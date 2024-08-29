@@ -2,6 +2,9 @@ package com.ohgiraffers.teample;
 
 import java.util.Scanner;
 
+import static com.ohgiraffers.teample.Div.div;
+import static com.ohgiraffers.teample.Re.re;
+
 public class Application {
     public static void main(String[] args) {
 
@@ -21,13 +24,12 @@ public class Application {
             case '-' : break;
             case '*' : break;
             case '/' :
-                Div.div(a,b);
+                div(a,b);
                 break;
             case '%' :
-                Re.re(a,b);
+                re(a,b);
                 break;
         }
-
     }
 }
 
