@@ -2,6 +2,8 @@ package com.ohgiraffers.teample;
 
 import java.util.Scanner;
 
+import static com.ohgiraffers.teample.Multi.multi;
+
 public class Application {
     public static void main(String[] args) {
         //asdasd
@@ -16,14 +18,14 @@ public class Application {
         scr.nextLine();
         char c = scr.nextLine().charAt(0);
 
+
         switch (c){
             case '+' : break;
             case '-' : break;
-            case '*' : break;
+            case '*' : multi(a,b); break;
             case '/' : break;
             case '%' : break;
         }
-
     }
 }
 
