@@ -21,7 +21,7 @@ public class Application {
 
         switch (c){
             case '+' : Plus.plus(a, b); break;
-            case '-' : break;
+            case '-' :  minus.minus(a, b);break;
             case '*' : break;
             case '/' :
                 div(a,b);
