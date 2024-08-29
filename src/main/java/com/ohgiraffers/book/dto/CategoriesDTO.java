@@ -2,15 +2,15 @@ package com.ohgiraffers.book.dto;
 
 import java.util.Date;
 
-public class Categories {
+public class CategoriesDTO {
 
     private int categoryId;
     private String categoryName;
     private Date createdAt;
 
-    public Categories() {}
+    public CategoriesDTO() {}
 
-    public Categories(int categoryId, String categoryName, Date createdAt) {
+    public CategoriesDTO(int categoryId, String categoryName, Date createdAt) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.createdAt = createdAt;
