@@ -2,8 +2,9 @@ package com.ohgiraffers.teample;
 
 public class Re {
 
-    public static int re(int a, int b) {
-        return a % b;
+    public static void re(int a, int b) {
+        int result = a % b;
+        System.out.println(result);
     }
 
 }
