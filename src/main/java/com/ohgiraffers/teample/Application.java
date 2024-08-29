@@ -1,7 +1,7 @@
 package com.ohgiraffers.teample;
 
 import java.util.Scanner;
-
+import static com.ohgiraffers.teample.Multi.multi;
 import static com.ohgiraffers.teample.Div.div;
 import static com.ohgiraffers.teample.Re.re;
 
@@ -19,10 +19,11 @@ public class Application {
         scr.nextLine();
         char c = scr.nextLine().charAt(0);
 
+
         switch (c){
             case '+' : Plus.plus(a, b); break;
             case '-' :  minus.minus(a, b);break;
-            case '*' : break;
+            case '*' : multi(a,b); break;
             case '/' :
                 div(a,b);
                 break;
