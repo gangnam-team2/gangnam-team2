@@ -20,7 +20,7 @@ public class Application {
         char c = scr.nextLine().charAt(0);
 
         switch (c){
-            case '+' : break;
+            case '+' : Plus.plus(a, b); break;
             case '-' : break;
             case '*' : break;
             case '/' :
