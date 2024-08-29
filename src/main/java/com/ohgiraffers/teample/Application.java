@@ -17,8 +17,8 @@ public class Application {
         char c = scr.nextLine().charAt(0);
 
         switch (c){
-            case '+' : break;
-            case '-' : break;
+            case '+' :; break;
+            case '-' :  minus.minus(a, b);break;
             case '*' : break;
             case '/' : break;
             case '%' : break;
