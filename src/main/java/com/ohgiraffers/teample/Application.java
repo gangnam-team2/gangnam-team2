@@ -6,7 +6,7 @@ import static com.ohgiraffers.teample.Multi.multi;
 
 public class Application {
     public static void main(String[] args) {
-        //asdasd
+
         Scanner scr = new Scanner(System.in);
         System.out.println("계산기 만들기");
 
@@ -23,8 +23,12 @@ public class Application {
             case '+' : break;
             case '-' : break;
             case '*' : multi(a,b); break;
-            case '/' : break;
-            case '%' : break;
+            case '/' :
+                Div.div(a,b);
+                break;
+            case '%' :
+                Re.re(a,b);
+                break;
         }
     }
 }
