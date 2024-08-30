@@ -1,7 +1,6 @@
 package com.ohgiraffers.book.dao;
 
 import com.ohgiraffers.book.dto.BorrowRecordDTO;
-import com.ohgiraffers.book.dto.UserDTO;
 
 import java.io.FileInputStream;
 import java.io.IOException;

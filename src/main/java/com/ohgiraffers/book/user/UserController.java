@@ -1,9 +1,9 @@
-package com.ohgiraffers.book.controller;
+package com.ohgiraffers.book.user;
 
-import com.ohgiraffers.book.dto.UserDTO;
-import com.ohgiraffers.book.loginsignup.Login;
-import com.ohgiraffers.book.loginsignup.Signup;
+import static com.ohgiraffers.common.JDBCTemplate.*;
 
+
+import java.sql.Connection;
 import java.util.Scanner;
 
 public class UserController {
@@ -16,9 +16,9 @@ public class UserController {
 
         System.out.println(" ----- 회원가입을 진행하겠습니다.-----");
         Scanner sc = new Scanner(System.in);
-        System.out.println( " 1. 사용자로 회원가입 " );
-        System.out.println( " 2. 관리자로 회원가입 ");
-        System.out.println( " 원하는 서비스의 번호를 입력해주세요 : ");
+        System.out.println(" 1. 사용자로 회원가입 ");
+        System.out.println(" 2. 관리자로 회원가입 ");
+        System.out.println(" 원하는 서비스의 번호를 입력해주세요 : ");
         int result = sc.nextInt();
 
         System.out.println(" 본인의 이름을 입력해주세요 : ");
@@ -27,23 +27,24 @@ public class UserController {
         String id = sc.nextLine();
         System.out.println(" 비밀번호를 입력 해주세요 : ");
         String pwd = sc.nextLine();
-        boolean role = false;
 
-        UserDTO newuser = new UserDTO(id, name, pwd);
         boolean singupuser = false;
 
-
         switch (result) {
+
             case 1: // 사용자로 회원가입
-                singupuser = signup.usersignup(newuser);
+                boolean role1 = true;
+                UserDTO newuser1 = new UserDTO(id, name, pwd, role1);
+                singupuser = signup.usersignup(newuser1);
 
                 break;
-            case 2:
-                singupuser = signup.adminsignup(newuser);
-
+            case 2: // 관리자로 회원가입
+                boolean role2 = false;
+                UserDTO newuser2 = new UserDTO(id, name, pwd, role2);
+                singupuser = signup.adminsignup(newuser2);
                 break;
-
-            default:break;
+            default:
+                break;
         }
 
         if (singupuser) {
@@ -54,16 +55,15 @@ public class UserController {
     }
 
 
-
-    public boolean totallogin() {
+    public void totallogin() {
         // 사용자, 관리자 로그인
 
         Login login = new Login();
         System.out.println(" ----- 로그인을 진행하겠습니다.-----");
         Scanner sc = new Scanner(System.in);
-        System.out.println( " 1. 사용자로 로그인 " );
-        System.out.println( " 2. 관리자로 로그인 ");
-        System.out.println( " 원하는 서비스의 번호를 입력해주세요 : ");
+        System.out.println(" 1. 사용자로 로그인 ");
+        System.out.println(" 2. 관리자로 로그인 ");
+        System.out.println(" 원하는 서비스의 번호를 입력해주세요 : ");
         int result = sc.nextInt();
 
         System.out.println(" 본인의 이름을 입력해주세요 : ");
@@ -85,7 +85,8 @@ public class UserController {
             case 2:
                 login.adminlogin(loginUser);
                 break;
-            default:break;
+            default:
+                break;
         }
 
         if (ulogin) {
@@ -95,4 +96,19 @@ public class UserController {
         }
 
     }
+    Connection con = getConnection();
+
+    private UserDAO menuDAO = new UserDAO("src/main/resources/mapper/user-query.xml");
+
+
+    public int userinsert(){
+
+        int result = menuDAO.insertuser(getConnection());
+        if(result == 1){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }
+

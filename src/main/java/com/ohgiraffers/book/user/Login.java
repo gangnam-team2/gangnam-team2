@@ -1,6 +1,4 @@
-package com.ohgiraffers.book.loginsignup;
-
-import com.ohgiraffers.book.dto.UserDTO;
+package com.ohgiraffers.book.user;
 
 import java.util.*;
 

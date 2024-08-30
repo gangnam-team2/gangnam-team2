@@ -5,6 +5,14 @@
     <entry key="deleteuser">
         DELETE
         FROM users
-        WHERE user_name = ?
+        WHERE user_id = ?, user_pwd = ?
+    </entry>
+
+    <entry key="insertuser">
+
+        INSERT
+        INTO users(user_id, user_name, user_pwd, user_role)
+        VALUES (?, ?, ?, ?)
+
     </entry>
     </properties>

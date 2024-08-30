@@ -1,21 +1,19 @@
-package com.ohgiraffers.book.loginsignup;
-
-import com.ohgiraffers.book.dto.UserDTO;
+package com.ohgiraffers.book.user;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Signup { // 회원가입
 
 
     private Map<String, String> userData = new HashMap<>();
+    UserController userController = new UserController();
 
     public boolean usersignup(UserDTO user) {
         // 사용자 회원가입
 
             if (userData.containsKey(user.getUserId())) {
-                return false; // 사용자 이름이 이미 존재
+                return false;
             }
             userData.put(user.getUserId(), user.getUserPwd());
             return true;
@@ -26,8 +24,14 @@ public class Signup { // 회원가입
     public boolean adminsignup(UserDTO user) {
         // 관리자 회원가입
 
+        int result = userController.userinsert();
+
         if (userData.containsKey(user.getUserId())) {
-            return false; // 사용자 이름이 이미 존재
+            if(result == 1){ // 성공 ... 맞나 ..?
+                return true;
+            }else{
+                return false;
+            }
         }
         userData.put(user.getUserId(), user.getUserPwd());
         return true;
