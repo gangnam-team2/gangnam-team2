@@ -1,6 +1,17 @@
 package com.ohgiraffers;
 
+<<<<<<< HEAD
 import com.ohgiraffers.book.user.UserController;
+=======
+<<<<<<< HEAD
+import com.ohgiraffers.user.Controller.UserController;
+import com.ohgiraffers.book.loginsignup.UserRole;
+=======
+import com.ohgiraffers.book.controller.ManagerController;
+import com.ohgiraffers.book.controller.RequestController;
+>>>>>>> e7fe0fa470b61be5b21605e3ba8c738695355cbd
+
+>>>>>>> 57e156006f2b2554e06792d94b553f2ae666f1c1
 import java.util.Scanner;
 
 public class Application {

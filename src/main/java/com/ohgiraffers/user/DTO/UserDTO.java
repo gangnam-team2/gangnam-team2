@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/main/java/com/ohgiraffers/book/user/UserDTO.java
 package com.ohgiraffers.book.dto;
+=======
+package com.ohgiraffers.user.DTO;
+>>>>>>> 57e156006f2b2554e06792d94b553f2ae666f1c1:src/main/java/com/ohgiraffers/user/DTO/UserDTO.java
 
 import java.util.Date;
 
