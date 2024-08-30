@@ -1,6 +1,8 @@
 package com.ohgiraffers.book;
 
 import java.util.Scanner;
+
+import com.ohgiraffers.book.controller.BestSellersController;
 import com.ohgiraffers.book.controller.BookController;
 
 public class Application {
@@ -25,7 +27,7 @@ public class Application {
                     break;
                 case 2:
                     // 로그인 및 해당 역할에 따른 메뉴 표시
-
+                    UserRole userRole = UserController.login(sc);
                     if (userRole != null) {
                         displayMenu(sc, userRole);
                     }
@@ -43,6 +45,7 @@ public class Application {
     // 역할에 따른 메뉴 출력 및 컨트롤러 호출
     private static void displayMenu(Scanner sc, UserRole userRole) {
         BookController bookController = new BookController();
+        BestSellersController bestSellersController = new BestSellersController();
         boolean isRunning = true;
 
         while (isRunning) {
@@ -51,13 +54,14 @@ public class Application {
                 System.out.println("1. 도서 관리");
                 System.out.println("2. 도서 검색 (연체된 도서 목록 포함)");
                 System.out.println("3. 사용자 관리");
-                System.out.println("4. 회원탈퇴");
+                System.out.println("4. 베스트셀러 관리");
+                System.out.println("5. 회원탈퇴");
                 System.out.println("0. 로그아웃");
             } else {
                 System.out.println("\n== 사용자 메뉴 ==");
                 System.out.println("1. 도서 검색");
                 System.out.println("2. 대여 및 반납");
-                System.out.println("3. 베스트셀러");
+                System.out.println("3. 베스트셀러 목록");
                 System.out.println("4. 도서 요청");
                 System.out.println("5. 마이페이지");
                 System.out.println("6. 회원탈퇴");
@@ -92,17 +96,17 @@ public class Application {
                         // 사용자 관리
 
                     } else {
-                        // 베스트셀러 목록
-                        bookController.showBestsellers(sc);
+                        // 베스트셀러 목록 조회
+                        bestSellersController.showBestSellersByPeriod();
                     }
                     break;
                 case 4:
                     if (userRole == UserRole.ADMIN) {
-                        // 관리자 회원탈퇴
-
+                        // 베스트셀러 관리
+                        manageBestSellersMenu(sc, bestSellersController);
                     } else {
                         // 도서 요청
-
+                        bookController.requestBook(sc);                     // --현준님 bookController에 추가해주시면 됩니다.
                     }
                     break;
                 case 5:
@@ -110,7 +114,8 @@ public class Application {
                         // 마이페이지
 
                     } else {
-                        System.out.println("잘못된 선택입니다.");
+                        // 관리자 회원탈퇴
+
                     }
                     break;
                 case 6:
@@ -164,8 +169,41 @@ public class Application {
             }
         }
     }
-}
 
+    // 관리자 베스트셀러 관리 메뉴
+    private static void manageBestSellersMenu(Scanner sc, BestSellersController bestSellersController) {
+        boolean managing = true;
+
+        while (managing) {
+            System.out.println("\n== 베스트셀러 관리 메뉴 ==");
+            System.out.println("1. 베스트셀러 추가");
+            System.out.println("2. 베스트셀러 목록 조회 (기간별)");
+            System.out.println("3. 모든 베스트셀러 목록 조회");
+            System.out.println("0. 이전 메뉴로 돌아가기");
+
+            System.out.print("선택: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    bestSellersController.addBestSeller();
+                    break;
+                case 2:
+                    bestSellersController.showBestSellersByPeriod();
+                    break;
+                case 3:
+                    bestSellersController.showAllBestSellers();
+                    break;
+                case 0:
+                    managing = false;
+                    break;
+                default:
+                    System.out.println("잘못된 선택입니다. 다시 시도하세요.");
+            }
+        }
+    }
+}
 
 
 
