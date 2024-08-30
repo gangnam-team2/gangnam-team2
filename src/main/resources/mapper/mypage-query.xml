@@ -5,19 +5,31 @@
 
     <entry key="currentBorrowBooks">
         SELECT
-        BOOK_CODE, BOOK_TITLE, BORROW_DATE, DUE_DATE, BR_CREATED_AT, BR_UPDATE_AT
+        BOOK_CODE, BOOK_TITLE, BORROW_DATE, DUE_DATE
         FROM BORROW_RECORDS
         WHERE USER_ID =? AND BOOK_STATUS = 'FALSE';
     </entry>
 
 
-    <entry key="updateRequestBook">
+    <entry key="updateRequest1">
         UPDATE BORROW_RECORDS
-        SET BOOK_TITLE =?, BOOK_CODE =?, BORROW_DATE = ? , DUE_DATE = ?, BOOK_STATUS = ?, BR_UPDATE_AT =? ;
+        SET BOOK_CODE =?, BORROW_DATE =?;
     </entry>
 
 
-    <entry key="borrowBookList">
+    <entry key="updateRequest2">
+        UPDATE BORROW_RECORDS
+        SET BOOK_CODE =?, DUE_DATE =?;
+    </entry>
+
+
+    <entry key="updateRequest3">
+        UPDATE BORROW_RECORDS
+        SET BOOK_CODE =?, BOOK_STATUS =?;
+    </entry>
+
+
+    <entry key="AllBorrowBookList">
         SELECT
         BOOK_CODE, BOOK_TITLE, BORROW_DATE, DUE_DATE, RETURN_DATE
         FROM BORROW_RECORDS;
@@ -26,7 +38,7 @@
 
     <entry key="pwdUpdate">
         UPDATE USERS
-        SET USER_PWD = ? , USER_UPDATED_AT = ?
+        SET USER_PWD = ?
         WHERE USER_PWD = ? ;
     </entry>
 
