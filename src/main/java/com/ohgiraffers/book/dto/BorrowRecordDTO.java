@@ -2,7 +2,7 @@ package com.ohgiraffers.book.dto;
 import java.util.Date;
 
 public class BorrowRecordDTO {
-    private int borrowCode;            // 고유한 대여코드
+
     private int userId;                // 대여자 아이디
     private int bookCode;              // 대여한 도서 코드
     private Date borrowDate;           // 대여일
@@ -15,7 +15,7 @@ public class BorrowRecordDTO {
 
     public BorrowRecordDTO(int borrowCode, int userId, int bookCode,
                            Date borrowDate, Date dueDate, Date returnDate, Date brCreatedAt, Date brUpdatedAt) {
-        this.borrowCode = borrowCode;
+
         this.userId = userId;
         this.bookCode = bookCode;
         this.borrowDate = borrowDate;
@@ -25,13 +25,7 @@ public class BorrowRecordDTO {
         this.brUpdatedAt = brUpdatedAt;
     }
 
-    public int getBorrowCode() {
-        return borrowCode;
-    }
 
-    public void setBorrowCode(int borrowCode) {
-        this.borrowCode = borrowCode;
-    }
 
     public int getUserId() {
         return userId;
@@ -92,7 +86,6 @@ public class BorrowRecordDTO {
     @Override
     public String toString() {
         return "BorrowRecordDTO{" +
-                "borrowCode=" + borrowCode +
                 ", userId=" + userId +
                 ", bookCode=" + bookCode +
                 ", borrowDate=" + borrowDate +

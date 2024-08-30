@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+
+<properties>
+    <entry key="insertBestSeller">
+        <![CDATA[
+            INSERT INTO best_sellers (book_code, borrow_count, period)
+            VALUES (?, ?, ?)
+            ]]>
+    </entry>
+
+    <entry key="selectBestSellersByPeriod">
+        <![CDATA[
+            SELECT * FROM best_sellers WHERE period = ?
+        ]]>
+    </entry>
+
+    <entry key="selectAllBestSellers">
+        <![CDATA[
+            SELECT * FROM best_sellers
+        ]]>
+    </entry>
+</properties>
