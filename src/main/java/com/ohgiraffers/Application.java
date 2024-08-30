@@ -1,4 +1,4 @@
-package com.ohgiraffers.book;
+package com.ohgiraffers;
 
 <<<<<<< HEAD
 import com.ohgiraffers.book.user.UserController;
@@ -111,7 +111,7 @@ public class Application {
                     break;
                 case 4:
                     if (userRole == UserRole.ADMIN) {
-                       manageBestSellersMenu(sc, bestSellersController);
+                        manageBestSellersMenu(sc, bestSellersController);
                     } else {
                         // (사용자 모드) 도서 요청 / 도서관에 없는 책을 요청 도서 목록에 인설트
                         RequestController.bookRequest();
@@ -212,8 +212,3 @@ public class Application {
         }
     }
 }
-
-
-
-
-

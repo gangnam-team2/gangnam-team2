@@ -1,4 +1,4 @@
-package com.ohgiraffers.book.dto;
+package com.ohgiraffers.borrowrecord.dto;
 import java.util.Date;
 
 public class BorrowRecordDTO {

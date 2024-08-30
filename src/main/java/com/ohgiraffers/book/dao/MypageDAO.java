@@ -1,6 +1,7 @@
 package com.ohgiraffers.book.dao;
 
 import com.ohgiraffers.book.dto.BorrowRecordDTO;
+import com.ohgiraffers.book.dto.UserDTO;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class MypageDAO {
     }
 
 
-    public int updateRequestBook(Collection con, BorrowRecordDTO borrowRecordDTO,boolean bookStatus){
+    public int updateRequestBook(Connection con, BorrowRecordDTO borrowRecordDTO,boolean bookStatus){
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("updateRequestBook");
