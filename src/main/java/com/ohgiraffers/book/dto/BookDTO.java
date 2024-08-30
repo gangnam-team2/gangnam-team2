@@ -10,27 +10,27 @@ public class BookDTO {
     private String bookPublisher;
     private String bookGenre;
     private boolean bookStatus; // true: 대여 중, false: 대여 가능
-    private int bookBrrowCount
+    private int bookBorrowCount;
 
     public BookDTO() {}
 
     public BookDTO(int bookCode, String bookTitle, String bookAuthor, String bookPublisher, String bookGenre, boolean bookStatus,
-                   int bookBrrowCount) {
+                   int bookBorrowCount) {
         this.bookCode = bookCode;
         this.bookTitle = bookTitle;
         this.bookAuthor = bookAuthor;
         this.bookPublisher = bookPublisher;
         this.bookGenre = bookGenre;
         this.bookStatus = bookStatus;
-        this.bookBrrowCount = bookBrrowCount;
+        this.bookBorrowCount = bookBorrowCount;
     }
 
-    public int getBookBrrowCount() {
-        return bookBrrowCount;
+    public int getBookBorrowCount() {
+        return bookBorrowCount;
     }
 
-    public void setBookBrrowCount(int bookBrrowCount) {
-        this.bookBrrowCount = bookBrrowCount;
+    public void setBookBorrowCount(int bookBorrowCount) {
+        this.bookBorrowCount = bookBorrowCount;
     }
 
     public int getBookCode() {
@@ -90,7 +90,7 @@ public class BookDTO {
                 ", bookPublisher='" + bookPublisher + '\'' +
                 ", bookGenre='" + bookGenre + '\'' +
                 ", bookStatus=" + bookStatus +
-                ", bookBrrowCount=" + bookBrrowCount +
+                ", bookBorrowCount=" + bookBorrowCount +
                 '}';
     }
 }

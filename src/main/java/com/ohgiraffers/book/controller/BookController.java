@@ -178,4 +178,38 @@ public class BookController {
             System.out.println("연체된 도서가 없습니다.");
         }
     }
+
+    public void manageBooksMenu(Scanner sc) {
+        boolean managing = true;
+
+        while (managing) {
+            System.out.println("\n== 도서 관리 메뉴 ==");
+            System.out.println("1. 도서 추가");
+            System.out.println("2. 도서 수정");
+            System.out.println("3. 도서 삭제");
+            System.out.println("0. 이전 메뉴로 돌아가기");
+
+            System.out.print("선택: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    insertBook();
+                    break;
+                case 2:
+                    updateBook();
+                    break;
+                case 3:
+                    deleteBook();
+                    break;
+                case 0:
+                    managing = false;
+                    break;
+                default:
+                    System.out.println("잘못된 선택입니다. 다시 시도하세요.");
+            }
+        }
+    }
+
 }
