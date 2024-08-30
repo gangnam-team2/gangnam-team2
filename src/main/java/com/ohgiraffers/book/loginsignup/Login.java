@@ -2,20 +2,40 @@ package com.ohgiraffers.book.loginsignup;
 
 import com.ohgiraffers.book.dto.UserDTO;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Login {
 
-    private Map<String, UserDTO> userMap = new HashMap<String, UserDTO>();
+    private List<UserDTO> userlist = new ArrayList<>();
 
-
-    public void userlogin(UserDTO user) {
+    public boolean userlogin(UserDTO user) {
         // 사용자 로그인
 
-
-
+        for (UserDTO userDTO : userlist) {
+            if (userDTO.getUserId().equals(user.getUserId())) {
+                if (userDTO.getUserPwd().equals(user.getUserPwd())) {
+                    return true;
+                }
+            }
         }
+        return false;
     }
+
+    public boolean adminlogin(UserDTO user) {
+        for (UserDTO userDTO : userlist) {
+            if (userDTO.getUserId().equals(user.getUserId())) {
+                if (userDTO.getUserPwd().equals(user.getUserPwd())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+
+
+
+
+
 

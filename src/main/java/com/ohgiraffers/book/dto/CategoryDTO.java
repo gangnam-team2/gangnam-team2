@@ -1,19 +1,14 @@
 package com.ohgiraffers.book.dto;
 
-import java.util.Date;
-
-public class CategoriesDTO {
-
+public class CategoryDTO {
     private int categoryId;
     private String categoryName;
-    private Date createdAt;
 
-    public CategoriesDTO() {}
+    public CategoryDTO() {}
 
-    public CategoriesDTO(int categoryId, String categoryName, Date createdAt) {
+    public CategoryDTO(int categoryId, String categoryName) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
-        this.createdAt = createdAt;
     }
 
     public int getCategoryId() {
@@ -32,20 +27,12 @@ public class CategoriesDTO {
         this.categoryName = categoryName;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
     @Override
     public String toString() {
-        return "Categories{" +
+        return "CategoryDTO{" +
                 "categoryId=" + categoryId +
                 ", categoryName='" + categoryName + '\'' +
-                ", createdAt=" + createdAt +
                 '}';
     }
 }
+

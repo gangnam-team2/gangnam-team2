@@ -24,11 +24,10 @@ public class UserDTO {
         this.userUpdatedAt = userUpdatedAt;
     }
 
-    public UserDTO(String userId, String userName, String userPwd, boolean userRole) {
+    public UserDTO(String userId, String userName, String userPwd) {
         this.userId = userId;
         this.userName = userName;
         this.userPwd = userPwd;
-        this.userRole = userRole;
     }
 
     public UserDTO(String userId, String userPwd) {

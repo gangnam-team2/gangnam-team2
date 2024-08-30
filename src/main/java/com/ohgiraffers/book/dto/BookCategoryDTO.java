@@ -3,17 +3,14 @@ package com.ohgiraffers.book.dto;
 import java.util.Date;
 
 public class BookCategoryDTO {
-
     private int bookCode;
     private int categoryId;
-    private Date createdAt;
 
     public BookCategoryDTO() {}
 
-    public BookCategoryDTO(int bookCode, int categoryId, Date createdAt) {
+    public BookCategoryDTO(int bookCode, int categoryId) {
         this.bookCode = bookCode;
         this.categoryId = categoryId;
-        this.createdAt = createdAt;
     }
 
     public int getBookCode() {
@@ -32,20 +29,11 @@ public class BookCategoryDTO {
         this.categoryId = categoryId;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
     @Override
     public String toString() {
         return "BookCategoryDTO{" +
                 "bookCode=" + bookCode +
                 ", categoryId=" + categoryId +
-                ", createdAt=" + createdAt +
                 '}';
     }
 }
