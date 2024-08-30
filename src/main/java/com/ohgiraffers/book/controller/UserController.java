@@ -24,14 +24,17 @@ public class UserController {
         System.out.println(" 원하시는 비밀번호를 입력 해주세요 : ");
         String pwd = sc.nextLine();
 
-        String role = "USER";
-        UserDTO userDTO = new UserDTO(id, name, pwd, role);
+        UserDTO newuser = new UserDTO(id, pwd);
+        boolean singupuser = signup.usersignup(newuser);
 
-        signup.usersignup(userDTO);
-
-
-
+        if (singupuser) {
+            System.out.println("회원가입 성공!");
+        } else {
+            System.out.println("회원가입 실패: 사용자 이름이 이미 존재합니다.");
+        }
     }
+
+
 
     public void login() {
 
@@ -48,14 +51,21 @@ public class UserController {
         System.out.println( " 비밀번호를 입력 해주세요 : ");
         String pwd = sc.nextLine();
 
-        String role = "USER";
 
-        UserDTO userDTO = new UserDTO(id, name, pwd, role);
-        login.userlogin(userDTO);
+        UserDTO loginUser = new UserDTO(id, pwd);
+        boolean ulogin = login.userlogin(loginUser);
+
+        if (ulogin) {
+            System.out.println("로그인 성공!");
+        } else {
+            System.out.println("로그인 실패: 사용자 이름 또는 비밀번호가 잘못되었습니다.");
+        }
+
 
 
 
 
 
     }
+
 }

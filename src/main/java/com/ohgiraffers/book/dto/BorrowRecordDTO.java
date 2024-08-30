@@ -8,8 +8,8 @@ public class BorrowRecordDTO {
     private Date borrowDate;           // 대여일
     private Date dueDate;              // 반납 예정일
     private Date returnDate;           // 실제 반납일
-    private Date brCreatedAt;         // 도서요청 등록일
-    private Date brUpdatedAt;         // 도서요청 수정일
+    private Date brCreatedAt;         // 도서대여 등록일
+    private Date brUpdatedAt;         // 도서대여 수정일
 
     public BorrowRecordDTO() {}
 
