@@ -23,7 +23,7 @@ public class MypageDAO {
     }
 
 
-    public int updateRequestBook(Collection con, BorrowRecordDTO borrowRecordDTO,boolean bookStatus){
+    public int updateRequestBook(Connection con, BorrowRecordDTO borrowRecordDTO,boolean bookStatus){
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("updateRequestBook");

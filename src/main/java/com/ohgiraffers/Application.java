@@ -1,18 +1,14 @@
-package com.ohgiraffers.book;
+package com.ohgiraffers;
 
-import com.ohgiraffers.manager.controller.ManagerController;
-import com.ohgiraffers.request.controller.RequestController;
-
+import com.ohgiraffers.book.user.UserController;
 import java.util.Scanner;
-
-import com.ohgiraffers.book.controller.BestSellersController;
-import com.ohgiraffers.book.controller.BookController;
 
 public class Application {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
+        UserController usercontroller = new UserController();
 
         while (running) {
             System.out.println("\n== 도서 대여 프로그램 ==");
@@ -25,13 +21,13 @@ public class Application {
 
             switch (choice) {
                 case 1:
-                    // 회원가입 컨트롤러 호출
-
+                    usercontroller.totalsignup();
                     break;
                 case 2:
                     // 로그인 및 해당 역할에 따른 메뉴 표시
-                    UserRole userRole = UserController.login(sc);
-                    if (userRole != null) {
+                   boolean userRole = usercontroller.totallogin();
+
+                    if ( userRole != null ) {
                         displayMenu(sc, userRole);
                     }
                     break;
@@ -52,7 +48,7 @@ public class Application {
         boolean isRunning = true;
 
         while (isRunning) {
-            if (userRole) {
+            if (userRole == UserRole.ADMIN) {
                 System.out.println("\n== 관리자 메뉴 ==");
                 System.out.println("1. 도서 관리");
                 System.out.println("2. 도서 검색 (연체된 도서 목록 포함)");
@@ -95,7 +91,7 @@ public class Application {
                     }
                     break;
                 case 3:
-                    if (userRole) {
+                    if (userRole  == UserRole.ADMIN) {
                         // (관리자 모드) 사용자 관리 / 1. 회원 목록 조회 / 2. 도서를 대여 중인 회원과 그 도서 목록 조회 / 3. 연체 이력이 있는 회원 목록 조회
                         ManagerController.displayManager();
                     } else {
@@ -104,11 +100,11 @@ public class Application {
                     }
                     break;
                 case 4:
-                    if (userRole) {
-                       manageBestSellersMenu(sc, bestSellersController);
+                    if (userRole == UserRole.ADMIN) {
+                        manageBestSellersMenu(sc, bestSellersController);
                     } else {
-                        // (사용자 모드) 도서 요청 / 도서관에 없는 책을 요청, 요청 도서 테이블에 인설트
-                        RequestController.insertRequestedBook(); // 완성! ㅎ
+                        // (사용자 모드) 도서 요청 / 도서관에 없는 책을 요청 도서 목록에 인설트
+                        RequestController.bookRequest();
                     }
                     break;
                 case 5:
