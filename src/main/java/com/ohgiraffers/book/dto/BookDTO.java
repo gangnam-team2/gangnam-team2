@@ -1,30 +1,25 @@
 package com.ohgiraffers.book.dto;
 
+import java.security.Timestamp;
 import java.util.Date;
 
 public class BookDTO {
-    private int bookCode;              // 도서 아이디
-    private String bookTitle;          // 도서 제목
-    private String bookAuthor;         // 도서 저자
-    private String bookPublisher;      // 도서 출판사
-    private String bookGenre;          // 도서 장르
-    private String bookStatus;         // 도서 상태 (AVAILABLE, RESERVED, BORROWED)
-    private Date bookCreatedAt;       // 도서 등록일
-    private Date bookUpdatedAt;       // 도서 수정일
+    private int bookCode;
+    private String bookTitle;
+    private String bookAuthor;
+    private String bookPublisher;
+    private String bookGenre;
+    private boolean bookStatus; // true: 대여 중, false: 대여 가능
 
-    // 기본 생성자
     public BookDTO() {}
 
-    public BookDTO(int bookCode, String bookTitle, String bookAuthor, String bookPublisher,
-                   String bookGenre, String bookStatus, Date bookCreatedAt, Date bookUpdatedAt) {
+    public BookDTO(int bookCode, String bookTitle, String bookAuthor, String bookPublisher, String bookGenre, boolean bookStatus) {
         this.bookCode = bookCode;
         this.bookTitle = bookTitle;
         this.bookAuthor = bookAuthor;
         this.bookPublisher = bookPublisher;
         this.bookGenre = bookGenre;
         this.bookStatus = bookStatus;
-        this.bookCreatedAt = bookCreatedAt;
-        this.bookUpdatedAt = bookUpdatedAt;
     }
 
     public int getBookCode() {
@@ -67,28 +62,12 @@ public class BookDTO {
         this.bookGenre = bookGenre;
     }
 
-    public String getBookStatus() {
+    public boolean isBookStatus() {
         return bookStatus;
     }
 
-    public void setBookStatus(String bookStatus) {
+    public void setBookStatus(boolean bookStatus) {
         this.bookStatus = bookStatus;
-    }
-
-    public Date getBookCreatedAt() {
-        return bookCreatedAt;
-    }
-
-    public void setBookCreatedAt(Date bookCreatedAt) {
-        this.bookCreatedAt = bookCreatedAt;
-    }
-
-    public Date getBookUpdatedAt() {
-        return bookUpdatedAt;
-    }
-
-    public void setBookUpdatedAt(Date bookUpdatedAt) {
-        this.bookUpdatedAt = bookUpdatedAt;
     }
 
     @Override
@@ -99,9 +78,7 @@ public class BookDTO {
                 ", bookAuthor='" + bookAuthor + '\'' +
                 ", bookPublisher='" + bookPublisher + '\'' +
                 ", bookGenre='" + bookGenre + '\'' +
-                ", bookStatus='" + bookStatus + '\'' +
-                ", bookCreatedAt=" + bookCreatedAt +
-                ", bookUpdatedAt=" + bookUpdatedAt +
+                ", bookStatus=" + bookStatus +
                 '}';
     }
 }
