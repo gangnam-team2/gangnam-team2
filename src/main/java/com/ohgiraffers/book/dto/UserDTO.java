@@ -1,5 +1,6 @@
 package com.ohgiraffers.book.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class UserDTO {
@@ -21,6 +22,13 @@ public class UserDTO {
         this.userRole = userRole;
         this.userCreatedAt = userCreatedAt;
         this.userUpdatedAt = userUpdatedAt;
+    }
+
+    public UserDTO(String userId, String userName, String userPwd, String userRole) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userPwd = userPwd;
+        this.userRole = userRole;
     }
 
     public String getUserId() {
