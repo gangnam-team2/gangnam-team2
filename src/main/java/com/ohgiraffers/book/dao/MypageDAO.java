@@ -1,13 +1,8 @@
 package com.ohgiraffers.book.dao;
 
-import com.ohgiraffers.book.dto.BorrowRecordDTO;
-import com.ohgiraffers.book.dto.UserDTO;
-
-import java.io.FileInputStream;
-import java.io.IOException;
+import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import java.sql.*;
 import java.util.*;
-
 import static com.ohgiraffers.common.JDBCTemplate.*;
 
 public class MypageDAO {
@@ -15,15 +10,16 @@ public class MypageDAO {
     private Properties prop = new Properties();
 
     public MypageDAO(String url) {
+        prop = new Properties();
         try {
-            prop.loadFromXML(new FileInputStream(url));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            prop.loadFromXML(getClass().getResourceAsStream("/mapper/mypage-query.xml"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
 
-    public int updateRequestBook(Collection con, BorrowRecordDTO borrowRecordDTO,boolean bookStatus){
+    public int updateRequestBook(Connection con, BorrowRecordDTO borrowRecordDTO,boolean bookStatus){
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("updateRequestBook");

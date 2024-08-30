@@ -1,7 +1,6 @@
 package com.ohgiraffers.book.dao;
 
 import com.ohgiraffers.book.dto.BestSellersDTO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
