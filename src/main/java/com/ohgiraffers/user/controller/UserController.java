@@ -1,7 +1,7 @@
-package com.ohgiraffers.user.Controller;
+package com.ohgiraffers.user.controller;
 
-import com.ohgiraffers.user.DAO.UserDAO;
-import com.ohgiraffers.user.DTO.UserDTO;
+import com.ohgiraffers.user.dao.UserDAO;
+import com.ohgiraffers.user.dto.UserDTO;
 import com.ohgiraffers.user.Login;
 import com.ohgiraffers.user.Signup;
 

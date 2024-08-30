@@ -1,6 +1,6 @@
 package com.ohgiraffers.user;
 
-import com.ohgiraffers.user.DTO.UserDTO;
+import com.ohgiraffers.user.dto.UserDTO;
 
 import java.util.*;
 

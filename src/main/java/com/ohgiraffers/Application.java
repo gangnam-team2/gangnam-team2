@@ -1,17 +1,8 @@
 package com.ohgiraffers;
 
-<<<<<<< HEAD
-import com.ohgiraffers.book.user.UserController;
-=======
-<<<<<<< HEAD
-import com.ohgiraffers.user.Controller.UserController;
-import com.ohgiraffers.book.loginsignup.UserRole;
-=======
-import com.ohgiraffers.book.controller.ManagerController;
-import com.ohgiraffers.book.controller.RequestController;
->>>>>>> e7fe0fa470b61be5b21605e3ba8c738695355cbd
-
->>>>>>> 57e156006f2b2554e06792d94b553f2ae666f1c1
+import com.ohgiraffers.book.controller.BestSellersController;
+import com.ohgiraffers.user.controller.UserController;
+import com.ohgiraffers.book.controller.BookController;
 import java.util.Scanner;
 
 public class Application {
@@ -36,9 +27,9 @@ public class Application {
                     break;
                 case 2:
                     // 로그인 및 해당 역할에 따른 메뉴 표시
-                   boolean userRole = usercontroller.totallogin();
+                    boolean userRole = usercontroller.totallogin();
 
-                    if ( userRole != null ) {
+                    if (userRole != null) {
                         displayMenu(sc, userRole);
                     }
                     break;
@@ -63,8 +54,8 @@ public class Application {
                 System.out.println("\n== 관리자 메뉴 ==");
                 System.out.println("1. 도서 관리");
                 System.out.println("2. 도서 검색 (연체된 도서 목록 포함)");
-                System.out.println("3. 사용자 관리");  // 서현준
-                System.out.println("4. 베스트셀러 관리");
+                System.out.println("3. 사용자 관리");
+                System.out.println("4. 베스트셀러 목록");
                 System.out.println("5. 회원탈퇴");
                 System.out.println("0. 로그아웃");
             } else {
@@ -72,7 +63,7 @@ public class Application {
                 System.out.println("1. 도서 검색");
                 System.out.println("2. 대여 및 반납");
                 System.out.println("3. 베스트셀러 목록");
-                System.out.println("4. 도서 요청"); // 서현준
+                System.out.println("4. 도서 요청");
                 System.out.println("5. 마이페이지");
                 System.out.println("6. 회원탈퇴");
                 System.out.println("0. 로그아웃");
@@ -85,52 +76,43 @@ public class Application {
             switch (choice) {
                 case 1:
                     if (userRole == UserRole.ADMIN) {
-                        // 도서 관리 (추가, 수정, 삭제)
                         manageBooksMenu(sc, bookController);
                     } else {
-                        // 도서 검색
                         bookController.searchBooksByTitle();
                     }
                     break;
                 case 2:
                     if (userRole == UserRole.ADMIN) {
-                        // 연체된 도서 목록 포함 검색
                         bookController.searchOverdueBooks();
                     } else {
                         // 대여 및 반납 기능 구현
-
                     }
                     break;
                 case 3:
-                    if (userRole  == UserRole.ADMIN) {
-                        // (관리자 모드) 사용자 관리 / 1. 회원 목록 조회 / 2. 도서를 대여 중인 회원과 그 도서 목록 조회 / 3. 연체 이력이 있는 회원 목록 조회
+                    if (userRole == UserRole.ADMIN) {
                         ManagerController.displayManager();
                     } else {
-                        // 베스트셀러 목록 조회
-                        bestSellersController.showBestSellersByPeriod();
+                        bestSellersController.showBestSellers();
                     }
                     break;
                 case 4:
                     if (userRole == UserRole.ADMIN) {
-                        manageBestSellersMenu(sc, bestSellersController);
+                        // 베스트셀러 관리 선택지를 관리자에게 보이지 않도록 제거했습니다.
+                        bestSellersController.showBestSellers();
                     } else {
-                        // (사용자 모드) 도서 요청 / 도서관에 없는 책을 요청 도서 목록에 인설트
                         RequestController.bookRequest();
                     }
                     break;
                 case 5:
                     if (userRole == UserRole.USER) {
-                        // 마이페이지
-
+                        // 마이페이지 기능
                     } else {
                         // 관리자 회원탈퇴
-
                     }
                     break;
                 case 6:
                     if (userRole == UserRole.USER) {
                         // 사용자 회원탈퇴
-
                     } else {
                         System.out.println("잘못된 선택입니다.");
                     }
@@ -178,42 +160,7 @@ public class Application {
             }
         }
     }
-
-    // 관리자 베스트셀러 관리 메뉴
-    private static void manageBestSellersMenu(Scanner sc, BestSellersController bestSellersController) {
-        boolean managing = true;
-
-        while (managing) {
-            System.out.println("\n== 베스트셀러 관리 메뉴 ==");
-            System.out.println("1. 베스트셀러 추가");
-            System.out.println("2. 베스트셀러 목록 조회 (기간별)");
-            System.out.println("3. 모든 베스트셀러 목록 조회");
-            System.out.println("0. 이전 메뉴로 돌아가기");
-
-            System.out.print("선택: ");
-            int choice = sc.nextInt();
-            sc.nextLine();
-
-            switch (choice) {
-                case 1:
-                    bestSellersController.addBestSeller();
-                    break;
-                case 2:
-                    bestSellersController.showBestSellersByPeriod();
-                    break;
-                case 3:
-                    bestSellersController.showAllBestSellers();
-                    break;
-                case 0:
-                    managing = false;
-                    break;
-                default:
-                    System.out.println("잘못된 선택입니다. 다시 시도하세요.");
-            }
-        }
-    }
 }
-
 
 
 

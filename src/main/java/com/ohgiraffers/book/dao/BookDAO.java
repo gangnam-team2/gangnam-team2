@@ -34,6 +34,7 @@ public class BookDAO {
             pstmt.setString(3, bookDTO.getBookPublisher());
             pstmt.setString(4, bookDTO.getBookGenre());
             pstmt.setBoolean(5, bookDTO.isBookStatus());
+            pstmt.setInt(6, bookDTO.getBorrowCount());  // borrow_count 설정
 
             result = pstmt.executeUpdate();
 
@@ -60,7 +61,8 @@ public class BookDAO {
             pstmt.setString(3, bookDTO.getBookPublisher());
             pstmt.setString(4, bookDTO.getBookGenre());
             pstmt.setBoolean(5, bookDTO.isBookStatus());
-            pstmt.setInt(6, bookDTO.getBookCode());
+            pstmt.setInt(6, bookDTO.getBorrowCount());  // borrow_count 설정
+            pstmt.setInt(7, bookDTO.getBookCode());
 
             result = pstmt.executeUpdate();
 
@@ -113,7 +115,8 @@ public class BookDAO {
                         rs.getString("book_author"),
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
-                        rs.getBoolean("book_status")
+                        rs.getBoolean("book_status"),
+                        rs.getInt("borrow_count")  // borrow_count 추가
                 );
             }
 
@@ -146,7 +149,8 @@ public class BookDAO {
                         rs.getString("book_author"),
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
-                        rs.getBoolean("book_status")
+                        rs.getBoolean("book_status"),
+                        rs.getInt("borrow_count")  // borrow_count 추가
                 );
                 books.add(bookDTO);
             }
@@ -180,7 +184,8 @@ public class BookDAO {
                         rs.getString("book_author"),
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
-                        rs.getBoolean("book_status")
+                        rs.getBoolean("book_status"),
+                        rs.getInt("borrow_count")  // borrow_count 추가
                 );
                 books.add(bookDTO);
             }
@@ -213,7 +218,8 @@ public class BookDAO {
                         rs.getString("book_author"),
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
-                        rs.getBoolean("book_status")
+                        rs.getBoolean("book_status"),
+                        rs.getInt("borrow_count")  // borrow_count 추가
                 );
                 books.add(bookDTO);
             }

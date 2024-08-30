@@ -2,6 +2,7 @@ package com.ohgiraffers.book.controller;
 
 import com.ohgiraffers.book.dao.BestSellersDAO;
 import com.ohgiraffers.book.dto.BestSellersDTO;
+import com.ohgiraffers.book.dto.BookDTO;
 import com.ohgiraffers.common.JDBCTemplate;
 import java.sql.Connection;
 import java.util.List;
@@ -16,16 +17,14 @@ public class BestSellersController {
         sc = new Scanner(System.in);
     }
 
-    // 선택지를 통해 기간별 베스트셀러를 조회하는 메서드
-    public void showBestSellersBySelectedPeriod() {
+    public void showBestSellers() {
         System.out.println("조회할 기간을 선택하세요:");
-        System.out.println("1. 일주일");
-        System.out.println("2. 한 달");
-        System.out.println("3. 1년");
-        System.out.print("선택 : ");
+        System.out.println("1. 이번주 베스트셀러");
+        System.out.println("2. 최근 한달간 베스트셀러");
+        System.out.println("3. 최근 일년간 베스트셀러");
 
         int choice = sc.nextInt();
-        sc.nextLine();
+        sc.nextLine(); // 개행 문자 제거
 
         String period = null;
         switch (choice) {
@@ -44,29 +43,16 @@ public class BestSellersController {
         }
 
         Connection con = JDBCTemplate.getConnection();
-        List<BestSellersDTO> bestSellersList = bestSellersDAO.selectBestSellersByPeriod(con, period);
+        List<BookDTO> bestSellersList = bestSellersDAO.selectTopBorrowedBooksByPeriod(con, period);
         JDBCTemplate.close(con);
 
         if (!bestSellersList.isEmpty()) {
-            for (BestSellersDTO bestSellersDTO : bestSellersList) {
-                System.out.println(bestSellersDTO);
+            System.out.println("가장 많이 대여된 도서 목록 (" + period + "):");
+            for (BookDTO book : bestSellersList) {
+                System.out.println(book.getBookTitle() + " - 대여 횟수: " + book.getBorrowCount());
             }
         } else {
             System.out.println("해당 기간의 베스트셀러가 없습니다.");
-        }
-    }
-
-    public void showAllBestSellers() {
-        Connection con = JDBCTemplate.getConnection();
-        List<BestSellersDTO> bestSellersList = bestSellersDAO.selectAllBestSellers(con);
-        JDBCTemplate.close(con);
-
-        if (!bestSellersList.isEmpty()) {
-            for (BestSellersDTO bestSellersDTO : bestSellersList) {
-                System.out.println(bestSellersDTO);
-            }
-        } else {
-            System.out.println("베스트셀러가 없습니다.");
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.ohgiraffers.user;
 
-import com.ohgiraffers.user.Controller.UserController;
-import com.ohgiraffers.user.DTO.UserDTO;
+import com.ohgiraffers.user.controller.UserController;
+import com.ohgiraffers.user.dto.UserDTO;
 
 import java.util.HashMap;
 import java.util.Map;
