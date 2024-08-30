@@ -1,4 +1,4 @@
-package com.ohgiraffers.book.user;
+package com.ohgiraffers.user.DTO;
 
 import java.util.Date;
 
