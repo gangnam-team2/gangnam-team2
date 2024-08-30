@@ -49,7 +49,7 @@ public class BestSellersController {
         if (!bestSellersList.isEmpty()) {
             System.out.println("가장 많이 대여된 도서 목록 (" + period + "):");
             for (BookDTO book : bestSellersList) {
-                System.out.println(book.getBookTitle() + " - 대여 횟수: " + book.getBorrowCount());
+                System.out.println(book.getBookTitle() + " - 대여 횟수: " + book.getBookBorrowCount());
             }
         } else {
             System.out.println("해당 기간의 베스트셀러가 없습니다.");

@@ -35,7 +35,7 @@ public class BestSellersDAO {
                 BookDTO book = new BookDTO();
                 book.setBookCode(rs.getInt("book_code"));
                 book.setBookTitle(rs.getString("book_title"));
-                book.setBorrowCount(rs.getInt("borrow_count"));
+                book.setBookBorrowCount(rs.getInt("borrow_count"));
 
                 bestSellersList.add(book);
             }
@@ -49,5 +49,4 @@ public class BestSellersDAO {
         }
         return bestSellersList;
     }
-}
 }
