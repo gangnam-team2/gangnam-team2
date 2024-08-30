@@ -1,4 +1,6 @@
-package com.ohgiraffers.book.user;
+package com.ohgiraffers.user;
+
+import com.ohgiraffers.user.DTO.UserDTO;
 
 import java.util.*;
 

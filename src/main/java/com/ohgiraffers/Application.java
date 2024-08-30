@@ -1,7 +1,7 @@
 package com.ohgiraffers;
 
 <<<<<<< HEAD
-import com.ohgiraffers.book.user.UserController;
+import com.ohgiraffers.user.Controller.UserController;
 import com.ohgiraffers.book.loginsignup.UserRole;
 =======
 import com.ohgiraffers.book.controller.ManagerController;
