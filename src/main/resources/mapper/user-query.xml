@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+
+<properties>
+    <entry key="deleteuser">
+        DELETE
+        FROM users
+        WHERE user_id = ?, user_pwd = ?
+    </entry>
+
+    <entry key="insertuser">
+
+        INSERT
+        INTO users(user_id, user_name, user_pwd, user_role)
+        VALUES (?, ?, ?, ?)
+
+    </entry>
+    </properties>

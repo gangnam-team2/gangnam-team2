@@ -15,6 +15,7 @@
         SET book_title = ?, book_author = ?, book_publisher = ?, book_genre = ?, book_status = ?
         WHERE book_code = ?
         ]]>
+>>>>>>> e7fe0fa470b61be5b21605e3ba8c738695355cbd
     </entry>
 
     <entry key="deleteBook">

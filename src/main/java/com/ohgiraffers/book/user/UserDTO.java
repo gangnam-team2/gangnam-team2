@@ -1,4 +1,4 @@
-package com.ohgiraffers.book.dto;
+package com.ohgiraffers.book.user;
 
 import java.util.Date;
 
@@ -7,20 +7,32 @@ public class UserDTO {
     private String userId;             // 사용자 아이디
     private String userName;           // 사용자 이름
     private String userPwd;            // 사용자 비밀번호
-    private boolean userRole;           // 사용자 역할 (ADMIN, USER)
+    private boolean userRole;           // 사용자 역할 (true= ADMIN, false= USER)
     private Date userCreatedAt;        // 사용자 생성일
     private Date userUpdatedAt;        // 사용자 업데이트일
 
     public UserDTO() {}
 
     public UserDTO(String userId, String userName, String userPwd,
-                   String userRole, Date userCreatedAt, Date userUpdatedAt) {
+                   boolean userRole, Date userCreatedAt, Date userUpdatedAt) {
         this.userId = userId;
         this.userName = userName;
         this.userPwd = userPwd;
         this.userRole = userRole;
         this.userCreatedAt = userCreatedAt;
         this.userUpdatedAt = userUpdatedAt;
+    }
+
+    public UserDTO(String userId, String userName, String userPwd, boolean userRole) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userPwd = userPwd;
+        this.userRole = userRole;
+    }
+
+    public UserDTO(String userId, String userPwd) {
+        this.userId = userId;
+        this.userPwd = userPwd;
     }
 
     public String getUserId() {
@@ -47,11 +59,11 @@ public class UserDTO {
         this.userPwd = userPwd;
     }
 
-    public String getUserRole() {
+    public boolean getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(String userRole) {
+    public void setUserRole(boolean userRole) {
         this.userRole = userRole;
     }
 
