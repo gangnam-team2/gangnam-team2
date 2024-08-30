@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+
+<properties>
+    <entry key="allMembersInfo">
+        SELECT
+        user_id,
+        user_name,
+        user_role,
+        user_created_at,
+        user_updated_at
+        FROM
+        users;
+    </entry>
+
+    <entry key="findBookList">
+        SELECT
+        book_code,
+        book_title
+        FROM books
+        WHERE book_status = FALSE;
+    </entry>
+
+    <entry key="memberHistoy"> <!--회원의 연체 이력을 조회할 수 있는 기능을 구현한다.-->
+        SELECT
+        user_id
+        FROM
+        borrow_records
+        WHERE
+        return_date > due_date;
+    </entry>
+
+    <entry key="bookRequest">
+        INSERT INTO REQUESTS
+        (
+        USER_ID,
+        BOOK_TITLE,
+        BOOK_WRITER,
+        BOOK_PUBLISHER,
+        REQUESTS_STATUS, <!-- 디폴트 값을 테이블에서 줘야 할 듯 합니다. 사용자가 요청을 하면, 따로 입력하지 않아도 도서 요청 중이라고 표기되도록.. -->
+        CREATED_AT
+        )VALUES
+        (
+        ?,
+        ?,
+        ?,
+        ?,
+        NULL,
+        NULL
+        );
+    </entry>
+
+
+</properties>
