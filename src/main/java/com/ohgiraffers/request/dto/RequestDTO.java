@@ -1,21 +1,21 @@
-package com.ohgiraffers.book.dto;
+package com.ohgiraffers.request.dto;
 
 import java.util.Date;
 
 public class RequestDTO {
 
     private int requestId;
-    private int userId;
+    private String userId;
     private String bookTitle;
     private String bookAuthor;
     private String bookPublisher;
-    private String requestStatus;
+    private boolean requestStatus;
     private Date createdAt;
 
-    public RequestDTO() {}
+    public RequestDTO() {
+    }
 
-    public RequestDTO(int requestId, int userId, String bookTitle, String bookAuthor,
-                      String bookPublisher, String requestStatus, Date createdAt) {
+    public RequestDTO(int requestId, String userId, String bookTitle, String bookAuthor, String bookPublisher, boolean requestStatus, Date createdAt) {
         this.requestId = requestId;
         this.userId = userId;
         this.bookTitle = bookTitle;
@@ -33,11 +33,11 @@ public class RequestDTO {
         this.requestId = requestId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -65,11 +65,11 @@ public class RequestDTO {
         this.bookPublisher = bookPublisher;
     }
 
-    public String getRequestStatus() {
+    public boolean isRequestStatus() {
         return requestStatus;
     }
 
-    public void setRequestStatus(String requestStatus) {
+    public void setRequestStatus(boolean requestStatus) {
         this.requestStatus = requestStatus;
     }
 
@@ -79,18 +79,5 @@ public class RequestDTO {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    @Override
-    public String toString() {
-        return "RequestDTO{" +
-                "requestId=" + requestId +
-                ", userId=" + userId +
-                ", bookTitle='" + bookTitle + '\'' +
-                ", bookAuthor='" + bookAuthor + '\'' +
-                ", bookPublisher='" + bookPublisher + '\'' +
-                ", requestStatus='" + requestStatus + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
     }
 }

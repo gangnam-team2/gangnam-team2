@@ -1,7 +1,7 @@
 package com.ohgiraffers.book;
 
-import com.ohgiraffers.book.controller.ManagerController;
-import com.ohgiraffers.book.controller.RequestController;
+import com.ohgiraffers.manager.controller.ManagerController;
+import com.ohgiraffers.request.controller.RequestController;
 
 import java.util.Scanner;
 
@@ -52,7 +52,7 @@ public class Application {
         boolean isRunning = true;
 
         while (isRunning) {
-            if (userRole == UserRole.ADMIN) {
+            if (userRole) {
                 System.out.println("\n== 관리자 메뉴 ==");
                 System.out.println("1. 도서 관리");
                 System.out.println("2. 도서 검색 (연체된 도서 목록 포함)");
@@ -95,7 +95,7 @@ public class Application {
                     }
                     break;
                 case 3:
-                    if (userRole  == UserRole.ADMIN) {
+                    if (userRole) {
                         // (관리자 모드) 사용자 관리 / 1. 회원 목록 조회 / 2. 도서를 대여 중인 회원과 그 도서 목록 조회 / 3. 연체 이력이 있는 회원 목록 조회
                         ManagerController.displayManager();
                     } else {
@@ -104,11 +104,11 @@ public class Application {
                     }
                     break;
                 case 4:
-                    if (userRole == UserRole.ADMIN) {
+                    if (userRole) {
                        manageBestSellersMenu(sc, bestSellersController);
                     } else {
-                        // (사용자 모드) 도서 요청 / 도서관에 없는 책을 요청 도서 목록에 인설트
-                        RequestController.bookRequest();
+                        // (사용자 모드) 도서 요청 / 도서관에 없는 책을 요청, 요청 도서 테이블에 인설트
+                        RequestController.insertRequestedBook(); // 완성! ㅎ
                     }
                     break;
                 case 5:

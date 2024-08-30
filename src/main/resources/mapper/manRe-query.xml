@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
 
 <properties>
-    <entry key="allMembersInfo">
+    <entry key="selectAllMembersInfo">
         SELECT
         user_id,
         user_name,
@@ -13,7 +13,7 @@
         users;
     </entry>
 
-    <entry key="findBookList">
+    <entry key="selectAbleBookList">
         SELECT
         book_code,
         book_title
@@ -21,7 +21,7 @@
         WHERE book_status = FALSE;
     </entry>
 
-    <entry key="memberHistoy"> <!--회원의 연체 이력을 조회할 수 있는 기능을 구현한다.-->
+    <entry key="selectMemberHistoy"> <!--회원의 연체 이력을 조회할 수 있는 기능을 구현한다.-->
         SELECT
         user_id
         FROM
@@ -30,23 +30,20 @@
         return_date > due_date;
     </entry>
 
-    <entry key="bookRequest">
+    <entry key="insertRequestedBook">
         INSERT INTO REQUESTS
         (
         USER_ID,
         BOOK_TITLE,
         BOOK_WRITER,
         BOOK_PUBLISHER,
-        REQUESTS_STATUS, <!-- 디폴트 값을 테이블에서 줘야 할 듯 합니다. 사용자가 요청을 하면, 따로 입력하지 않아도 도서 요청 중이라고 표기되도록.. -->
-        CREATED_AT
+
         )VALUES
         (
         ?,
         ?,
         ?,
-        ?,
-        NULL,
-        NULL
+        ?
         );
     </entry>
 
