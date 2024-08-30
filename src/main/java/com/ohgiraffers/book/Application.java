@@ -23,9 +23,8 @@ public class Application {
 
             switch (choice) {
                 case 1:
-                    usercontroller.signUp();
+                    usercontroller.totalsignup();
                     // 회원가입 컨트롤러 호출
-
                     break;
                 case 2:
                     // 로그인 및 해당 역할에 따른 메뉴 표시

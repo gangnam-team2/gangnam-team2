@@ -8,14 +8,25 @@ import java.util.Scanner;
 
 public class UserController {
 
-    public void signUp() {
+    public void
+
+
+
+
+
+    public void totalsignup() { // user, admin 회원가입 진행
+
+        System.out.println(" ----- 회원가입을 진행하겠습니다.-----");
+        Scanner sc = new Scanner(System.in);
+        System.out.println( " 1. 사용자로 회원가입 " );
+        System.out.println( " 2. 관리자로 회원가입 ");
 
         //  사용자 회원가입 입력받기
 
-        Scanner sc = new Scanner(System.in);
+
         Signup signup = new Signup();
 
-        System.out.println(" ----- 사용자 회원가입을 진행하겠습니다.-----");
+
 
         System.out.println(" 본인의 이름을 입력해주세요 : ");
         String name = sc.nextLine();
