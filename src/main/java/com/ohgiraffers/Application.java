@@ -1,18 +1,25 @@
-package com.ohgiraffers.book;
+package com.ohgiraffers;
 
+<<<<<<< HEAD
+import com.ohgiraffers.book.user.UserController;
+=======
+<<<<<<< HEAD
+import com.ohgiraffers.user.Controller.UserController;
+import com.ohgiraffers.book.loginsignup.UserRole;
+=======
 import com.ohgiraffers.book.controller.ManagerController;
 import com.ohgiraffers.book.controller.RequestController;
+>>>>>>> e7fe0fa470b61be5b21605e3ba8c738695355cbd
 
+>>>>>>> 57e156006f2b2554e06792d94b553f2ae666f1c1
 import java.util.Scanner;
-
-import com.ohgiraffers.book.controller.BestSellersController;
-import com.ohgiraffers.book.controller.BookController;
 
 public class Application {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
+        UserController usercontroller = new UserController();
 
         while (running) {
             System.out.println("\n== 도서 대여 프로그램 ==");
@@ -25,13 +32,13 @@ public class Application {
 
             switch (choice) {
                 case 1:
-                    // 회원가입 컨트롤러 호출
-
+                    usercontroller.totalsignup();
                     break;
                 case 2:
                     // 로그인 및 해당 역할에 따른 메뉴 표시
-                    UserRole userRole = UserController.login(sc);
-                    if (userRole != null) {
+                   boolean userRole = usercontroller.totallogin();
+
+                    if ( userRole != null ) {
                         displayMenu(sc, userRole);
                     }
                     break;
@@ -105,7 +112,7 @@ public class Application {
                     break;
                 case 4:
                     if (userRole == UserRole.ADMIN) {
-                       manageBestSellersMenu(sc, bestSellersController);
+                        manageBestSellersMenu(sc, bestSellersController);
                     } else {
                         // (사용자 모드) 도서 요청 / 도서관에 없는 책을 요청 도서 목록에 인설트
                         RequestController.bookRequest();
