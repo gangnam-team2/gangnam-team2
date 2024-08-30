@@ -5,16 +5,20 @@ import java.util.Date;
 public class BestSellersDTO {
 
     private int bestSellerId;
-    private int bookCood;
+    private int bookCode;
     private int borrowCount;
     private String period;
     private Date createdAt;
 
     public BestSellersDTO() {}
 
-    public BestSellersDTO(int bestSellerId, int bookCood, int borrowCount, String period, Date createdAt) {
+    public int bestSellerId() {
+        return bestSellerId;
+    }
+
+    public BestSellersDTO(int bestSellerId, int bookCode, int borrowCount, String period, Date createdAt) {
         this.bestSellerId = bestSellerId;
-        this.bookCood = bookCood;
+        this.bookCode = bookCode;
         this.borrowCount = borrowCount;
         this.period = period;
         this.createdAt = createdAt;
@@ -28,12 +32,12 @@ public class BestSellersDTO {
         this.bestSellerId = bestSellerId;
     }
 
-    public int getBookCood() {
-        return bookCood;
+    public int getBookCode() {
+        return bookCode;
     }
 
-    public void setBookCood(int bookCood) {
-        this.bookCood = bookCood;
+    public void setBookCode(int bookCode) {
+        this.bookCode = bookCode;
     }
 
     public int getBorrowCount() {
@@ -64,7 +68,7 @@ public class BestSellersDTO {
     public String toString() {
         return "BestSellersDTO{" +
                 "bestSellerId=" + bestSellerId +
-                ", bookCood=" + bookCood +
+                ", bookCode=" + bookCode +
                 ", borrowCount=" + borrowCount +
                 ", period='" + period + '\'' +
                 ", createdAt=" + createdAt +
