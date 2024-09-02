@@ -1,8 +1,8 @@
 //package com.ohgiraffers.mypage.controller;
 //
-//import com.ohgiraffers.book.dto.UserDTO;
+//import com.ohgiraffers.user.dto.UserDTO;
 //import com.ohgiraffers.mypage.dao.MypageDAO;
-//import com.ohgiraffers.book.dto.BorrowRecordDTO;
+//import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 //
 //import java.sql.Connection;
 //import java.sql.Date;

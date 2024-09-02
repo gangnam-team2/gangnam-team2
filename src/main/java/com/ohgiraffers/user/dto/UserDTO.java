@@ -10,6 +10,7 @@ public class UserDTO {
     private boolean userRole;           // 사용자 역할 (true= ADMIN, false= USER)
     private Date userCreatedAt;        // 사용자 생성일
     private Date userUpdatedAt;        // 사용자 업데이트일
+    private UserDTO userInfo;
 
     public UserDTO() {
     }
@@ -34,6 +35,14 @@ public class UserDTO {
     public UserDTO(String userId, String userPwd) {
         this.userId = userId;
         this.userPwd = userPwd;
+    }
+
+    public UserDTO getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserDTO userInfo) {
+        this.userInfo = userInfo;
     }
 
     public String getUserId() {

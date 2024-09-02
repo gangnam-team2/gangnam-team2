@@ -56,9 +56,8 @@ public class Application {
 
         BookController bookController = new BookController();
         BestSellersController bestSellersController = new BestSellersController();
-        ManagerController managerController = new ManagerController();
-        RequestController requestController = new RequestController();
         boolean isRunning = true;
+        ManagerController managerController = new ManagerController();
 
         while (isRunning) {
             if (userRole) {
@@ -111,7 +110,7 @@ public class Application {
                         // 베스트셀러 관리 선택지를 관리자에게 보이지 않도록 제거했습니다.
                         bestSellersController.showBestSellers();
                     } else {
-                        requestController.insertRequestedBook();
+                        RequestController.insertRequestedBook();
                     }
                     break;
                 case 5:
@@ -136,6 +135,5 @@ public class Application {
                     System.out.println("잘못된 선택입니다.");
             }
         }
-
     }
 }

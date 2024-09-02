@@ -58,7 +58,7 @@ public class ManagerDAO {
         return allMembersInfolist;
     }
 
-    public List<BookDTO> selectAllBooksInfo(Connection con){
+    public List<BookDTO> selectAllBooksInfo(Connection con) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
         List<BookDTO> allBooksInfolist = new ArrayList<>();
@@ -66,28 +66,48 @@ public class ManagerDAO {
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setBoolean(1, false); // 대여 가능한 책 목록 조회. 트루면 대여 중, 펄스면 대여 가능.
+            pstmt.setBoolean(1, false);  // 대여 가능한 책 목록 조회
             rset = pstmt.executeQuery();
 
-            while(rset.next()){
+            while (rset.next()) {
                 BookDTO bookInfo = new BookDTO();
                 UserDTO userInfo = new UserDTO();
-                // 사용자 아이디도 출력해야 하는데, 쿼리문에 조인을 어떻게 써야할 지 모르겠다...
+
                 userInfo.setUserId(rset.getString("user_id"));
                 bookInfo.setBookCode(rset.getInt("book_code"));
                 bookInfo.setBookTitle(rset.getString("book_title"));
                 bookInfo.setBookAuthor(rset.getString("book_author"));
                 bookInfo.setBookPublisher(rset.getString("book_publisher"));
                 bookInfo.setBookGenre(rset.getString("book_genre"));
+                bookInfo.setUserInfo(userInfo);  // 책 정보에 사용자 정보 추가
 
                 allBooksInfolist.add(bookInfo);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            close(con);
-            close(pstmt);
-            close(rset);
+        } finally {
+            // 리소스 해제 시 null 체크 추가
+            if (rset != null) {
+                try {
+                    rset.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return allBooksInfolist;
     }

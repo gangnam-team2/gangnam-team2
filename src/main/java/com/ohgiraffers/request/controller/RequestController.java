@@ -2,6 +2,7 @@ package com.ohgiraffers.request.controller;
 
 import com.ohgiraffers.request.dao.RequestDAO;
 import com.ohgiraffers.request.dto.RequestDTO;
+import com.ohgiraffers.user.dto.UserDTO;
 
 import java.util.Scanner;
 
@@ -16,14 +17,15 @@ public class RequestController { // 도서 요청 컨트롤러, 서현준이가 
         Scanner scr = new Scanner(System.in);
         RequestDTO requestDTO = new RequestDTO();
         int result = 0;
-
+        UserDTO userDTO = new UserDTO();
         System.out.println("도서관에 추가하고 싶은 책의 정보를 받겠습니다.");
 
-        System.out.println("책의 제목을 알려주세요 : ");
+        requestDTO.setUserId(userDTO.getUserId());
+        System.out.print("책의 제목을 알려주세요 : ");
         requestDTO.setBookTitle(scr.nextLine());
-        System.out.println("작가를 알려주세요 : ");
+        System.out.print("작가를 알려주세요 : ");
         requestDTO.setBookAuthor(scr.nextLine());
-        System.out.println("출판사를 알려주세요 : ");
+        System.out.print("출판사를 알려주세요 : ");
         requestDTO.setBookPublisher(scr.nextLine());
 
         result = requestDAO.insertRequestedBook(getConnection(), requestDTO);

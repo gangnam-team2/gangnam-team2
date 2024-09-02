@@ -15,14 +15,18 @@
 
     <entry key="selectBookList">
         SELECT
-        b.user_id
-        a.book_code,
-        a.book_title,
-        a.book_author,
-        a.book_publisher,
-        a.book_genre
-        FROM books a JOIN borrow_records b ON a.book_code = b.book_code <!--user_id도 조회해야 하는데.. JOIN를 써야 할 것 같은데...-->
-        WHERE book_status = ?;
+            b.user_id,
+            a.book_code,
+            a.book_title,
+            a.book_author,
+            a.book_publisher,
+            a.book_genre
+          FROM
+            books a
+        LEFT JOIN
+            borrow_records b ON a.book_code = b.book_code
+        WHERE
+            a.book_status = ?;
     </entry>
 
     <entry key="selectMemberHistoy"> <!--회원의 연체 이력을 조회할 수 있는 기능을 구현한다.-->
@@ -40,7 +44,7 @@
         (
         USER_ID,
         BOOK_TITLE,
-        BOOK_WRITER,
+        BOOK_AUTHOR,
         BOOK_PUBLISHER,
 
         )VALUES
