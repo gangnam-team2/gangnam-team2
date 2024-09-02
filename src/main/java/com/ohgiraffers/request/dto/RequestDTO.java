@@ -11,11 +11,13 @@ public class RequestDTO {
     private String bookPublisher;
     private boolean requestStatus;
     private Date createdAt;
+    private String bookGenre;
 
     public RequestDTO() {
     }
 
-    public RequestDTO(int requestId, String userId, String bookTitle, String bookAuthor, String bookPublisher, boolean requestStatus, Date createdAt) {
+    public RequestDTO(int requestId, String userId, String bookTitle, String bookAuthor,
+                      String bookPublisher, boolean requestStatus, Date createdAt, String bookGenre) {
         this.requestId = requestId;
         this.userId = userId;
         this.bookTitle = bookTitle;
@@ -23,6 +25,16 @@ public class RequestDTO {
         this.bookPublisher = bookPublisher;
         this.requestStatus = requestStatus;
         this.createdAt = createdAt;
+        this.bookGenre = bookGenre;
+    }
+
+
+    public String getBookGenre() {
+        return bookGenre;
+    }
+
+    public void setBookGenre(String bookGenre) {
+        this.bookGenre = bookGenre;
     }
 
     public int getRequestId() {
@@ -79,5 +91,19 @@ public class RequestDTO {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestDTO{" +
+                "requestId=" + requestId +
+                ", userId='" + userId + '\'' +
+                ", bookTitle='" + bookTitle + '\'' +
+                ", bookAuthor='" + bookAuthor + '\'' +
+                ", bookPublisher='" + bookPublisher + '\'' +
+                ", requestStatus=" + requestStatus +
+                ", createdAt=" + createdAt +
+                ", bookGenre='" + bookGenre + '\'' +
+                '}';
     }
 }

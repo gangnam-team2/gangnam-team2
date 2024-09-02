@@ -1,6 +1,9 @@
 package com.ohgiraffers.book.dao;
 
 import com.ohgiraffers.book.dto.BookDTO;
+import com.ohgiraffers.common.JDBCTemplate;
+import com.ohgiraffers.request.dto.RequestDTO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -232,5 +235,25 @@ public class BookDAO {
             close(pstmt);
         }
         return books;
+    }
+
+    // 요청된 도서를 도서 목록에 추가하는 메서드
+    public void addRequestedBook(RequestDTO requestedBook) {
+        BookDTO newBook = new BookDTO();
+        newBook.setBookTitle(requestedBook.getBookTitle());
+        newBook.setBookAuthor(requestedBook.getBookAuthor());
+        newBook.setBookPublisher(requestedBook.getBookPublisher());
+        newBook.setBookGenre(requestedBook.getBookGenre());
+        newBook.setBookStatus(false);
+
+        Connection con = JDBCTemplate.getConnection();
+        int result = insertBook(con, newBook);
+        JDBCTemplate.close(con);
+
+        if (result > 0) {
+            System.out.println("도서가 성공적으로 추가되었습니다.");
+        } else {
+            System.out.println("도서 추가에 실패하였습니다.");
+        }
     }
 }
