@@ -1,8 +1,10 @@
 package com.ohgiraffers;
 
 import com.ohgiraffers.book.controller.BestSellersController;
-import com.ohgiraffers.user.controller.UserController;
 import com.ohgiraffers.book.controller.BookController;
+import com.ohgiraffers.user.controller.UserController;
+import com.ohgiraffers.user.dao.UserDAO;
+
 import java.util.Scanner;
 
 public class Application {
@@ -23,10 +25,14 @@ public class Application {
 
             switch (choice) {
                 case 1:
+                    // 사용자, 관리자 회원가입
+                    // insert
                     usercontroller.totalsignup();
                     break;
+
                 case 2:
                     // 로그인 및 해당 역할에 따른 메뉴 표시
+                    // select
                     boolean userRole = usercontroller.totallogin();
 
                     if (userRole != null) {
@@ -44,13 +50,14 @@ public class Application {
     }
 
     // 역할에 따른 메뉴 출력 및 컨트롤러 호출
-    private static void displayMenu(Scanner sc, UserRole userRole) {
+    private static void displayMenu(Scanner sc, boolean userRole) {
+
         BookController bookController = new BookController();
         BestSellersController bestSellersController = new BestSellersController();
         boolean isRunning = true;
 
         while (isRunning) {
-            if (userRole == UserRole.ADMIN) {
+            if (userRole) {
                 System.out.println("\n== 관리자 메뉴 ==");
                 System.out.println("1. 도서 관리");
                 System.out.println("2. 도서 검색 (연체된 도서 목록 포함)");
@@ -75,28 +82,28 @@ public class Application {
 
             switch (choice) {
                 case 1:
-                    if (userRole == UserRole.ADMIN) {
+                    if (userRole == true) {
                         bookController.manageBooksMenu(sc);
                     } else {
                         bookController.searchBooksByTitle();
                     }
                     break;
                 case 2:
-                    if (userRole == UserRole.ADMIN) {
+                    if (userRole == false) {
                         bookController.searchOverdueBooks();
                     } else {
                         // 대여 및 반납 기능 구현
                     }
                     break;
                 case 3:
-                    if (userRole == UserRole.ADMIN) {
+                    if (userRole == true) {
                         ManagerController.displayManager();
                     } else {
                         bestSellersController.showBestSellers();
                     }
                     break;
                 case 4:
-                    if (userRole == UserRole.ADMIN) {
+                    if (userRole == true) {
                         // 베스트셀러 관리 선택지를 관리자에게 보이지 않도록 제거했습니다.
                         bestSellersController.showBestSellers();
                     } else {
@@ -104,14 +111,14 @@ public class Application {
                     }
                     break;
                 case 5:
-                    if (userRole == UserRole.USER) {
+                    if (userRole == false) {
                         // 마이페이지 기능
                     } else {
                         // 관리자 회원탈퇴
                     }
                     break;
                 case 6:
-                    if (userRole == UserRole.USER) {
+                    if (userRole == false) {
                         // 사용자 회원탈퇴
                     } else {
                         System.out.println("잘못된 선택입니다.");
@@ -127,6 +134,3 @@ public class Application {
         }
     }
 }
-
-
-
