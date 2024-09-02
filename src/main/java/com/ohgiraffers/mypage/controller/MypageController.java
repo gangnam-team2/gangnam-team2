@@ -21,7 +21,7 @@ public class MypageController {
 
 
         List<BorrowRecordDTO> currentBorrowBookList =  mypageDAO.currentBorrowBooks(getConnection());
-        System.out.println("현재 대여 중인 채은 " + currentBorrowBookList + " 입니다.");
+        System.out.println("현재 대여 중인 책은 " + currentBorrowBookList + " 입니다.");
 
         System.out.println("대여 신청한 책의 북코드를 입력해주세요.");
         borrowRecordDTO.setBookCode(sc.nextInt());
@@ -63,10 +63,10 @@ public class MypageController {
 
     public void allBorrowBookList(){
         List<BorrowRecordDTO> allBorrowBookList =  mypageDAO.currentBorrowBooks(getConnection());
-        System.out.println("현재 대여 중인 채은 " + allBorrowBookList + " 입니다.");
+        System.out.println("현재 대여 중인 책은 " + allBorrowBookList + " 입니다.");
     }
 
-    public int pwdUpdate(){
+    public void pwdUpdate(){
         Scanner sc = new Scanner(System.in);
         UserDTO userDTO = new UserDTO();
         MypageDAO mypageDAO = new MypageDAO();
@@ -75,8 +75,12 @@ public class MypageController {
         System.out.println("변경할 비밀번호를 입력해주세요.");
         String changePwd = sc.nextLine();
 
-        int result = mypageDAO.pwdUpdate(getConnection().changePwd);
-
+        int result = mypageDAO.pwdUpdate(getConnection(),userDTO, changePwd);
+        if (result > 0) {
+            System.out.println("비밀번호가 변경 되었습니다.");
+        }else{
+            System.out.println("비밀번호 변경에 실패했습니다.");
+        }
     }
 
 }
