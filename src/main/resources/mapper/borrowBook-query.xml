@@ -17,7 +17,7 @@
 
     <entry key="rentBook">
         UPDATE BORROW_RECORDS
-            SET BOOK_CODE = ?, BOOK_STATUS=false, USER_ID = ?, BORROW_DATE =?, DUE_DATE = ?;
+            SET BOOK_CODE = ?, BOOK_STATUS=false, USER_ID = ?, BORROW_DATE =?;
     </entry>
 
 
