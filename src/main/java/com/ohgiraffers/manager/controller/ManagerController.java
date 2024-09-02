@@ -13,7 +13,7 @@ import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 
 public class ManagerController {
 
-private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manRe-query.xml");
+private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manager-query.xml");
 
     public void displayManager(){
         System.out.println("사용자 관리 모드 입니다.");
