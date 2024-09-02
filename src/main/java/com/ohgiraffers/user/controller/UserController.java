@@ -34,6 +34,7 @@ public class UserController {
 
         boolean singupuser = false;
 
+
         switch (result) {
 
             case 1: // 사용자로 회원가입
@@ -73,8 +74,6 @@ public class UserController {
         System.out.print(" 원하는 서비스의 번호를 입력해주세요 : ");
         int result = sc.nextInt();
         sc.nextLine();
-        System.out.print(" 본인의 이름을 입력해주세요 : ");
-        String name = sc.nextLine();
         System.out.print(" 아이디를 입력해주세요 : ");
         String id = sc.nextLine();
         System.out.print(" 비밀번호를 입력 해주세요 : ");
@@ -82,13 +81,14 @@ public class UserController {
 
 
         UserDTO loginUser = new UserDTO(id, pwd);
-
+        UserDTO userDTO = new UserDTO();
 
         switch (result) {
             case 1:
                 // 사용자로 로그인
-                if (userDAO.selectuser(getConnection(), loginUser)) {
+                if (!userDTO.getUserRole()) {
                     // 성공이면 true, 실패면 false
+                    userDAO.selectuser(getConnection(), loginUser);
                     return true; // true -> 사용자
                     // useradmin (role 지정하는 값이 될꺼임) 에
                     // false 를 담아둔다
@@ -122,7 +122,6 @@ public class UserController {
             default:
                 break;
         }
-
         return false;
     }
 

@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         boolean running = true;
         UserController usercontroller = new UserController();
@@ -34,7 +35,7 @@ public class Application {
                     // select
                     boolean userRole = usercontroller.totallogin();
 
-                    if (userRole != null) {
+                    if (userRole == true || userRole == false) {
                         displayMenu(sc, userRole);
                     }
                     break;
@@ -131,8 +132,6 @@ public class Application {
                     System.out.println("잘못된 선택입니다.");
             }
         }
+
     }
-
-
-
 }

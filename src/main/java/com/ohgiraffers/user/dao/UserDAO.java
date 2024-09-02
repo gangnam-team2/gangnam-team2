@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static jdk.internal.net.http.common.Utils.close;
+
 
 public class UserDAO {
 
@@ -28,7 +30,6 @@ public class UserDAO {
         PreparedStatement ps = null;
         int result = 0;
         String query = prop.getProperty("insertuser");
-        // 중복확인 해야댐 ....
 
         try {
             ps = con.prepareStatement(query);
@@ -36,7 +37,6 @@ public class UserDAO {
             ps.setString(2, userDTO.getUserName());
             ps.setString(3, userDTO.getUserPwd());
             ps.setBoolean(4, userDTO.getUserRole());
-            System.out.println("==============UserRole : " + userDTO.getUserRole());
             result = ps.executeUpdate();
             return result > 0;
 
@@ -58,10 +58,28 @@ public class UserDAO {
             ps.setString(1, userDTO.getUserId());
             ps.setString(2, userDTO.getUserPwd());
             result = ps.executeQuery();
-            return result.next();
+            System.out.println("" + result);
+            if (result.next()) {
+                return true; // 로그인 성공
+            } else {
+                return false; // 로그인 실패
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (result != null) 
+                try { 
+                    result.close(); 
+                } catch (SQLException e) {
+                    System.out.println("SQL 오류");
+                }
+            if (ps != null)
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    System.out.println("SQL 오류");
+                }
         }
     }
 
