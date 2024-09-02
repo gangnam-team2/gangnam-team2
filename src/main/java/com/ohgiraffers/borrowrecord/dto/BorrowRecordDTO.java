@@ -13,11 +13,13 @@ public class BorrowRecordDTO {
     private LocalDate returnDate;           // 실제 반납일
     private boolean bookStatus;
     private boolean overDueBooks;
+    private int borrowCode;
 
     public BorrowRecordDTO() {
     }
 
-    public BorrowRecordDTO(String userId, int bookCode, LocalDate borrowDate, LocalDate dueDate, LocalDate returnDate, boolean bookStatus, boolean overDueBooks) {
+    public BorrowRecordDTO(String userId, int bookCode, LocalDate borrowDate, LocalDate dueDate,
+                           LocalDate returnDate, boolean bookStatus, boolean overDueBooks, int borrowCode) {
         this.userId = userId;
         this.bookCode = bookCode;
         this.borrowDate = borrowDate;
@@ -25,6 +27,15 @@ public class BorrowRecordDTO {
         this.returnDate = returnDate;
         this.bookStatus = bookStatus;
         this.overDueBooks = overDueBooks;
+        this.borrowCode = borrowCode;
+    }
+
+    public int getBorrowCode() {
+        return borrowCode;
+    }
+
+    public void setBorrowCode(int borrowCode) {
+        this.borrowCode = borrowCode;
     }
 
     public String getUserId() {
@@ -93,6 +104,7 @@ public class BorrowRecordDTO {
                 ", returnDate=" + returnDate +
                 ", bookStatus=" + bookStatus +
                 ", overDueBooks=" + overDueBooks +
+                ", borrowCode=" + borrowCode +
                 '}';
     }
 }

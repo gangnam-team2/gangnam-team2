@@ -63,8 +63,6 @@ public class Application {
         MypageController mypageController   = new MypageController();
         BorrowRecordController borrowRecordController = new BorrowRecordController();
         boolean isRunning = true;
-        System.out.println(userRole);
-
 
         while (isRunning) {
             try {
@@ -108,13 +106,14 @@ public class Application {
                         } else {
                             System.out.println("사용자: 대여 및 반납 기능 선택");
                             System.out.println("1. 대여   2. 반납");
+                            System.out.print("메뉴를 선택해주세요 : ");
                             int choice2 = sc.nextInt();
                             switch (choice2) {
                                 case 1:
                                     borrowRecordController.rentBook();
                                     break;
                                 case 2:
-                                    borrowRecordController.rentBook();
+                                    borrowRecordController.returnBook();
                                     break;
                                 default:
                                     System.out.println("잘못 선택하셨습니다. 다시 시도해 주세요.");

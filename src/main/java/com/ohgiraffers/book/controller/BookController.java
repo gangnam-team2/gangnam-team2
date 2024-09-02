@@ -31,7 +31,7 @@ public class BookController {
         String bookPublisher = sc.nextLine();
         System.out.print("도서 장르 : ");
         String bookGenre = sc.nextLine();
-        boolean bookStatus = false;                 // false = 도서 대여 가능
+        boolean bookStatus = true;                 // true = 도서 대여 가능
 
         BookDTO bookDTO = new BookDTO();
         bookDTO.setBookTitle(bookTitle);
@@ -284,7 +284,7 @@ public class BookController {
         } else {
             newBook.setBookGenre("미정");                     // 기본 장르 값을 일단 미정으로 설정 요청 도서에서 장르를 안추가함
         }
-        newBook.setBookStatus(false);
+        newBook.setBookStatus(true);
 
         // 위에서 분리한 메서드를 재사용
         insertBookIntoDB(newBook);
