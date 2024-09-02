@@ -2,56 +2,65 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
 
 <properties>
+
+    <!--도서 추가 쿼리-->
     <entry key="insertBook">
         <![CDATA[
-        INSERT INTO books (book_title, book_author, book_publisher, book_genre, book_status, borrow_count)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO books (book_title, book_author, book_publisher, book_genre, book_status, borrow_count, book_quantity)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
     ]]>
     </entry>
-  
+
+    <!--도서 수정 쿼리-->
     <entry key="updateBook">
         <![CDATA[
         UPDATE books
-            SET book_title = ?, book_author = ?, book_publisher = ?, book_genre = ?, book_status = ?, borrow_count = ?
+            SET book_title = ?, book_author = ?, book_publisher = ?, book_genre = ?, book_status = ?, borrow_count = ?, book_quantity = ?
         WHERE book_code = ?
         ]]>
     </entry>
 
+    <!--도서 삭제 쿼리-->
     <entry key="deleteBook">
         <![CDATA[
             DELETE FROM books WHERE book_code = ?
         ]]>
     </entry>
 
-    <entry key="getBookById">
+    <!--책 코드로 찾기-->
+    <entry key="getBookByCode">
         <![CDATA[
             SELECT * FROM books WHERE book_code = ?
         ]]>
     </entry>
 
+    <!--책 제목으로 찾기-->
     <entry key="searchBooksByTitle">
         <![CDATA[
             SELECT * FROM books WHERE book_title LIKE ?
         ]]>
     </entry>
 
+    <!--책 카테고리로 찾기-->
     <entry key="searchBooksByCategory">
         <![CDATA[
             SELECT b.* FROM books b JOIN book_category bc ON b.book_code = bc.book_code WHERE bc.category_id = ?
         ]]>
     </entry>
 
+    <!--연체된 도서-->
     <entry key="getOverdueBooks">
         <![CDATA[
             SELECT * FROM books WHERE book_status = true
         ]]>
     </entry>
 
+    <!--대여 가능한 도서-->
     <entry key="getAvailableBooks">
         <![CDATA[
-            SELECT book_code, book_title, book_author, book_publisher, book_genre
+            SELECT book_code, book_title, book_author, book_publisher, book_genre, book_quantity
               FROM books
-            WHERE book_status = true;
+            WHERE book_status = true AND book_quantity > 0;
         ]]>
     </entry>
 

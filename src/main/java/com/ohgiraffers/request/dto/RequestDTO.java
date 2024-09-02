@@ -12,12 +12,13 @@ public class RequestDTO {
     private boolean requestStatus;
     private Date createdAt;
     private String bookGenre;
+    private int bookQuantity;
 
     public RequestDTO() {
     }
 
     public RequestDTO(int requestId, String userId, String bookTitle, String bookAuthor,
-                      String bookPublisher, boolean requestStatus, Date createdAt, String bookGenre) {
+                      String bookPublisher, boolean requestStatus, Date createdAt, String bookGenre, int bookQuantity) {
         this.requestId = requestId;
         this.userId = userId;
         this.bookTitle = bookTitle;
@@ -26,6 +27,7 @@ public class RequestDTO {
         this.requestStatus = requestStatus;
         this.createdAt = createdAt;
         this.bookGenre = bookGenre;
+        this.bookQuantity = bookQuantity;
     }
 
 
@@ -105,5 +107,13 @@ public class RequestDTO {
                 ", createdAt=" + createdAt +
                 ", bookGenre='" + bookGenre + '\'' +
                 '}';
+    }
+
+    public int getBookQuantity() {
+        return bookQuantity;
+    }
+
+    public void setBookQuantity(int bookQuantity) {
+        this.bookQuantity = bookQuantity;
     }
 }
