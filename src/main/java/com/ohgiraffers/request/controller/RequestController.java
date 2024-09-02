@@ -10,7 +10,7 @@ import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 
 public class RequestController { // 도서 요청 컨트롤러, 서현준이가 맹급니다.
 
-    private static RequestDAO requestDAO = new RequestDAO("src/main/resources/mapper/manRe-query.xml");
+    private static RequestDAO requestDAO = new RequestDAO("src/main/resources/mapper/request-query.xml");
 
     public static void insertRequestedBook()
     {
@@ -20,7 +20,10 @@ public class RequestController { // 도서 요청 컨트롤러, 서현준이가 
         UserDTO userDTO = new UserDTO();
         System.out.println("도서관에 추가하고 싶은 책의 정보를 받겠습니다.");
 
+
         requestDTO.setUserId(userDTO.getUserId());
+
+
         System.out.print("책의 제목을 알려주세요 : ");
         requestDTO.setBookTitle(scr.nextLine());
         System.out.print("작가를 알려주세요 : ");
