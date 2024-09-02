@@ -256,4 +256,35 @@ public class BookDAO {
             System.out.println("도서 추가에 실패하였습니다.");
         }
     }
+
+    // 대여 가능한 책 리스트를 가져오는 메서드
+    // !!!! 근데 로그인한 아이디에서 대여한건지 검증 필요 !!!!
+    public List<BookDTO> getAvailableBooks(Connection con) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<BookDTO> availableBooks = new ArrayList<>();
+        String query = prop.getProperty("getAvailableBooks");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                BookDTO bookDTO = new BookDTO();
+                bookDTO.setBookCode(rs.getInt("book_code"));
+                bookDTO.setBookTitle(rs.getString("book_title"));
+                bookDTO.setBookAuthor(rs.getString("book_author"));
+                bookDTO.setBookPublisher(rs.getString("book_publisher"));
+                bookDTO.setBookGenre(rs.getString("book_genre"));
+                availableBooks.add(bookDTO);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+
+        return availableBooks;
+    }
 }
