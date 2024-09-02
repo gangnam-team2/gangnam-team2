@@ -7,7 +7,7 @@ public class UserDTO {
     private String userId;             // 사용자 아이디
     private String userName;           // 사용자 이름
     private String userPwd;            // 사용자 비밀번호
-    private boolean userRole;           // 사용자 역할 (true= ADMIN, false= USER)
+    private boolean userRole;           // 사용자 역할 (true 1 = admin, false 0 = user)
     private Date userCreatedAt;        // 사용자 생성일
     private Date userUpdatedAt;        // 사용자 업데이트일
     private UserDTO userInfo;

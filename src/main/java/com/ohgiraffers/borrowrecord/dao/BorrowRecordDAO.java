@@ -1,5 +1,6 @@
 package com.ohgiraffers.borrowrecord.dao;
 
+import com.ohgiraffers.book.dto.BookDTO;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 
 import java.sql.*;
@@ -23,27 +24,30 @@ public class BorrowRecordDAO {
     }
 
 
-    public void showBookList(Connection con, BorrowRecordDTO borrowRecordDTO){
-
-        Statement stmt = null;
-        ResultSet rs = null;
-        String query = prop.getProperty("showBookList");
-
-        try {
-            stmt =con.createStatement();
-            rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-                System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " +rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) );
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }finally {
-            close(rs);
-            close(stmt);
-            close(con);
-        }
-    }
+//    public void showBookList(Connection con, BorrowRecordDTO borrowRecordDTO){
+//
+//        Statement stmt = null;
+//        ResultSet rs = null;
+//        String query = prop.getProperty("showBookList");
+//        try {
+//            stmt =con.createStatement();
+//            rs = stmt.executeQuery(query);
+//
+//            while (rs.next()) {
+//                System.out.println(rs.getInt(1) + " "
+//                                    + rs.getString(2) + " "
+//                                    + rs.getString(3) + " "
+//                                    + rs.getString(4) + " "
+//                                    + rs.getString(5) );
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }finally {
+//            close(rs);
+//            close(stmt);
+//            close(con);
+//        }
+//    }
 
 
     public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO){

@@ -2,7 +2,6 @@ package com.ohgiraffers;
 
 import com.ohgiraffers.book.controller.BestSellersController;
 import com.ohgiraffers.book.controller.BookController;
-//import com.ohgiraffers.manager.controller.ManagerController;
 import com.ohgiraffers.borrowrecord.controller.BorrowRecordController;
 import com.ohgiraffers.manager.controller.ManagerController;
 import com.ohgiraffers.mypage.controller.MypageController;
@@ -51,6 +50,7 @@ public class Application {
                     break;
                 default:
                     System.out.println("잘못된 선택입니다. 다시 시도하세요.");
+                    break;
             }
         }
     }

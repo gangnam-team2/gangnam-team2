@@ -8,7 +8,7 @@
         USER_ID,
         BOOK_TITLE,
         BOOK_AUTHOR,
-        BOOK_PUBLISHER,
+        BOOK_PUBLISHER
 
         )VALUES
         (
@@ -16,6 +16,6 @@
         ?,
         ?,
         ?
-        );
+        )
     </entry>
 </properties>
