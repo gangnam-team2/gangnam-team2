@@ -36,6 +36,7 @@ public class UserDAO {
             ps.setString(2, userDTO.getUserName());
             ps.setString(3, userDTO.getUserPwd());
             ps.setBoolean(4, userDTO.getUserRole());
+            System.out.println("==============UserRole : " + userDTO.getUserRole());
             result = ps.executeUpdate();
             return result > 0;
 
