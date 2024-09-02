@@ -39,7 +39,7 @@ public class UserController {
             switch (result) {
 
                 case 1: // 사용자로 회원가입
-                    boolean role = true; // 사용자(true)
+                    boolean role = false;
                     UserDTO newuser = new UserDTO(id, name, pwd, role);
                     if (userDAO.insertuser(getConnection(), newuser)) {
                         System.out.println(" 회원가입 성공 ! ");
@@ -51,10 +51,11 @@ public class UserController {
 
 
                 case 2: // 관리자로 회원가입
-                    boolean role2 = false; //role -> 관리자(false)로 일단 줌
+                    boolean role2 = true;
                     UserDTO newuser2 = new UserDTO(id, name, pwd, role2);
                     if (userDAO.insertuser(getConnection(), newuser2)) {
                         System.out.println(" 회원가입 성공 !");
+                        break loop;
                     } else {
                         System.out.println(" 회원가입 실패 ! 아이디가 이미 존재합니다.");
                     }
@@ -73,8 +74,8 @@ public class UserController {
 
         System.out.println("----- 로그인을 진행하겠습니다. -----");
         Scanner sc = new Scanner(System.in);
-        System.out.println("1. 사용자로 로그인");
-        System.out.println("2. 관리자로 로그인");
+
+        System.out.println( "1. 로그인 ");
         System.out.println("3. 회원탈퇴");
         System.out.print("원하는 서비스의 번호를 입력해주세요: ");
         int result = sc.nextInt();
