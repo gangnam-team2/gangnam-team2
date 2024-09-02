@@ -68,14 +68,10 @@ public class UserController {
     }
 
     public boolean totallogin() {
-        // 사용자, 관리자 로그인 및 회원탈퇴
-
-        while (true) {
-
-        System.out.println("----- 로그인을 진행하겠습니다. -----");
         Scanner sc = new Scanner(System.in);
 
-        System.out.println( "1. 로그인 ");
+        System.out.println("----- 로그인을 진행하겠습니다. -----");
+        System.out.println("1. 로그인");
         System.out.println("3. 회원탈퇴");
         System.out.print("원하는 서비스의 번호를 입력해주세요: ");
         int result = sc.nextInt();
@@ -83,53 +79,40 @@ public class UserController {
         System.out.print("아이디를 입력해주세요: ");
         String id = sc.nextLine();
         System.out.print("비밀번호를 입력해주세요: ");
-       
         String pwd = sc.nextLine();
 
         UserDTO loginUser = new UserDTO(id, pwd);
         UserDAO userDAO = new UserDAO("src/main/resources/mapper/user-query.xml"); // UserDAO 인스턴스 생성
 
-
-
-            switch (result) {
-                case 1:
-                    // 사용자로 로그인
-                    loginUser.setUserRole(false);  // 사용자로 로그인 시 false로 설정
-                    if (userDAO.selectuser(getConnection(), loginUser)) {
-                        System.out.println("사용자 로그인 성공!");
-                        return true;// 사용자 로그인 성공
-                    } else {
-                        System.out.println("로그인 실패! 잘못된 아이디 또는 비밀번호입니다.");
-                        totallogin();
-                    }
-                    break;
-
-                case 2:
-                    // 관리자로 로그인
-                    loginUser.setUserRole(true);  // 관리자로 로그인 시 true로 설정
-                    if (userDAO.selectuser(getConnection(), loginUser)) {
+        switch (result) {
+            case 1:
+                if (userDAO.selectuser(getConnection(), loginUser)) {
+                    if (loginUser.getUserRole()) {
                         System.out.println("관리자 로그인 성공!");
-                        return true;  // 관리자 로그인 성공
+                        return true; // 관리자 로그인 성공 시 true 반환
                     } else {
-                        System.out.println("로그인 실패! 잘못된 아이디 또는 비밀번호입니다.");
+                        System.out.println("사용자 로그인 성공!");
+                        return false; // 일반 사용자 로그인 성공 시 false 반환
                     }
-                    break;
+                } else {
+                    System.out.println("로그인 실패! 잘못된 아이디 또는 비밀번호입니다.");
+                    return false; // 로그인 실패
+                }
 
-                case 3:
-                    // 회원탈퇴
-                    if (userDAO.deleteuser(getConnection(), loginUser)) {
-                        System.out.println("회원탈퇴 성공!");
-                    } else {
-                        System.out.println("회원탈퇴 실패! 아이디와 비밀번호를 확인해주세요.");
-                    }
-                    break;
+            case 3:
+                // 회원탈퇴
+                if (userDAO.deleteuser(getConnection(), loginUser)) {
+                    System.out.println("회원탈퇴 성공!");
+                } else {
+                    System.out.println("회원탈퇴 실패! 아이디와 비밀번호를 확인해주세요.");
+                }
+                break;
 
-                default:
-                    System.out.println("잘못된 입력입니다. 프로그램을 종료합니다.");
-                    break;
-            }
-
-            return false;  // 기본적으로 실패로 반환
+            default:
+                System.out.println("잘못된 입력입니다. 프로그램을 종료합니다.");
+                break;
         }
+
+        return false;  // 기본적으로 실패로 반환
     }
 }

@@ -47,8 +47,7 @@ public class UserDAO {
 
 
 
-    public boolean selectuser(Connection con, UserDTO userDTO){
-        // 로그인 시 회원정보 select
+    public boolean selectuser(Connection con, UserDTO userDTO) {
         PreparedStatement ps = null;
         ResultSet result = null;
         String query = prop.getProperty("selectuser");
@@ -57,8 +56,11 @@ public class UserDAO {
             ps.setString(1, userDTO.getUserId());
             ps.setString(2, userDTO.getUserPwd());
             result = ps.executeQuery();
-            System.out.println("" + result);
+
             if (result.next()) {
+                // user_role 값을 가져와서 UserDTO에 설정
+                int role = result.getInt("user_role");
+                userDTO.setUserRole(role == 0);  // 0이면 관리자, 1이면 일반 사용자
                 return true; // 로그인 성공
             } else {
                 return false; // 로그인 실패
@@ -67,9 +69,9 @@ public class UserDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            if (result != null) 
-                try { 
-                    result.close(); 
+            if (result != null)
+                try {
+                    result.close();
                 } catch (SQLException e) {
                     System.out.println("SQL 오류");
                 }
