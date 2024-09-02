@@ -1,9 +1,10 @@
+/*
 package com.ohgiraffers.borrowrecord.controller;
 
 
 import com.ohgiraffers.borrowrecord.dao.BorrowRecordDAO;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
-import com.ohgiraffers.mypage.dao.MypageDAO;
+//import com.ohgiraffers.mypage.dao.MypageDAO;
 import com.ohgiraffers.user.dto.UserDTO;
 
 import java.sql.Date;
@@ -66,3 +67,4 @@ public class BorrowRecordController {
 
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.ohgiraffers.manager.dao;
 
 import com.ohgiraffers.book.dto.BookDTO;
@@ -141,3 +142,4 @@ public class ManagerDAO {
 
 
 }
+*/

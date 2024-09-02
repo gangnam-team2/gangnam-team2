@@ -1,3 +1,4 @@
+/*
 package com.ohgiraffers.mypage.controller;
 import com.ohgiraffers.book.dto.UserDTO;
 import com.ohgiraffers.mypage.dao.MypageDAO;
@@ -85,4 +86,4 @@ public class MypageController {
 
     }
 
-}
+}*/

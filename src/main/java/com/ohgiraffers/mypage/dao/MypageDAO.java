@@ -1,3 +1,4 @@
+/*
 package com.ohgiraffers.mypage.dao;
 
 import com.ohgiraffers.book.dto.BorrowRecordDTO;
@@ -164,3 +165,4 @@ public class MypageDAO {
         }return result;
     }
 }
+*/

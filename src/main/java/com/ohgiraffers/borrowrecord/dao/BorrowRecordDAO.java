@@ -1,3 +1,4 @@
+/*
 package com.ohgiraffers.borrowrecord.dao;
 
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
@@ -121,3 +122,4 @@ public class BorrowRecordDAO {
 
 
 
+*/
