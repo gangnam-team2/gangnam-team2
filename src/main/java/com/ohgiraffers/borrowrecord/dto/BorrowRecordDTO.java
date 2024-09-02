@@ -1,36 +1,37 @@
 package com.ohgiraffers.borrowrecord.dto;
+
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.util.Date;
 
 public class BorrowRecordDTO {
 
-    private int userId;                // 대여자 아이디
+    private String userId;                // 대여자 아이디
     private int bookCode;              // 대여한 도서 코드
-    private Date borrowDate;           // 대여일
-    private Date dueDate;              // 반납 예정일
-    private Date returnDate;           // 실제 반납일
+    private LocalDate borrowDate;           // 대여일
+    private LocalDate dueDate;              // 반납 예정일
+    private LocalDate returnDate;           // 실제 반납일
     private boolean bookStatus;
     private boolean overDueBooks;
 
-    public BorrowRecordDTO() {}
+    public BorrowRecordDTO() {
+    }
 
-    public BorrowRecordDTO(int userId, int bookCode, Date borrowDate, Date dueDate, Date returnDate, boolean bookStatus, boolean overduebooks) {
+    public BorrowRecordDTO(String userId, int bookCode, LocalDate borrowDate, LocalDate dueDate, LocalDate returnDate, boolean bookStatus, boolean overDueBooks) {
         this.userId = userId;
         this.bookCode = bookCode;
         this.borrowDate = borrowDate;
         this.dueDate = dueDate;
         this.returnDate = returnDate;
         this.bookStatus = bookStatus;
-        this.overDueBooks = overduebooks;
+        this.overDueBooks = overDueBooks;
     }
-
 
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -42,23 +43,23 @@ public class BorrowRecordDTO {
         this.bookCode = bookCode;
     }
 
-    public ChronoLocalDate getBorrowDate() {
+    public LocalDate getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(Date borrowDate) {
+    public void setBorrowDate(LocalDate borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public String getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
-    public java.sql.Date getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
@@ -85,13 +86,14 @@ public class BorrowRecordDTO {
     @Override
     public String toString() {
         return "BorrowRecordDTO{" +
-                "userId=" + userId +
+                "userId='" + userId + '\'' +
                 ", bookCode=" + bookCode +
                 ", borrowDate=" + borrowDate +
                 ", dueDate=" + dueDate +
                 ", returnDate=" + returnDate +
                 ", bookStatus=" + bookStatus +
-                ", overduebooks=" + overDueBooks +
+                ", overDueBooks=" + overDueBooks +
                 '}';
     }
 }
+

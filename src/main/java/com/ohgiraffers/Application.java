@@ -2,7 +2,9 @@ package com.ohgiraffers;
 
 import com.ohgiraffers.book.controller.BestSellersController;
 import com.ohgiraffers.book.controller.BookController;
+import com.ohgiraffers.borrowrecord.controller.BorrowRecordController;
 import com.ohgiraffers.manager.controller.ManagerController;
+import com.ohgiraffers.mypage.controller.MypageController;
 import com.ohgiraffers.request.controller.RequestController;
 import com.ohgiraffers.user.controller.UserController;
 
@@ -61,6 +63,8 @@ public class Application {
         BestSellersController bestSellersController = new BestSellersController();
         boolean isRunning = true;
         ManagerController managerController = new ManagerController();
+        BorrowRecordController borrowRecordController = new BorrowRecordController();
+        MypageController mypageController = new MypageController();
 
         while (isRunning) {
             if (userRole) {
@@ -96,9 +100,18 @@ public class Application {
                     break;
                 case 2:
                     if (userRole == false) {
-                        bookController.searchOverdueBooks();
+                        System.out.println("1. 대여   2. 반납");
+                        int choice2 = sc.nextInt();
+                        switch (choice2) {
+                            case 1:
+                                borrowRecordController.rentBook();
+                                break;
+                            case 2:
+                                borrowRecordController.rentBook();
+                                break;
+                        }
                     } else {
-                        // 대여 및 반납 기능 구현
+                        System.out.println("잘못된 선택입니다. 다시 시도해주세요.");
                     }
                     break;
                 case 3:
@@ -118,7 +131,16 @@ public class Application {
                     break;
                 case 5:
                     if (userRole == false) {
-                        // 마이페이지 기능
+                        System.out.println("1. 현재 대여 시청한 책 목록\n" + "2. 전체 대여 목록\n" + "3. 대여 신청서 변경\n" + "4. 비밀번호 변경");
+                        int choice3 = sc.nextInt();
+                        switch (choice3) {
+                            case 1: mypageController.currentBorrowBookList(); break;
+                            case 2: mypageController.allBorrowBookList(); break;
+                            case 3: mypageController.updateRequestBook(); break;
+                            case 4: mypageController.pwdUpdate(); break;
+                            default:
+                                System.out.println("다시 시도해 주세요.");
+                        }
                     } else {
                         // 관리자 회원탈퇴
                     }
