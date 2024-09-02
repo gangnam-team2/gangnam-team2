@@ -3,7 +3,9 @@ package com.ohgiraffers;
 import com.ohgiraffers.book.controller.BestSellersController;
 import com.ohgiraffers.book.controller.BookController;
 //import com.ohgiraffers.manager.controller.ManagerController;
+import com.ohgiraffers.borrowrecord.controller.BorrowRecordController;
 import com.ohgiraffers.manager.controller.ManagerController;
+import com.ohgiraffers.mypage.controller.MypageController;
 import com.ohgiraffers.request.controller.RequestController;
 import com.ohgiraffers.user.controller.UserController;
 import java.util.InputMismatchException;
@@ -58,6 +60,8 @@ public class Application {
         BookController bookController = new BookController();
         BestSellersController bestSellersController = new BestSellersController();
         ManagerController managerController = new ManagerController();
+        MypageController mypageController   = new MypageController();
+        BorrowRecordController borrowRecordController = new BorrowRecordController();
         boolean isRunning = true;
         System.out.println(userRole);
 
@@ -103,7 +107,18 @@ public class Application {
                             bookController.searchOverdueBooks();  // 연체 도서 목록은 관리자 기능
                         } else {
                             System.out.println("사용자: 대여 및 반납 기능 선택");
-                            // 대여 및 반납 기능 구현
+                            System.out.println("1. 대여   2. 반납");
+                            int choice2 = sc.nextInt();
+                            switch (choice2) {
+                                case 1:
+                                    borrowRecordController.rentBook();
+                                    break;
+                                case 2:
+                                    borrowRecordController.rentBook();
+                                    break;
+                                default:
+                                    System.out.println("잘못 선택하셨습니다. 다시 시도해 주세요.");
+                            }
                         }
                         break;
                     case 3:
@@ -127,7 +142,16 @@ public class Application {
                     case 5:
                         if (!userRole) {
                             System.out.println("사용자: 마이페이지 선택");
-                            // 마이페이지 기능 구현
+                            System.out.println("1. 현재 대여 신청 책 목록\n" + "2. 전체 대여 목록\n" + "3. 대여 신청서 변경\n" + "4. 비밀번호 변경");
+                            int choice3 = sc.nextInt();
+                            switch (choice3) {
+                                case 1: mypageController.currentBorrowBookList(); break;
+                                case 2: mypageController.allBorrowBookList(); break;
+                                case 3: mypageController.updateRequestBook(); break;
+                                case 4: mypageController.pwdUpdate(); break;
+                                default:
+                                    System.out.println("다시 시도해 주세요.");
+                            }
                         } else {
                             System.out.println("관리자: 회원탈퇴 기능 선택");
                             // 관리자 회원탈퇴 기능 구현
