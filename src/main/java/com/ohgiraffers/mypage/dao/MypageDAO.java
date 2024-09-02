@@ -90,6 +90,7 @@ public class MypageDAO {
 
         try {
             stmt = con.createStatement();
+
             rset = stmt.executeQuery(query);
 
             while (rset.next()) {
