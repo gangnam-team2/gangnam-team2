@@ -27,7 +27,7 @@ public class BorrowRecordDAO {
 
         Statement stmt = null;
         ResultSet rs = null;
-        String query = "showBookList";
+        String query = prop.getProperty("showBookList");
 
         try {
             stmt =con.createStatement();
@@ -57,8 +57,7 @@ public class BorrowRecordDAO {
                 pstmt = con.prepareStatement(query);
                 pstmt.setInt(1, borrowRecordDTO.getBookCode());
                 pstmt.setString(2, borrowRecordDTO.getUserId());
-                pstmt.setString(3, borrowRecordDTO.getBorrowDate());
-                pstmt.setString(4, borrowRecordDTO.getDueDate());
+                pstmt.setDate(3, Date.valueOf(borrowRecordDTO.getBorrowDate()));
 
                 result = pstmt.executeUpdate();
             } catch (SQLException e) {
@@ -82,7 +81,7 @@ public class BorrowRecordDAO {
         try {
             pstmt =con.prepareStatement(query);
             pstmt.setInt(1,borrowRecordDTO.getBookCode());
-            pstmt.setDate(2,borrowRecordDTO.getReturnDate());
+            pstmt.setDate(2, Date.valueOf(borrowRecordDTO.getReturnDate()));
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -111,12 +110,9 @@ public class BorrowRecordDAO {
                 close(con);
                 close(pstmt);
              }
-
         }
         return result;
     }
-
-
 }
 
 

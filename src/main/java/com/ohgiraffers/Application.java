@@ -63,7 +63,7 @@ public class Application {
         BestSellersController bestSellersController = new BestSellersController();
         ManagerController managerController = new ManagerController();
         boolean isRunning = true;
-        UserDAO userDAO = new UserDAO("src/main/resources/mapper/user-query.xml");
+
 
         while (isRunning) {
             try {

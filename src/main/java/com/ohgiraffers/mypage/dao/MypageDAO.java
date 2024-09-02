@@ -2,7 +2,9 @@ package com.ohgiraffers.mypage.dao;
 
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.user.dto.UserDTO;
+
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 import static com.ohgiraffers.common.JDBCTemplate.*;
@@ -21,7 +23,7 @@ public class MypageDAO {
     }
 
 
-    public int updateRequest1(Connection con, BorrowRecordDTO borrowRecordDTO){     // 대여일 변경
+    public int updateRequest1(Connection con, BorrowRecordDTO borrowRecordDTO){
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("updateRequest1");
@@ -29,7 +31,7 @@ public class MypageDAO {
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1,borrowRecordDTO.getBookCode());
-            pstmt.setTimestamp(2, borrowRecordDTO.getBorrowDate());
+            pstmt.setDate(2, Date.valueOf(borrowRecordDTO.getBorrowDate()));
 
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -41,30 +43,11 @@ public class MypageDAO {
 
     }
 
-    public int updateRequest2(Connection con, BorrowRecordDTO borrowRecordDTO){         // 반납일 변경
-        PreparedStatement pstmt = null;
-        int result = 0;
-        String query = prop.getProperty("updateRequest2");
 
-        try {
-            pstmt = con.prepareStatement(query);
-            pstmt.setInt(1,borrowRecordDTO.getBookCode());
-            pstmt.setDate(2, borrowRecordDTO.getDueDate());
-
-            result = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }finally {
-            close(con);
-            close(pstmt);
-        }return result;
-
-    }
-
-    public int updateRequest3(Connection con, BorrowRecordDTO borrowRecordDTO){         // 대여 취소
+    public int updateRequest2(Connection con, BorrowRecordDTO borrowRecordDTO){
        PreparedStatement pstmt = null;
         int result = 0;
-       String query = prop.getProperty("updateRequest3");
+       String query = prop.getProperty("updateRequest2");
 
         try {
             pstmt = con.prepareStatement(query);
@@ -81,25 +64,21 @@ public class MypageDAO {
     }
 
 
-    public List<BorrowRecordDTO> currentBorrowBooks(Connection con, BorrowRecordDTO borrowRecordDTO){
+    public void currentBorrowBooks(Connection con, BorrowRecordDTO borrowRecordDTO){
         Statement stmt = null;
         ResultSet rset = null;
-        String query = prop.getProperty("currentBorrowBooks");
-        List<BorrowRecordDTO> currentBorrowBooks = new ArrayList<>();
+        String query = "SELECT\n" +
+                "            BOOK_CODE, BOOK_TITLE, BORROW_DATE, DUE_DATE\n" +
+                "          FROM BORROW_RECORDS\n" +
+                "        WHERE USER_ID = '" +borrowRecordDTO.getUserId() + "' AND BOOK_STATUS = 'FALSE';";
 
         try {
             stmt = con.createStatement();
-
             rset = stmt.executeQuery(query);
 
             while (rset.next()) {
-                BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO(
-                        rset.getInt("book_code"),
-                        rset.getString("book_title"),
-                       rset.getTimestamp("borrow_date"),
-                        rset.getDate("due_date"),
-                        rset.getTimestamp("returnDate"));
-                currentBorrowBooks.add(borrowRecordDTO);
+                System.out.println(rset.getInt(1)+ " " + rset.getString(2)+ " "
+                        + rset.getDate(3)+ " " + rset.getDate(4));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -108,29 +87,21 @@ public class MypageDAO {
             close(stmt);
             close(rset);
         }
-        return currentBorrowBooks;
     }
 
 
-    public List<BorrowRecordDTO> allBorrowBookList(Connection con){
+    public void allBorrowBookList(Connection con, BorrowRecordDTO borrowRecordDTO){
         Statement stmt = null;
         ResultSet rset = null;
-       String query = prop.getProperty("AllBorrowBookList");
-        List<BorrowRecordDTO> allBorrowBookList = new ArrayList<>();
+        String query = prop.getProperty("allBorrowBookList");
+
 
        try {
             stmt = con.createStatement();
             rset = stmt.executeQuery(query);
 
             while (rset.next()) {
-               BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO(
-                        rset.getInt("book_code"),
-                        rset.getString("book_title"),
-                        rset.getTimestamp("borrow_date"),
-                        rset.getDate("due_date"),
-                        rset.getTimestamp("returnDate")
-                );
-                allBorrowBookList.add(borrowRecordDTO);
+                System.out.println(rset.getInt(1)+ " " + rset.getString(2)+ " "+rset.getDate(3)+" "+rset.getDate(4));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -139,11 +110,10 @@ public class MypageDAO {
             close(stmt);
             close(rset);
         }
-        return allBorrowBookList;
    }
 
 
-    public int pwdUpdate (Connection con, UserDTO userDTO, String changepwd){
+    public int pwdUpdate (Connection con, UserDTO userDTO, String changePwd){
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("pwdUpdate");
@@ -151,7 +121,7 @@ public class MypageDAO {
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1,userDTO.getUserPwd());
-            pstmt.setString(2,changepwd);
+            pstmt.setString(2,changePwd);
 
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
