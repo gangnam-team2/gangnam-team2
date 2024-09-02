@@ -59,15 +59,17 @@ public class UserController {
                         System.out.println(" 회원가입 실패 ! 아이디가 이미 존재합니다.");
                     }
                     break;
+
                 default:
                     break;
             }
         }
     }
 
-
     public boolean totallogin() {
         // 사용자, 관리자 로그인 및 회원탈퇴
+
+        while (true) {
 
         System.out.println("----- 로그인을 진행하겠습니다. -----");
         Scanner sc = new Scanner(System.in);
@@ -87,7 +89,7 @@ public class UserController {
         UserDAO userDAO = new UserDAO("src/main/resources/mapper/user-query.xml"); // UserDAO 인스턴스 생성
 
 
-        while (true) {
+
             switch (result) {
                 case 1:
                     // 사용자로 로그인
