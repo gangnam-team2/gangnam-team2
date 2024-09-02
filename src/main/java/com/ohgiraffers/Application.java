@@ -5,7 +5,6 @@ import com.ohgiraffers.book.controller.BookController;
 import com.ohgiraffers.manager.controller.ManagerController;
 import com.ohgiraffers.request.controller.RequestController;
 import com.ohgiraffers.user.controller.UserController;
-import com.ohgiraffers.user.dao.UserDAO;
 
 import java.util.Scanner;
 
@@ -14,7 +13,10 @@ public class Application {
 
         Scanner sc = new Scanner(System.in);
         boolean running = true;
+
         UserController usercontroller = new UserController();
+
+
 
         while (running) {
             System.out.println("\n== 도서 대여 프로그램 ==");
@@ -36,6 +38,7 @@ public class Application {
                     // 로그인 및 해당 역할에 따른 메뉴 표시
                     // select
                     boolean userRole = usercontroller.totallogin();
+
 
                     if (userRole == true || userRole == false) {
                         displayMenu(sc, userRole);
