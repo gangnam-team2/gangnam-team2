@@ -15,22 +15,24 @@
 
     <entry key="selectBookList">
         SELECT
-        book_code,
-        book_title,
-        book_author,
-        book_publisher,
-        book_genre
-        FROM books <!--JOIN 를 써야 할 것 같은데...-->
+        b.user_id
+        a.book_code,
+        a.book_title,
+        a.book_author,
+        a.book_publisher,
+        a.book_genre
+        FROM books a JOIN borrow_records b ON a.book_code = b.book_code <!--user_id도 조회해야 하는데.. JOIN를 써야 할 것 같은데...-->
         WHERE book_status = ?;
     </entry>
 
     <entry key="selectMemberHistoy"> <!--회원의 연체 이력을 조회할 수 있는 기능을 구현한다.-->
         SELECT
-        user_id
-        FROM
-        borrow_records
+        a.user_id,
+        b.book_title
+        FROM borrow_records a JOIN books b ON a.book_code = b.book_code
         WHERE
-        return_date > due_date; <!--현재를 반영하기 어렵다. 관리자가 조회한 시점과 마감일을 비교하는 쿼리문을 써야 할 것 같다.-->
+        (return_date = NULL AND NOW() > due_date) AND (over_due_books = true) <!--현재를 반영하기 어렵다. 관리자가 조회한 시점과 마감일을 비교하는 쿼리문을 써야 할 것 같다.-->
+
     </entry>
 
     <entry key="insertRequestedBook">
