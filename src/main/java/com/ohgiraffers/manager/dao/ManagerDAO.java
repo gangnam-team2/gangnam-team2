@@ -125,7 +125,7 @@ public class ManagerDAO {
 
             while(rset.next()){
                 BorrowRecordDTO record = new BorrowRecordDTO();
-                record.setUserId(rset.getInt("user_id"));
+                record.setUserId(String.valueOf(rset.getInt("user_id")));
 
                 lateMember.add(record);
             }

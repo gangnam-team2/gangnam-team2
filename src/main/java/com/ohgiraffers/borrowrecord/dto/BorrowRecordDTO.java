@@ -1,29 +1,29 @@
 /*
 package com.ohgiraffers.borrowrecord.dto;
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.util.Date;
 
 public class BorrowRecordDTO {
 
-    private int userId;                // 대여자 아이디
+    private String userId;                // 대여자 아이디
     private int bookCode;              // 대여한 도서 코드
-    private Date borrowDate;           // 대여일
+    private Timestamp borrowDate;           // 대여일
     private Date dueDate;              // 반납 예정일
-    private Date returnDate;           // 실제 반납일
+    private Timestamp returnDate;           // 실제 반납일
     private boolean bookStatus;
     private boolean overDueBooks;
 
     public BorrowRecordDTO() {}
 
-    public BorrowRecordDTO(int userId, int bookCode, Date borrowDate, Date dueDate, Date returnDate, boolean bookStatus, boolean overduebooks) {
+    public BorrowRecordDTO(String userId, int bookCode, Timestamp borrowDate, Date dueDate, Timestamp returnDate, boolean bookStatus, boolean overDueBooks) {
         this.userId = userId;
         this.bookCode = bookCode;
         this.borrowDate = borrowDate;
         this.dueDate = dueDate;
         this.returnDate = returnDate;
         this.bookStatus = bookStatus;
-        this.overDueBooks = overduebooks;
+        this.overDueBooks = overDueBooks;
     }
 
 
@@ -31,7 +31,7 @@ public class BorrowRecordDTO {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -43,27 +43,27 @@ public class BorrowRecordDTO {
         this.bookCode = bookCode;
     }
 
-    public ChronoLocalDate getBorrowDate() {
+    public Timestamp getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(Date borrowDate) {
+    public void setBorrowDate(Timestamp borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public java.sql.Date getDueDate() {
+        return (java.sql.Date) dueDate;
     }
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
-    public java.sql.Date getReturnDate() {
+    public Timestamp getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
+    public void setReturnDate(Timestamp returnDate) {
         this.returnDate = returnDate;
     }
 

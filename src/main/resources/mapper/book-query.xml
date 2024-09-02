@@ -4,18 +4,17 @@
 <properties>
     <entry key="insertBook">
         <![CDATA[
-        INSERT INTO books (book_title, book_author, book_publisher, book_genre, book_status)
-        VALUES (?, ?, ?, ?, ?)
-        ]]>
+    INSERT INTO books (book_title, book_author, book_publisher, book_genre, book_status, borrow_count)
+    VALUES (?, ?, ?, ?, ?, ?)
+    ]]>
     </entry>
   
     <entry key="updateBook">
         <![CDATA[
         UPDATE books
-        SET book_title = ?, book_author = ?, book_publisher = ?, book_genre = ?, book_status = ?
+        SET book_title = ?, book_author = ?, book_publisher = ?, book_genre = ?, book_status = ?, borrow_count = ?
         WHERE book_code = ?
         ]]>
->>>>>>> e7fe0fa470b61be5b21605e3ba8c738695355cbd
     </entry>
 
     <entry key="deleteBook">
