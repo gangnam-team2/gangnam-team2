@@ -1,5 +1,7 @@
 package com.ohgiraffers.book.dto;
 
+import com.ohgiraffers.user.dto.UserDTO;
+
 import java.security.Timestamp;
 import java.util.Date;
 
@@ -92,5 +94,9 @@ public class BookDTO {
                 ", bookStatus=" + bookStatus +
                 ", borrowCount=" + borrowCount +
                 '}';
+    }
+
+    public void setUserInfo(UserDTO userInfo) {
+
     }
 }
