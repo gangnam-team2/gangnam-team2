@@ -1,9 +1,7 @@
 package com.ohgiraffers;
 
 import com.ohgiraffers.book.controller.BestSellersController;
-import com.ohgiraffers.book.controller.BookController;
 import com.ohgiraffers.user.controller.UserController;
-import com.ohgiraffers.user.dao.UserDAO;
 
 import java.util.Scanner;
 
@@ -12,7 +10,10 @@ public class Application {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
+
         UserController usercontroller = new UserController();
+
+
 
         while (running) {
             System.out.println("\n== 도서 대여 프로그램 ==");
@@ -35,7 +36,7 @@ public class Application {
                     // select
                     boolean userRole = usercontroller.totallogin();
 
-                    if (userRole != null) {
+                    if (userRole = true || userRole == false) {
                         displayMenu(sc, userRole);
                     }
                     break;
