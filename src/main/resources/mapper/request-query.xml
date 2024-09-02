@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+
+<properties>
+    <entry key="insertRequestedBook">
+        INSERT INTO REQUESTS
+        (
+        USER_ID,
+        BOOK_TITLE,
+        BOOK_AUTHOR,
+        BOOK_PUBLISHER,
+
+        )VALUES
+        (
+        ?,
+        ?,
+        ?,
+        ?
+        );
+    </entry>
+</properties>

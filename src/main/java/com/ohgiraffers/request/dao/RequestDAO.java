@@ -38,7 +38,7 @@ public class RequestDAO
         try
         {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1,requestDTO.getUserId()); // 유저 아이디
+            pstmt.setString(1, requestDTO.getUserId()); // 유저 아이디
             pstmt.setString(2, requestDTO.getBookTitle()); // 책 이름
             pstmt.setString(3, requestDTO.getBookAuthor()); // 작가
             pstmt.setString(4, requestDTO.getBookPublisher()); // 출판사
