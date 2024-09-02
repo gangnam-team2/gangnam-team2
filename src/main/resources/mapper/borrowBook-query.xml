@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+
+<properties>
+
+    <entry key="showBookList">
+        SELECT
+            BOOK_CODE,
+            BOOK_TITLE,
+            BOOK_AUTHOR,
+            BOOK_GENRE,
+            BOOK_PUBLISHER
+          FROM BOOKS
+        WHERE BOOK_STATUS = 'TRUE';
+    </entry>
+
+
+    <entry key="rentBook">
+        UPDATE BORROW_RECORDS
+            SET BOOK_CODE = ?, BOOK_STATUS=false, USER_ID = ?, BORROW_DATE =?, DUE_DATE = ?;
+    </entry>
+
+
+    <entry key="returnBook">
+        UPDATE BOOKS, BORROW_RECORDS
+            SET BOOK_CODE =?, BOOK_STATUS=true, RETURN_DATE = ?;
+    </entry>
+
+
+    <entry key="overDueBooks">
+        UPDATE BORROW_RECODES
+            SET BOOK_CODE = ? , BOOK_STATUS = FALSE, USER_ID = ?, OVER_DUE_BOOKS = TRUE;
+    </entry>
+
+
+</properties>

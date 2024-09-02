@@ -2,6 +2,7 @@ package com.ohgiraffers.mypage.dao;
 
 import com.ohgiraffers.book.dto.BorrowRecordDTO;
 import com.ohgiraffers.book.dto.UserDTO;
+import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 
 import java.sql.*;
 import java.util.*;
@@ -30,7 +31,7 @@ public class MypageDAO {
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1,borrowRecordDTO.getBookCode());
-            pstmt.setDate(2, new java.sql.Date(borrowRecordDTO.getBorrowDate().getTime()));
+            pstmt.setDate(2, borrowRecordDTO.getBorrowDate());
 
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -50,7 +51,7 @@ public class MypageDAO {
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1,borrowRecordDTO.getBookCode());
-            pstmt.setDate(2, new java.sql.Date(borrowRecordDTO.getDueDate().getTime()));
+            pstmt.setDate(2, borrowRecordDTO.getDueDate());
 
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -82,7 +83,7 @@ public class MypageDAO {
     }
 
 
-    public List<BorrowRecordDTO> currentBorrowBooks(Connection con){
+    public List<BorrowRecordDTO> currentBorrowBooks(Connection con, BorrowRecordDTO borrowRecordDTO){
         Statement stmt = null;
         ResultSet rset = null;
         String query = prop.getProperty("currentBorrowBooks");
