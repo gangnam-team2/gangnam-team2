@@ -24,14 +24,14 @@ public class BorrowRecordDTO {
         this.dueDate = dueDate;
         this.returnDate = returnDate;
         this.bookStatus = bookStatus;
-        this.overDueBooks = overduebooks;
+        this.overDueBooks = overDueBooks;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
