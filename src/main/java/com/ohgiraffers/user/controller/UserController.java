@@ -9,7 +9,7 @@ import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 public class UserController {
 
 
-    private UserDAO userDAO = new UserDAO("src/main/resources/mapper/user-query.xml");
+    private static UserDAO userDAO = new UserDAO("src/main/resources/mapper/user-query.xml");
 
 
     public static void totalsignup() {
@@ -97,6 +97,7 @@ public class UserController {
                         return true;// 사용자 로그인 성공
                     } else {
                         System.out.println("로그인 실패! 잘못된 아이디 또는 비밀번호입니다.");
+                        totallogin();
                     }
                     break;
 
