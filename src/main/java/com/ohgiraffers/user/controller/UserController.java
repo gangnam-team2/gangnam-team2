@@ -9,7 +9,7 @@ import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 public class UserController {
 
 
-    private UserDAO userDAO = new UserDAO("src/main/resources/mapper/user-query.xml");
+    private static UserDAO userDAO = new UserDAO("src/main/resources/mapper/user-query.xml");
 
 
     public static void totalsignup() {
