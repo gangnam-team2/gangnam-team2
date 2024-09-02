@@ -18,7 +18,7 @@ public class BorrowRecordController {
 
     public void rentBook(){
 
-       borrowRecordDAO.showBookList(getConnection(),borrowRecordDTO);
+        //borrowRecordDAO.showBookList(getConnection(),borrowRecordDTO);
 
         Scanner sc = new Scanner(System.in);
         System.out.println("대여하고 싶은 책의 코드를 입력해주세요.");
@@ -34,7 +34,7 @@ public class BorrowRecordController {
             System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
         }
 
-        borrowRecordDAO.overDueBook(getConnection(),borrowRecordDTO);
+        //borrowRecordDAO.overDueBook(getConnection(),borrowRecordDTO);
     }
 
 
