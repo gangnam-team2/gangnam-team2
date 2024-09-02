@@ -15,12 +15,13 @@
 
     <entry key="selectBookList">
         SELECT
-        book_code,
-        book_title,
-        book_author,
-        book_publisher,
-        book_genre
-        FROM books <!--JOIN 를 써야 할 것 같은데...-->
+        b.user_id
+        a.book_code,
+        a.book_title,
+        a.book_author,
+        a.book_publisher,
+        a.book_genre
+        FROM books a JOIN borrow_records b ON a.book_code = b.book_code <!--user_id도 조회해야 하는데.. JOIN를 써야 할 것 같은데...-->
         WHERE book_status = ?;
     </entry>
 
