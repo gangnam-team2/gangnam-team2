@@ -1,13 +1,16 @@
 package com.ohgiraffers;
 
 import com.ohgiraffers.book.controller.BestSellersController;
+import com.ohgiraffers.book.controller.BookController;
+import com.ohgiraffers.manager.controller.ManagerController;
+import com.ohgiraffers.request.controller.RequestController;
 import com.ohgiraffers.user.controller.UserController;
 
 import java.util.Scanner;
 
 public class Application {
-
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         boolean running = true;
 
@@ -36,7 +39,8 @@ public class Application {
                     // select
                     boolean userRole = usercontroller.totallogin();
 
-                    if (userRole = true || userRole == false) {
+
+                    if (userRole == true || userRole == false) {
                         displayMenu(sc, userRole);
                     }
                     break;
@@ -56,6 +60,7 @@ public class Application {
         BookController bookController = new BookController();
         BestSellersController bestSellersController = new BestSellersController();
         boolean isRunning = true;
+        ManagerController managerController = new ManagerController();
 
         while (isRunning) {
             if (userRole) {
@@ -98,7 +103,7 @@ public class Application {
                     break;
                 case 3:
                     if (userRole == true) {
-                        ManagerController.displayManager();
+                        managerController.displayManager();
                     } else {
                         bestSellersController.showBestSellers();
                     }
@@ -108,7 +113,7 @@ public class Application {
                         // 베스트셀러 관리 선택지를 관리자에게 보이지 않도록 제거했습니다.
                         bestSellersController.showBestSellers();
                     } else {
-                        RequestController.bookRequest();
+                        RequestController.insertRequestedBook();
                     }
                     break;
                 case 5:

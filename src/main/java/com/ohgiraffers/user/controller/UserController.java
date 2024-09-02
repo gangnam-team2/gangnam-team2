@@ -80,6 +80,7 @@ public class UserController {
         System.out.print("아이디를 입력해주세요: ");
         String id = sc.nextLine();
         System.out.print("비밀번호를 입력해주세요: ");
+       
         String pwd = sc.nextLine();
 
         UserDTO loginUser = new UserDTO(id, pwd);
@@ -127,5 +128,4 @@ public class UserController {
             return false;  // 기본적으로 실패로 반환
         }
     }
-
 }
