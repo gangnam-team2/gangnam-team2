@@ -2,6 +2,8 @@ package com.ohgiraffers.book.dao;
 
 import com.ohgiraffers.book.dto.BookDTO;
 import com.ohgiraffers.common.JDBCTemplate;
+import com.ohgiraffers.request.controller.RequestController;
+import com.ohgiraffers.request.dao.RequestDAO;
 import com.ohgiraffers.request.dto.RequestDTO;
 
 import java.sql.*;
@@ -37,7 +39,8 @@ public class BookDAO {
             pstmt.setString(3, bookDTO.getBookPublisher());
             pstmt.setString(4, bookDTO.getBookGenre());
             pstmt.setBoolean(5, bookDTO.isBookStatus());
-            pstmt.setInt(6, bookDTO.getBorrowCount());  // borrow_count 설정
+            pstmt.setInt(6, bookDTO.getBorrowCount());
+            pstmt.setInt(7, bookDTO.getBookQuantity());
 
             result = pstmt.executeUpdate();
 
@@ -64,8 +67,9 @@ public class BookDAO {
             pstmt.setString(3, bookDTO.getBookPublisher());
             pstmt.setString(4, bookDTO.getBookGenre());
             pstmt.setBoolean(5, bookDTO.isBookStatus());
-            pstmt.setInt(6, bookDTO.getBorrowCount());  // borrow_count 설정
-            pstmt.setInt(7, bookDTO.getBookCode());
+            pstmt.setInt(6, bookDTO.getBorrowCount());
+            pstmt.setInt(7, bookDTO.getBookQuantity());
+            pstmt.setInt(8, bookDTO.getBookCode());
 
             result = pstmt.executeUpdate();
 
@@ -104,7 +108,7 @@ public class BookDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         BookDTO bookDTO = null;
-        String query = prop.getProperty("getBookById");
+        String query = prop.getProperty("getBookByCode");
 
         try {
             pstmt = con.prepareStatement(query);
@@ -119,7 +123,8 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count")  // borrow_count 추가
+                        rs.getInt("borrow_count"),
+                        rs.getInt("book_quantity")
                 );
             }
 
@@ -153,7 +158,8 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count")  // borrow_count 추가
+                        rs.getInt("borrow_count"),
+                        rs.getInt("book_quantity")
                 );
                 books.add(bookDTO);
             }
@@ -188,7 +194,8 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count")  // borrow_count 추가
+                        rs.getInt("borrow_count"),
+                        rs.getInt("book_quantity")
                 );
                 books.add(bookDTO);
             }
@@ -222,7 +229,8 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count")  // borrow_count 추가
+                        rs.getInt("borrow_count"),
+                        rs.getInt("book_quantity")
                 );
                 books.add(bookDTO);
             }
@@ -237,21 +245,19 @@ public class BookDAO {
         return books;
     }
 
-    // 요청된 도서를 도서 목록에 추가하는 메서드
-    public void addRequestedBook(RequestDTO requestedBook) {
-        BookDTO newBook = new BookDTO();
-        newBook.setBookTitle(requestedBook.getBookTitle());
-        newBook.setBookAuthor(requestedBook.getBookAuthor());
-        newBook.setBookPublisher(requestedBook.getBookPublisher());
-        newBook.setBookGenre(requestedBook.getBookGenre());
-        newBook.setBookStatus(false);
 
-        Connection con = JDBCTemplate.getConnection();
-        int result = insertBook(con, newBook);
-        JDBCTemplate.close(con);
+    public void insertBookIntoDB(Connection con, BookDTO bookDTO) throws SQLException {
+        con = null;
+        BookDAO bookDAO = new BookDAO();
+        int result = 0;
+        try {
+            result = bookDAO.insertBook(con, bookDTO);
+        } finally {
+            close(con);
+        }
 
         if (result > 0) {
-            System.out.println("도서가 성공적으로 추가되었습니다.");
+            System.out.println("도서가 추가되었습니다.");
         } else {
             System.out.println("도서 추가에 실패하였습니다.");
         }
@@ -276,6 +282,7 @@ public class BookDAO {
                 bookDTO.setBookAuthor(rs.getString("book_author"));
                 bookDTO.setBookPublisher(rs.getString("book_publisher"));
                 bookDTO.setBookGenre(rs.getString("book_genre"));
+                bookDTO.setBookQuantity(rs.getInt("book_quantity"));
                 availableBooks.add(bookDTO);
             }
         } catch (SQLException e) {
@@ -287,4 +294,5 @@ public class BookDAO {
 
         return availableBooks;
     }
+
 }

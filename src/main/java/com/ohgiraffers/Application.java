@@ -7,6 +7,8 @@ import com.ohgiraffers.manager.controller.ManagerController;
 import com.ohgiraffers.mypage.controller.MypageController;
 import com.ohgiraffers.request.controller.RequestController;
 import com.ohgiraffers.user.controller.UserController;
+
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -173,7 +175,9 @@ public class Application {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
-                sc.nextLine();  // 잘못된 입력 클리어
+                sc.nextLine();  // 잘못된 입력 비워버리기
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
     }
