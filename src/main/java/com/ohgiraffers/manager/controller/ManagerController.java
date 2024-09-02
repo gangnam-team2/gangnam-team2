@@ -1,8 +1,7 @@
-/*
 package com.ohgiraffers.manager.controller;
 
 import com.ohgiraffers.book.dto.BookDTO;
-//import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
+import com.ohgiraffers.borrowrecord.dto.*;
 import com.ohgiraffers.manager.dao.ManagerDAO;
 import com.ohgiraffers.user.dto.UserDTO;
 
@@ -67,4 +66,3 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
 
     }
 
-*/
