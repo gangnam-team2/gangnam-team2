@@ -28,7 +28,6 @@ public class UserDAO {
         PreparedStatement ps = null;
         int result = 0;
         String query = prop.getProperty("insertuser");
-        // 중복확인 해야댐 ....
 
         try {
             ps = con.prepareStatement(query);

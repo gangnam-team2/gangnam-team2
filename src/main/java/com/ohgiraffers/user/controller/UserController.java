@@ -33,6 +33,7 @@ public class UserController {
 
         boolean singupuser = false;
 
+
         switch (result) {
 
             case 1: // 사용자로 회원가입
@@ -72,8 +73,7 @@ public class UserController {
         System.out.println(" 원하는 서비스의 번호를 입력해주세요 : ");
         int result = sc.nextInt();
 
-        System.out.println(" 본인의 이름을 입력해주세요 : ");
-        String name = sc.nextLine();
+
         System.out.println(" 아이디를 입력해주세요 : ");
         String id = sc.nextLine();
         System.out.println(" 비밀번호를 입력 해주세요 : ");
@@ -121,6 +121,7 @@ public class UserController {
             default:
                 break;
         }
+        return false;
 
     }
 }
