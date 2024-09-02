@@ -365,7 +365,7 @@ public class BookController {
 
                     // 선택된 도서를 도서 목록에 추가
                     addRequestedBook(selectedBook);
-
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~Request ID: " + selectedBook.getRequestId());
                     // 도서를 추가한 후, 요청된 도서 목록에서 삭제
                     requestDAO.deleteRequest(getConnection(), selectedBook.getRequestId());
                 } else {
