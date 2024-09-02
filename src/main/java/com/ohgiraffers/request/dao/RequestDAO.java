@@ -83,11 +83,14 @@ public class RequestDAO
 
             while (rs.next()) {
                 RequestDTO book = new RequestDTO();
+                book.setRequestId(rs.getInt("request_id")); // request_id 필드 설정
                 book.setBookTitle(rs.getString("book_title"));
                 book.setBookAuthor(rs.getString("book_author"));
                 book.setBookPublisher(rs.getString("book_publisher"));
                 book.setRequestStatus(rs.getBoolean("requests_status"));
                 book.setCreatedAt(rs.getTimestamp("created_at"));
+                book.setBookGenre(rs.getString("book_genre"));
+                book.setBookQuantity(rs.getInt("book_quantity"));
 
                 requestedBooks.add(book);
             }
@@ -112,7 +115,6 @@ public class RequestDAO
 
         return requestedBooks;
     }
-
     public void addRequestedBook(RequestDTO requestedBook) {
         Connection con = null;
         try {
