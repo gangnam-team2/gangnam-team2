@@ -3,6 +3,8 @@ package com.ohgiraffers.book.controller;
 import com.ohgiraffers.book.dao.BookDAO;
 import com.ohgiraffers.book.dto.BookDTO;
 import com.ohgiraffers.common.JDBCTemplate;
+import com.ohgiraffers.request.controller.RequestController;
+import com.ohgiraffers.request.dto.RequestDTO;
 
 import java.sql.Connection;
 import java.util.List;
@@ -179,6 +181,8 @@ public class BookController {
         }
     }
 
+    private final RequestController requestController = new RequestController();
+
     public void manageBooksMenu(Scanner sc) {
         boolean managing = true;
 
@@ -187,6 +191,7 @@ public class BookController {
             System.out.println("1. 도서 추가");
             System.out.println("2. 도서 수정");
             System.out.println("3. 도서 삭제");
+            System.out.println("4. 요청된 도서 확인 및 추가");  // 새로운 메뉴 추가
             System.out.println("0. 이전 메뉴로 돌아가기");
 
             System.out.print("선택: ");
@@ -203,6 +208,9 @@ public class BookController {
                 case 3:
                     deleteBook();
                     break;
+                case 4:
+                    showRequestedBooks(sc);  // 요청된 도서 확인 및 추가 기능 호출
+                    break;
                 case 0:
                     managing = false;
                     break;
@@ -210,6 +218,76 @@ public class BookController {
                     System.out.println("잘못된 선택입니다. 다시 시도하세요.");
             }
         }
+    }
+
+    // 요청된 도서 목록을 보여주고 선택적으로 도서 목록에 추가하는 메서드
+    public void showRequestedBooks(Scanner sc) {
+        List<RequestDTO> requestedBooks = requestController.getRequestedBooks();
+
+        if (requestedBooks.isEmpty()) {
+            System.out.println("현재 요청된 도서가 없습니다.");
+            return;
+        }
+
+        System.out.println("\n== 요청된 도서 목록 ==");
+        for (int i = 0; i < requestedBooks.size(); i++) {
+            RequestDTO book = requestedBooks.get(i);
+            System.out.printf("%d. 제목: %s - 저자: %s - 출판사: %s - 장르: %s%n",
+                    i + 1,
+                    book.getBookTitle(),
+                    book.getBookAuthor(),
+                    book.getBookPublisher(),
+                    book.getBookGenre() != null ? book.getBookGenre() : "미정");
+        }
+
+        System.out.println("도서를 추가하시겠습니까? (1: 예, 2: 아니오)");
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        if (choice == 1) {
+            System.out.println("추가할 도서 번호를 선택하세요:");
+            int bookChoice = sc.nextInt();
+            sc.nextLine();
+
+            if (bookChoice > 0 && bookChoice <= requestedBooks.size()) {
+                RequestDTO selectedBook = requestedBooks.get(bookChoice - 1);
+                addRequestedBook(selectedBook); // 도서 추가
+            } else {
+                System.out.println("잘못된 선택입니다.");
+            }
+        }
+    }
+
+    // 실제 DB에 도서를 추가하는 로직을 담당하는 메서드
+    private void insertBookIntoDB(BookDTO bookDTO) {
+        Connection con = JDBCTemplate.getConnection();
+
+        int result = bookDAO.insertBook(con, bookDTO);
+        JDBCTemplate.close(con);
+
+        if (result > 0) {
+            System.out.println("도서가 추가되었습니다.");
+        } else {
+            System.out.println("도서 추가에 실패하였습니다.");
+        }
+    }
+
+    // addRequestedBook 메서드에서 사용할거임
+    public void addRequestedBook(RequestDTO requestedBook) {
+        BookDTO newBook = new BookDTO();
+        newBook.setBookTitle(requestedBook.getBookTitle());
+        newBook.setBookAuthor(requestedBook.getBookAuthor());
+        newBook.setBookPublisher(requestedBook.getBookPublisher());
+        //newBook.setBookGenre(requestedBook.getBookGenre());
+        if (requestedBook.getBookGenre() != null && !requestedBook.getBookGenre().isEmpty()) {
+            newBook.setBookGenre(requestedBook.getBookGenre());
+        } else {
+            newBook.setBookGenre("미정");                     // 기본 장르 값을 일단 미정으로 설정 요청 도서에서 장르를 안추가함
+        }
+        newBook.setBookStatus(false);
+
+        // 위에서 분리한 메서드를 재사용
+        insertBookIntoDB(newBook);
     }
 
 }

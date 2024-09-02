@@ -18,4 +18,12 @@
         ?
         )
     </entry>
+
+    <entry key="getRequestedBooks">
+        <![CDATA[
+        SELECT book_title, book_author, book_publisher, requests_status, created_at
+        FROM requests
+        ]]>
+    </entry>
+
 </properties>
