@@ -37,11 +37,15 @@ public class RequestController {
                 result = requestDAO.insertRequestedBook(getConnection(), requestDTO);
                 if (result > 0) {
                     System.out.println("도서 요청이 성공적으로 이루어졌습니다.");
-                    System.out.println("계속 추가하시겠습니까?\nY = 계속 도서 추가하기\nN = 이전 선택창으로 돌아가기");
-                    String answer = scr.nextLine();
-                    if (answer.equalsIgnoreCase("Y")) {
+                    System.out.println("계속 추가하시겠습니까?\n" +
+                            "1. 계속 도서 추가하기\n" +
+                            "2. 이전 선택창으로 돌아가기");
+                    System.out.print("선택 : ");
+                    int answer = scr.nextInt();
+                    if(answer==1){
                         continue;
-                    } else if (answer.equalsIgnoreCase("N")) {
+                    }else if(answer==2){
+
                         break;
                     } else {
                         throw new InputMismatchException();
