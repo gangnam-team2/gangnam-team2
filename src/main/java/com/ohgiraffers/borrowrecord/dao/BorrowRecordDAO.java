@@ -26,7 +26,9 @@ public class BorrowRecordDAO {
         }
     }
 
-        public void showBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
+
+        public List<Integer> showBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
+            List<Integer> bookList = new ArrayList<Integer>();
             Statement stmt = null;
             ResultSet rs = null;
             String query = prop.getProperty("showBookList");
@@ -40,6 +42,7 @@ public class BorrowRecordDAO {
                                 + "작가: " + rs.getString(3) + " "
                                 + "장르: " + rs.getString(4) + " "
                                 + "출판사: " + rs.getString(5));
+                        bookList.add(rs.getInt(1));
                     }
                 } else {
                     System.out.println("대여 가능한 책이 없습니다.");
@@ -50,39 +53,39 @@ public class BorrowRecordDAO {
                 close(rs);
                 close(stmt);
                 close(con);
-            }
+            }return bookList;
         }
 
 
-    public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
-        PreparedStatement pstmt = null;
-        int result = 0;
-        String rentBookQuery = prop.getProperty("rentBook");
-        String updateBookStatusQuery = prop.getProperty("updateBookStatus");
+        public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
+            PreparedStatement pstmt = null;
+            UserDTO userDTO = new UserDTO();
+            int result = 0;
+            String rentBookQuery = prop.getProperty("rentBook");
+            String updateBookStatusQuery = prop.getProperty("updateBookStatus");
 
-        try {
-            // 도서 대여 정보를 삽입
-            pstmt = con.prepareStatement(rentBookQuery);
-            pstmt.setInt(1, borrowRecordDTO.getBookCode());
-            pstmt.setString(2, borrowRecordDTO.getUserId());
-            pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
+            try {
+                // 도서 대여 정보를 삽입
+                pstmt = con.prepareStatement(rentBookQuery);
+                pstmt.setInt(1, borrowRecordDTO.getBookCode());
+                pstmt.setString(2, borrowRecordDTO.getUserId());
+                pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
 
-            result = pstmt.executeUpdate();
+                result = pstmt.executeUpdate();
 
-            // 도서 상태를 업데이트
-            if (result > 0) {
-                pstmt = con.prepareStatement(updateBookStatusQuery);
-                pstmt.setBoolean(1, true); // 책을 대여했으므로 상태를 true로 설정 (대여 중)
-                pstmt.setInt(2, borrowRecordDTO.getBookCode());
-                pstmt.executeUpdate();
+                // 도서 상태를 업데이트
+                if (result > 0) {
+                    pstmt = con.prepareStatement(updateBookStatusQuery);
+                    pstmt.setBoolean(1, true); // 책을 대여했으므로 상태를 true로 설정 (대여 중)
+                    pstmt.setInt(2, borrowRecordDTO.getBookCode());
+                    pstmt.executeUpdate();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                close(pstmt);
+                close(con);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(pstmt);
-            close(con);
-        }
-
         return result;
     }
 
@@ -97,7 +100,7 @@ public class BorrowRecordDAO {
                 pstmt.setInt(1, borrowRecordDTO.getBookCode());
                 pstmt.setDate(2, borrowRecordDTO.getReturnDate());
                 BookDTO bookDTO = new BookDTO();
-                bookDTO.setBookStatus(true);
+                bookDTO.setBookStatus(false);
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
