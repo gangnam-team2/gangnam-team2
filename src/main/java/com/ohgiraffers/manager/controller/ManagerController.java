@@ -63,11 +63,11 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
             String userId = list.getKey();
             List<BookDTO> booksInfo = list.getValue();
 
-            System.out.println("도서를 대여 중인 사용자: "+userId);
+            System.out.println("도서를 대여 중인 사용자: " +userId);
 
             for(BookDTO book : booksInfo){
-                System.out.println("책 제목: " + book.getBookTitle() + "작가: "+book.getBookAuthor()
-                + "책 고유번호: " + book.getBookCode());
+                System.out.println("책 제목: " + book.getBookTitle()+ "   작가: "+book.getBookAuthor()
+                + "   책 고유번호: " + book.getBookCode());
 
             }
 
