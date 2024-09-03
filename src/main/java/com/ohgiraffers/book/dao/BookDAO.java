@@ -101,12 +101,46 @@ public class BookDAO {
         return result;
     }
 
-    // 도서 ID로 도서 검색
+    // 도서 코드로 도서 가져오기
     public BookDTO getBookById(Connection con, int bookCode) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         BookDTO bookDTO = null;
         String query = prop.getProperty("getBookByCode");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, bookCode);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                bookDTO = new BookDTO(
+                        rs.getInt("book_code"),
+                        rs.getString("book_title"),
+                        rs.getString("book_author"),
+                        rs.getString("book_publisher"),
+                        rs.getString("book_genre"),
+                        rs.getBoolean("book_status"),
+                        rs.getInt("borrow_count")
+                );
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            System.out.println("잘못된 값이 입력됨...");
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+        return bookDTO;
+    }
+
+    // 도서 코드로 도서 검색
+    public BookDTO searchBooksByCode(Connection con, int bookCode) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        BookDTO bookDTO = null;
+        String query = prop.getProperty("searchBooksByCode");
 
         try {
             pstmt = con.prepareStatement(query);
@@ -145,41 +179,6 @@ public class BookDAO {
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, "%" + title + "%");
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                BookDTO bookDTO = new BookDTO(
-                        rs.getInt("book_code"),
-                        rs.getString("book_title"),
-                        rs.getString("book_author"),
-                        rs.getString("book_publisher"),
-                        rs.getString("book_genre"),
-                        rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count")
-                );
-                books.add(bookDTO);
-            }
-
-        } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
-            e.printStackTrace();
-        } finally {
-            close(rs);
-            close(pstmt);
-        }
-        return books;
-    }
-
-    // 카테고리로 도서 검색
-    public List<BookDTO> searchBooksByCategory(Connection con, int categoryId) {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        List<BookDTO> books = new ArrayList<>();
-        String query = prop.getProperty("searchBooksByCategory");
-
-        try {
-            pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, categoryId);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {

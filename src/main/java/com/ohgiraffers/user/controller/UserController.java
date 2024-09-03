@@ -166,7 +166,14 @@ public class UserController {
                             System.out.println("회원탈퇴 실패! 아이디와 비밀번호를 확인해주세요.");
                         }
                         break;
+                    case 3:
+                        System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
+                        break;
 
+                    case 0:
+                        System.out.println(" 프로그램을 종료합니다. ");
+                        isLoggedIn = true;
+                        break;
                     default:
                         System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
                 }
@@ -177,5 +184,6 @@ public class UserController {
             }
         }  // 기본적으로 실패로 반환
         return false;
+
     }
 }

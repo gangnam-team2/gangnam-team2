@@ -17,8 +17,8 @@ import static com.ohgiraffers.common.JDBCTemplate.*;
 
 public class BookController {
     private RequestDAO requestDAO;
-    private BookDAO bookDAO;
-    private Scanner sc;
+    private static BookDAO bookDAO;
+    private static Scanner sc;
 
     public BookController() {
         bookDAO = new BookDAO();
@@ -64,7 +64,7 @@ public class BookController {
                 continue;
             }
 
-            boolean bookStatus = true; // true = 도서 대여 가능
+            boolean bookStatus = false; // false = 도서 대여 가능
 
             BookDTO bookDTO = new BookDTO();
             bookDTO.setBookTitle(bookTitle);
@@ -133,7 +133,7 @@ public class BookController {
                 continue;
             }
 
-            System.out.print("도서 상태 (true: 대여 중, false: 대여 가능): ");
+            System.out.print("대여 상태 (true: 대여 중, false: 대여 가능): ");
             boolean bookStatus = false;
             if (sc.hasNextBoolean()) {
                 bookStatus = sc.nextBoolean();
@@ -183,6 +183,29 @@ public class BookController {
         }
     }
 
+    public static void searchBookMenu(Scanner sc) {
+        System.out.println("== 도서 검색 ==");
+        System.out.println("1. 도서 제목으로 검색");
+        System.out.println("2. 도서 코드로 검색");
+        System.out.print("선택: ");
+
+        int searchChoice = sc.nextInt();
+        sc.nextLine();
+
+        switch (searchChoice) {
+            case 1:
+                searchBooksByTitle();  // 도서 제목으로 검색
+                break;
+            case 2:
+                searchBooksByCode();  // 도서 코드로 검색
+                break;
+            default:
+                System.out.println("잘못된 선택입니다. 다시 시도하세요.");
+                searchBookMenu(sc);  // 잘못된 선택 시 다시 검색 메뉴로 돌아가기
+                break;
+        }
+    }
+
     public void searchBookById() {
         System.out.println("=====도서 검색 (코드로 검색)=====");
         System.out.print("검색할 도서 코드: ");
@@ -200,10 +223,51 @@ public class BookController {
         }
     }
 
-    public void searchBooksByTitle() {
-        System.out.println("=====도서 검색 (제목으로 검색)=====");
+    // 도서 코드로 도서 찾기
+    public static void searchBooksByCode() {
+        System.out.println("=====도서 검색 (코드로 검색)=====");
+        System.out.print("검색할 도서 코드: ");
+
+        int bookCode;
+        try {
+            bookCode = Integer.parseInt(sc.nextLine());  // 도서 코드를 정수로 변환
+        } catch (NumberFormatException e) {
+            System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+            return;  // 잘못된 입력이므로 메서드 종료
+        }
+
+        Connection con = getConnection();
+        BookDTO book = bookDAO.searchBooksByCode(con, bookCode);
+        close(con);
+
+        if (book != null) {
+            System.out.printf(
+                    "도서 코드: %d\n도서 제목: %s\n도서 저자: %s\n도서 출판사: %s\n도서 장르: %s\n대여 상태: %s\n대여 횟수: %d\n",
+                    book.getBookCode(),
+                    book.getBookTitle(),
+                    book.getBookAuthor(),
+                    book.getBookPublisher(),
+                    book.getBookGenre(),
+                    book.isBookStatus() ? "대여 가능" : "대여 중",
+                    book.getBorrowCount()
+            );
+            System.out.println("----------------------------");  // 각 도서 사이 구분선
+        } else {
+            System.out.println("해당 코드의 도서를 찾을 수 없습니다.");
+        }
+    }
+    
+    // 도서 제목으로 도서 찾기
+    public static void searchBooksByTitle() {
+        System.out.println("=====도서 제목으로 찾기=====");
         System.out.print("검색할 도서 제목: ");
         String title = sc.nextLine();
+
+        // 입력된 도서 제목이 공백이거나 비어있는지 확인
+        if (title == null || title.trim().isEmpty()) {
+            System.out.println("잘못된 입력입니다. 도서 제목을 정확히 입력하세요.");
+            return;  // 잘못된 입력이므로 메서드 종료
+        }
 
         Connection con = getConnection();
         List<BookDTO> books = bookDAO.searchBooksByTitle(con, title);
@@ -211,29 +275,20 @@ public class BookController {
 
         if (!books.isEmpty()) {
             for (BookDTO book : books) {
-                System.out.println(book);
+                System.out.printf(
+                        "도서 코드: %d\n도서 제목: %s\n도서 저자: %s\n도서 출판사: %s\n도서 장르: %s\n대여 상태: %s\n대여 횟수: %d\n",
+                        book.getBookCode(),
+                        book.getBookTitle(),
+                        book.getBookAuthor(),
+                        book.getBookPublisher(),
+                        book.getBookGenre(),
+                        book.isBookStatus() ? "대여 가능" : "대여 중",
+                        book.getBorrowCount()
+                );
+                System.out.println("----------------------------");  // 각 도서 사이 구분선
             }
         } else {
             System.out.println("해당 제목의 도서를 찾을 수 없습니다.");
-        }
-    }
-
-    public void searchBooksByCategory() {
-        System.out.println("=====도서 검색 (카테고리로 검색)=====");
-        System.out.print("검색할 카테고리 ID: ");
-        int categoryId = sc.nextInt();
-        sc.nextLine();
-
-        Connection con = getConnection();
-        List<BookDTO> books = bookDAO.searchBooksByCategory(con, categoryId);
-        close(con);
-
-        if (!books.isEmpty()) {
-            for (BookDTO book : books) {
-                System.out.println(book);
-            }
-        } else {
-            System.out.println("해당 카테고리의 도서를 찾을 수 없습니다.");
         }
     }
 
@@ -246,7 +301,17 @@ public class BookController {
 
         if (!books.isEmpty()) {
             for (BookDTO book : books) {
-                System.out.println(book);
+                System.out.printf(
+                        "도서 코드: %d\n도서 제목: %s\n도서 저자: %s\n도서 출판사: %s\n도서 장르: %s\n대여 상태: %s\n대여 횟수: %d\n",
+                        book.getBookCode(),
+                        book.getBookTitle(),
+                        book.getBookAuthor(),
+                        book.getBookPublisher(),
+                        book.getBookGenre(),
+                        book.isBookStatus() ? "대여 가능" : "대여 중",
+                        book.getBorrowCount()
+                );
+                System.out.println("----------------------------");  // 각 도서 사이 구분선임
             }
         } else {
             System.out.println("연체된 도서가 없습니다.");
@@ -333,7 +398,9 @@ public class BookController {
                     // 요청 목록에서 삭제
                     boolean isDeleted = requestController.deleteRequestedBook(selectedBook.getRequestId());
                     if (isDeleted) {
+                        System.out.println("\n===============================");
                         System.out.println("요청된 도서 " + selectedBook.getBookTitle() + "이 목록에서 삭제되었습니다.");
+                        System.out.println("===============================");
                     } else {
                         System.out.println("요청된 도서 삭제에 실패하였습니다.");
                     }
@@ -371,4 +438,5 @@ public class BookController {
             // DB에 도서 추가
             insertBookIntoDB(newBook);
         }
-    }
+
+}
