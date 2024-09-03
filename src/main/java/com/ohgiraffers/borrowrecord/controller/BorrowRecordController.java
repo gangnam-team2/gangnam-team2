@@ -39,17 +39,11 @@ public class BorrowRecordController {
                 }else{
                 System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
             }
-        } catch (
-                InputMismatchException e) {
+        } catch (InputMismatchException e) {
+            System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
         }
     }
 
-    public void overDueBook() {
-
-
-
-        borrowRecordDAO.overDueBook(getConnection(),borrowRecordDTO);
-    }
 
     public void returnBook() {
         try {

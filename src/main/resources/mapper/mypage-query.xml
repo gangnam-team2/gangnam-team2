@@ -14,7 +14,8 @@
 
     <entry key="updateRequest">
         UPDATE BOOKS
-        SET BOOK_CODE =?, BOOK_STATUS =0;
+            SET BOOK_STATUS =0
+        WHERE BOOK_CODE =?;
     </entry>
 
 

@@ -53,12 +53,13 @@ public class MypageDAO {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, userDTO.getUserId());
             rset = pstmt.executeQuery();
-            if (rset.next()) {
-
-            }
-            while (rset.next()) {
-                System.out.println("북코드: " + rset.getInt(1)+ " " +"제목: " + rset.getString(2)+ " "
-                        +"대여 날짜: " + rset.getDate(3)+ " " +"반납 예정일: " + rset.getDate(4));
+            if (rset!=null) {
+                while (rset.next()) {
+                    System.out.println("북코드: " + rset.getInt(1) + "\n" + "제목: " + rset.getString(2) + "\n"
+                            + "대여 날짜: " + rset.getDate(3) + "\n" + "반납 예정일: " + rset.getDate(4));
+                }
+            }else{
+                System.out.println("현재 대여중인 책이 없습니다.");
             }
 
         } catch (SQLException e) {
@@ -70,24 +71,31 @@ public class MypageDAO {
         }
     }
 
-    public void overDueBooks(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO){
+
+
+    public void myOverDueBooks (Connection con, BorrowRecordDTO borrowRecordDTO) {
+
         PreparedStatement pstmt = null;
-        ResultSet rset = null;
-        String query = prop.getProperty("overDueBooks");
+        ResultSet rs = null;
+        String query = prop.getProperty("myOverDueBooks");
 
         try {
-            pstmt = con.prepareStatement(query);
-            pstmt.setString(1, userDTO.getUserId());
-            rset = pstmt.executeQuery();
+           pstmt = con.prepareStatement(query);
+           pstmt.setString(1, borrowRecordDTO.getUserId());
+           rs = pstmt.executeQuery();
 
-            while (rset.next()) {
-                System.out.println("북코드: " + rset.getInt(1)+ " "+ "제목: " + rset.getString(2) + " " + "대여일: " + rset.getDate(3)+ " " + "반납 예정일: " + rset.getDate(4));
+            if(rs!=null) {
+                while (rs.next()) {
+                    System.out.println("북코드: " + rs.getInt(1) + "\n"
+                            + "제목: " + rs.getString(2) + "\n" + "대여일: " + rs.getDate(3) + "\n"+ "반납 예정일: " + rs.getDate(4));
+                }
+            }else{
+                System.out.println("연체된 책이 없습니다.");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     public void allBorrowBookList(Connection con, BorrowRecordDTO borrowRecordDTO,UserDTO userDTO){
         PreparedStatement pstmt = null;
@@ -95,13 +103,15 @@ public class MypageDAO {
         String query = prop.getProperty("allBorrowBookList");
 
        try {
-
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, userDTO.getUserId());
             rset = pstmt.executeQuery();
-
-            while (rset.next()) {
-                System.out.println("북코드: " + rset.getInt(1)+ " "+ "제목: " + rset.getString(2) + " " + "대여일: " + rset.getDate(3)+ " " + "반납 예정일: " + rset.getDate(4) + " " + "실제 반납일: "+ rset.getDate(5));
+            if(rset!=null) {
+                while (rset.next()) {
+                    System.out.println("북코드: " + rset.getInt(1) + "\n" + "제목: " + rset.getString(2) + "\n" + "대여일: " + rset.getDate(3) + "\n" + "반납 예정일: " + rset.getDate(4) + "\n" + "실제 반납일: " + rset.getDate(5));
+                }
+            }else{
+                System.out.println("대여 목록이 없습니다.");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
