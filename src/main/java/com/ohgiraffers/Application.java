@@ -151,13 +151,14 @@ public class Application {
                     case 5:
                         if (!userRole) {
                             System.out.println("사용자: 마이페이지 선택");
-                            System.out.println("1. 현재 대여 신청 책 목록\n" + "2. 전체 대여 목록\n" + "3. 대여 신청서 변경\n" + "4. 비밀번호 변경");
+                            System.out.println("1. 현재 대여 신청 책 목록\n" + "2. 전체 대여 목록\n" + "3. 대여 취소\n" + "4. 연체 목록 조회\n"+ "5. 비밀번호 변경");
                             int choice3 = sc.nextInt();
                             switch (choice3) {
                                 case 1: mypageController.currentBorrowBookList(); break;
                                 case 2: mypageController.allBorrowBookList(); break;
                                 case 3: mypageController.updateRequestBook(); break;
-                                case 4: mypageController.pwdUpdate(); break;
+                                case 4: mypageController.myOverDueBooks(); break;
+                                case 5: mypageController.pwdUpdate(); break;
                                 default:
                                     System.out.println("다시 시도해 주세요.");
                             }

@@ -1,5 +1,7 @@
 package com.ohgiraffers.borrowrecord.dto;
 
+import com.ohgiraffers.user.dto.UserDTO;
+
 import java.sql.Date;
 
 
@@ -28,7 +30,7 @@ public class BorrowRecordDTO {
         this.overDueBooks = overDueBooks;
         this.borrowCode = borrowCode;
     }
-
+UserDTO userDTO = new UserDTO();
     public int getBorrowCode() {
         return borrowCode;
     }
@@ -42,7 +44,7 @@ public class BorrowRecordDTO {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.userId = userDTO.getUserId();
     }
 
     public int getBookCode() {
