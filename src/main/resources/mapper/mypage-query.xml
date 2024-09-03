@@ -7,7 +7,7 @@
         SELECT
             BOOK_CODE, BOOK_TITLE, BORROW_DATE, DUE_DATE
           FROM BORROW_RECORDS
-        WHERE USER_ID = ? AND BOOK_STATUS = 'FALSE';
+        WHERE USER_ID = ? AND BOOK_STATUS = 0;
     </entry>
 
 
@@ -33,7 +33,7 @@
 
     <entry key="pwdUpdate">
         UPDATE USERS
-        SET USER_PWD = ?
+            SET USER_PWD = ?
         WHERE USER_PWD = ?;
     </entry>
 

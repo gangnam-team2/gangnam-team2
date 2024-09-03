@@ -36,11 +36,11 @@ public class BorrowRecordDAO {
             rs = stmt.executeQuery(query);
             if(rs!=null) {
                 while (rs.next()) {
-                    System.out.println(rs.getInt(1) + " "
-                            + rs.getString(2) + " "
-                            + rs.getString(3) + " "
-                            + rs.getString(4) + " "
-                            + rs.getString(5));
+                    System.out.println("북코드: "+rs.getInt(1) + " "
+                            + "제목: " + rs.getString(2) + " "
+                            + "작가: " + rs.getString(3) + " "
+                            + "장르: " + rs.getString(4) + " "
+                            + "출판사: " +rs.getString(5));
                 }
             }else{
                 System.out.println("대여 가능한 책이 없습니다.");
