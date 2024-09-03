@@ -4,6 +4,8 @@ import com.ohgiraffers.request.dao.RequestDAO;
 import com.ohgiraffers.request.dto.RequestDTO;
 import com.ohgiraffers.user.dto.UserDTO;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static com.ohgiraffers.common.JDBCTemplate.getConnection;
@@ -18,24 +20,41 @@ public class RequestController { // 도서 요청 컨트롤러, 서현준이가 
         RequestDTO requestDTO = new RequestDTO();
         int result = 0;
         UserDTO userDTO = new UserDTO();
-        System.out.println("도서관에 추가하고 싶은 책의 정보를 받겠습니다.");
-
 
         requestDTO.setUserId(userDTO.getUserId());
 
+        while (true){
+            try {
+                System.out.println("도서관에 추가하고 싶은 책의 정보를 받겠습니다.");
 
-        System.out.print("책의 제목을 알려주세요 : ");
-        requestDTO.setBookTitle(scr.nextLine());
-        System.out.print("작가를 알려주세요 : ");
-        requestDTO.setBookAuthor(scr.nextLine());
-        System.out.print("출판사를 알려주세요 : ");
-        requestDTO.setBookPublisher(scr.nextLine());
+                System.out.print("책의 제목을 알려주세요 : ");
+                requestDTO.setBookTitle(scr.nextLine());
+                System.out.print("작가를 알려주세요 : ");
+                requestDTO.setBookAuthor(scr.nextLine());
+                System.out.print("출판사를 알려주세요 : ");
+                requestDTO.setBookPublisher(scr.nextLine());
 
-        result = requestDAO.insertRequestedBook(getConnection(), requestDTO);
-        if(result > 0){
-            System.out.println("도서 요청이 성공적으로 이루어졌습니다.");
-        }else {
-            System.out.println("요청이 거부되었습니다. 다시 시도해 주세요");
+                result = requestDAO.insertRequestedBook(getConnection(), requestDTO);
+                if(result > 0){
+                    System.out.println("도서 요청이 성공적으로 이루어졌습니다.");
+                    System.out.println("계속 추가하시겠습니까?\n" +
+                            "Y = 계속 도서 추가하기\n" +
+                            "N = 이전 선택창으로 돌아가기");
+                    String answer = scr.nextLine();
+                    if(answer.equals("Y")){
+                        continue;
+                    }else if(answer.equals("N")){
+                        break;
+                    }else{
+                        throw new InputMismatchException();
+                    }
+                }else {
+                    System.out.println("요청이 거부되었습니다. 다시 시도해 주세요");
+                }
+            }catch (InputMismatchException e){
+            }
+            System.out.println("입력 과정에 문제가 발생했습니다. 확인해 보시고 다시 시도해 주세요.");
+            scr.nextLine();
         }
 
     }
