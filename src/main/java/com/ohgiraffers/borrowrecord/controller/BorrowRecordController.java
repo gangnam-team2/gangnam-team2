@@ -2,27 +2,26 @@ package com.ohgiraffers.borrowrecord.controller;
 
 
 import com.ohgiraffers.book.dto.BookDTO;
+import com.ohgiraffers.book.usersession.UserSession;
 import com.ohgiraffers.borrowrecord.dao.BorrowRecordDAO;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.mypage.dao.MypageDAO;
 import com.ohgiraffers.user.dto.UserDTO;
+import java.sql.Connection;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-
-import static com.ohgiraffers.common.JDBCTemplate.getConnection;
+import static com.ohgiraffers.common.JDBCTemplate.*;
 
 public class BorrowRecordController {
-
 
     public void rentBook(){
         try{
             BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
             BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
             List<Integer> a = borrowRecordDAO.showBookList(getConnection(),borrowRecordDTO);
-
             Scanner sc = new Scanner(System.in);
             System.out.println("대여하고 싶은 책의 코드를 입력해주세요.");
             System.out.print("코드 입력 : ");
@@ -51,6 +50,8 @@ public class BorrowRecordController {
             }
         } catch (InputMismatchException e) {
             System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
+        } finally {
+            close(con); // Connection 객체를 마지막에 닫습니다.
         }
     }
 

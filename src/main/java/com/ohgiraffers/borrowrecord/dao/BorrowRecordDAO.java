@@ -1,5 +1,6 @@
 package com.ohgiraffers.borrowrecord.dao;
 
+import com.ohgiraffers.book.controller.BookController;
 import com.ohgiraffers.book.dto.BookDTO;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.user.dto.UserDTO;
@@ -56,8 +57,6 @@ public class BorrowRecordDAO {
         }
 
 
-
-
         public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
             PreparedStatement pstmt = null;
             UserDTO userDTO = new UserDTO();
@@ -87,8 +86,8 @@ public class BorrowRecordDAO {
                 close(pstmt);
                 close(con);
             }
-            return result;
-        }
+        return result;
+    }
 
 
         public int returnBook(Connection con, BorrowRecordDTO borrowRecordDTO) {

@@ -51,4 +51,5 @@ public class JDBCTemplate {
                 throw new RuntimeException(e);
             }
         }
+
 }
