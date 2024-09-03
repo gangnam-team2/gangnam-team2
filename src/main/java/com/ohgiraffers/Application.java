@@ -105,7 +105,7 @@ public class Application {
                             bookController.manageBooksMenu(sc);
                         } else {
                             System.out.println("사용자: 도서 검색 메뉴 선택");
-                            bookController.searchBooksByTitle();
+                            bookController.searchBookMenu(sc);
                         }
                         break;
                     case 2:

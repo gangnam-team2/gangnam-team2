@@ -43,6 +43,12 @@ public class BorrowRecordController {
         }
     }
 
+    public void overDueBook() {
+
+
+
+        borrowRecordDAO.overDueBook(getConnection(),borrowRecordDTO);
+    }
 
 
     public void returnBook() {

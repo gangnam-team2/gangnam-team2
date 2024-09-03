@@ -165,8 +165,7 @@ public class UserController {
 
                     case 0:
                         System.out.println(" 프로그램을 종료합니다. ");
-                        isLoggedIn = false;
-
+                        isLoggedIn = true;
                         break;
 
                     default:
@@ -176,6 +175,7 @@ public class UserController {
                 System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
                 sc.nextLine();
             }
-        } return false; // 기본적으로 실패로 반환
+        }
+        return false; // 기본적으로 실패로 반환
     }
 }
