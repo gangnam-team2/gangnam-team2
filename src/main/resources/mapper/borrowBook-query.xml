@@ -23,9 +23,24 @@
         ]]>
     </entry>
 
+    <entry key="deleteBorrowRecord">
+        <![CDATA[
+            DELETE FROM borrow_records WHERE book_code = ? AND user_id = ?
+        ]]>
+    </entry>
+
     <entry key="updateBookStatus">
         <![CDATA[
             UPDATE books SET book_status = ? WHERE book_code = ?
+        ]]>
+    </entry>
+
+    <entry key="getBorrowedBooks">
+        <![CDATA[
+            SELECT br.book_code, b.book_title, br.borrow_date
+              FROM borrow_records br
+            JOIN books b ON br.book_code = b.book_code
+            WHERE br.user_id = ?
         ]]>
     </entry>
 

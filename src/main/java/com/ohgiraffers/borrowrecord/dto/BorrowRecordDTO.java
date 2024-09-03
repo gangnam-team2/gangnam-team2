@@ -15,9 +15,10 @@ public class BorrowRecordDTO {
     private boolean bookStatus;
     private boolean overDueBooks;
     private int borrowCode;
+    private String bookTitle;
 
     public BorrowRecordDTO(String userId, int bookCode, Date borrowDate, Date dueDate,
-                           Date returnDate, boolean bookStatus, boolean overDueBooks, int borrowCode) {
+                           Date returnDate, boolean bookStatus, boolean overDueBooks, int borrowCode, String bookTitle) {
         this.userId = userId;
         this.bookCode = bookCode;
         this.borrowDate = borrowDate;
@@ -26,6 +27,7 @@ public class BorrowRecordDTO {
         this.bookStatus = bookStatus;
         this.overDueBooks = overDueBooks;
         this.borrowCode = borrowCode;
+        this.bookTitle = bookTitle;
     }
 
 UserDTO userDTO = new UserDTO();
@@ -34,6 +36,13 @@ UserDTO userDTO = new UserDTO();
 
     }
 
+    public String getBookTitle() {
+        return bookTitle;
+    }
+
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+    }
 
     public int getBorrowCode() {
         return borrowCode;
@@ -109,6 +118,8 @@ UserDTO userDTO = new UserDTO();
                 ", bookStatus=" + bookStatus +
                 ", overDueBooks=" + overDueBooks +
                 ", borrowCode=" + borrowCode +
+                ", bookTitle='" + bookTitle + '\'' +
+                ", userDTO=" + userDTO +
                 '}';
     }
 }

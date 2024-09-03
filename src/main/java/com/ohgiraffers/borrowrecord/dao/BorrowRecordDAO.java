@@ -91,26 +91,71 @@ public class BorrowRecordDAO {
     }
 
 
-        public int returnBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
-            PreparedStatement pstmt = null;
-            int result = 0;
-            String query = prop.getProperty("returnBook");
+    public int returnBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String logind = UserSession.getUserDTO().getUserId();
 
-            try {
-                pstmt = con.prepareStatement(query);
-                pstmt.setInt(1, borrowRecordDTO.getBookCode());
-                pstmt.setDate(2, borrowRecordDTO.getReturnDate());
-                BookDTO bookDTO = new BookDTO();
-                bookDTO.setBookStatus(false);
+        String deleteBorrowRecordQuery = prop.getProperty("deleteBorrowRecord");
+        String updateBookStatusQuery = prop.getProperty("updateBookStatus");
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                close(pstmt);
-                close(con);
+        try {
+
+            // 1. borrow_records 테이블에서 해당 도서 대여 기록 삭제
+            pstmt = con.prepareStatement(deleteBorrowRecordQuery);
+            pstmt.setInt(1, borrowRecordDTO.getBookCode());
+            pstmt.setString(2, logind);
+            result = pstmt.executeUpdate();
+            close(pstmt);
+
+            if (result > 0) {
+                // 2. books 테이블에서 book_status를 false로 업데이트
+                pstmt = con.prepareStatement(updateBookStatusQuery);
+                pstmt.setBoolean(1, false); // 책을 반납했으므로 상태를 false로 설정 (대여 가능)
+                pstmt.setInt(2, borrowRecordDTO.getBookCode());
+                pstmt.executeUpdate();
+            } else {
+                System.out.println("대여 기록이 존재하지 않습니다.");
+                return 0; // 대여 기록이 없을 경우 반납 실패 처리
             }
-            return result;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
         }
+
+        return result;
+    }
+
+    public List<BorrowRecordDTO> getBorrowedBooks(Connection con, String userId) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<BorrowRecordDTO> borrowedBooks = new ArrayList<>();
+        String query = prop.getProperty("getBorrowedBooks");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, userId);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                BorrowRecordDTO book = new BorrowRecordDTO();
+                book.setBookCode(rs.getInt("book_code"));
+                book.setBookTitle(rs.getString("book_title"));
+                book.setBorrowDate(rs.getDate("borrow_date"));
+                borrowedBooks.add(book);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+
+        return borrowedBooks;
+    }
 
 
         public int overDueBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
