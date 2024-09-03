@@ -97,6 +97,7 @@ public class BorrowRecordDAO {
 
         String deleteBorrowRecordQuery = prop.getProperty("deleteBorrowRecord");
         String updateBookStatusQuery = prop.getProperty("updateBookStatus");
+        String updateBorrowCountQuery = prop.getProperty("updateBorrowCount");
 
         try {
 
@@ -113,6 +114,12 @@ public class BorrowRecordDAO {
                 pstmt.setBoolean(1, false);
                 pstmt.setInt(2, borrowRecordDTO.getBookCode());
                 pstmt.executeUpdate();
+
+                // borrow_count 값을 증가시킴
+                pstmt = con.prepareStatement(updateBorrowCountQuery);
+                pstmt.setInt(1, borrowRecordDTO.getBookCode());
+                pstmt.executeUpdate();
+
             } else {
                 System.out.println("대여 기록이 존재하지 않습니다.");
                 return 0; // 대여 기록이 없을 경우 반납 실패 처리
