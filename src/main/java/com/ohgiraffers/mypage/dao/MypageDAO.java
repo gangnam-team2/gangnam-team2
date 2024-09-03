@@ -45,9 +45,9 @@ public class MypageDAO {
 
 
     public int updateRequest2(Connection con, BorrowRecordDTO borrowRecordDTO){
-       PreparedStatement pstmt = null;
+        PreparedStatement pstmt = null;
         int result = 0;
-       String query = prop.getProperty("updateRequest2");
+        String query = prop.getProperty("updateRequest2");
 
         try {
             pstmt = con.prepareStatement(query);
@@ -60,7 +60,7 @@ public class MypageDAO {
         }finally {
             close(con);
             close(pstmt);
-       }return result;
+        }return result;
     }
 
 
@@ -96,6 +96,7 @@ public class MypageDAO {
         String query = prop.getProperty("allBorrowBookList");
 
        try {
+
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, userDTO.getUserId());
             rset = pstmt.executeQuery();
@@ -110,7 +111,7 @@ public class MypageDAO {
             close(pstmt);
             close(rset);
         }
-   }
+    }
 
 
     public int pwdUpdate (Connection con, UserDTO userDTO, String changePwd){
@@ -126,7 +127,7 @@ public class MypageDAO {
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-       }finally {
+        }finally {
             close(con);
             close(pstmt);
         }return result;

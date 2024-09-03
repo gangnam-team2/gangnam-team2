@@ -115,7 +115,7 @@ public class BorrowRecordDAO {
             }finally {
                 close(con);
                 close(pstmt);
-             }
+            }
         }
         return result;
     }

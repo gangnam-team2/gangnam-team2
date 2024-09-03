@@ -6,8 +6,8 @@
     <!--도서 추가 쿼리-->
     <entry key="insertBook">
         <![CDATA[
-        INSERT INTO books (book_title, book_author, book_publisher, book_genre, book_status, borrow_count, book_quantity)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO books (book_title, book_author, book_publisher, book_genre, book_status, borrow_count)
+        VALUES (?, ?, ?, ?, ?, ?)
     ]]>
     </entry>
 
@@ -15,7 +15,7 @@
     <entry key="updateBook">
         <![CDATA[
         UPDATE books
-            SET book_title = ?, book_author = ?, book_publisher = ?, book_genre = ?, book_status = ?, borrow_count = ?, book_quantity = ?
+            SET book_title = ?, book_author = ?, book_publisher = ?, book_genre = ?, book_status = ?, borrow_count = ?
         WHERE book_code = ?
         ]]>
     </entry>
@@ -58,9 +58,9 @@
     <!--대여 가능한 도서-->
     <entry key="getAvailableBooks">
         <![CDATA[
-            SELECT book_code, book_title, book_author, book_publisher, book_genre, book_quantity
+            SELECT book_code, book_title, book_author, book_publisher, book_genre
               FROM books
-            WHERE book_status = true AND book_quantity > 0;
+            WHERE book_status = true
         ]]>
     </entry>
 
