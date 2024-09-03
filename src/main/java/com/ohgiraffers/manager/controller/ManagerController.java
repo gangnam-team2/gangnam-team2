@@ -5,10 +5,7 @@ import com.ohgiraffers.borrowrecord.dto.*;
 import com.ohgiraffers.manager.dao.ManagerDAO;
 import com.ohgiraffers.user.dto.UserDTO;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 
@@ -31,9 +28,9 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
 
                 int num = scr.nextInt();
                 switch (num){
-                    case 1: allMembersInfo(); break loop;
-                    case 2: findBookList(); break loop;
-                    case 3: memberHistoy(); break loop;
+                    case 1: allMembersInfo(); break;
+                    case 2: findBookList(); break;
+                    case 3: memberHistoy(); break;
                     case 4: break loop;
 
                     default: break;
@@ -54,16 +51,26 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
         allMembersInfo = managerDAO.selectAllMembersInfo(getConnection());
         System.out.println("회원 정보 리스트");
         for (UserDTO member : allMembersInfo){
-            System.out.println(member);
+            System.out.println("USER ID: " + member.getUserId() + "USER NAME: " + member.getUserName()
+            + "USER JOIN DATE" + member.getUserCreatedAt() + "USER UPDATE DATE" + member.getUserUpdatedAt());
         }
     }
 
     public void findBookList() {
-        List<BookDTO> allBookList;
-        allBookList = managerDAO.selectAllBooksInfo(getConnection());
+        Map<String, List<BookDTO>> userBooks= managerDAO.selectAllBooksInfo(getConnection());
         System.out.println("대여 중인 책과 그 회원 목록:");
-        for (BookDTO book : allBookList) {
-            System.out.println(book);
+        for (Map.Entry<String, List<BookDTO>> list : userBooks.entrySet()) {
+            String userId = list.getKey();
+            List<BookDTO> booksInfo = list.getValue();
+
+            System.out.println("도서를 대여 중인 사용자: " +userId);
+
+            for(BookDTO book : booksInfo){
+                System.out.println("책 제목: " + book.getBookTitle()+ "   작가: "+book.getBookAuthor()
+                + "   책 고유번호: " + book.getBookCode());
+
+            }
+
         }
     }
 
