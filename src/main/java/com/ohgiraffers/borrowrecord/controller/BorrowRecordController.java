@@ -51,7 +51,6 @@ public class BorrowRecordController {
         } catch (InputMismatchException e) {
             System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
         } finally {
-            close(con); // Connection 객체를 마지막에 닫습니다.
         }
     }
 

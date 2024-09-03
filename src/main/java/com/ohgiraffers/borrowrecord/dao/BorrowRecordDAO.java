@@ -2,6 +2,7 @@ package com.ohgiraffers.borrowrecord.dao;
 
 import com.ohgiraffers.book.controller.BookController;
 import com.ohgiraffers.book.dto.BookDTO;
+import com.ohgiraffers.book.usersession.UserSession;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.user.dto.UserDTO;
 import java.sql.*;
@@ -68,7 +69,7 @@ public class BorrowRecordDAO {
                 // 도서 대여 정보를 삽입
                 pstmt = con.prepareStatement(rentBookQuery);
                 pstmt.setInt(1, borrowRecordDTO.getBookCode());
-                pstmt.setString(2, borrowRecordDTO.getUserId());
+                pstmt.setString(2, UserSession.getUserDTO().getUserId());
                 pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
 
                 result = pstmt.executeUpdate();
