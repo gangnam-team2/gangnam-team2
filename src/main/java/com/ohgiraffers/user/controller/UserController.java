@@ -24,7 +24,6 @@ public class UserController {
                 System.out.println("1. 사용자로 회원가입");
                 System.out.println("2. 관리자로 회원가입");
                 System.out.println("3. 이전 메뉴로 돌아가기");
-                System.out.println("0. 종료 ");
                 System.out.print("원하는 서비스의 번호를 입력해주세요: ");
                 int result = sc.nextInt();
                 sc.nextLine();
@@ -46,16 +45,17 @@ public class UserController {
                     }
                 }
 
-                System.out.print("본인의 이름을 입력해주세요: ");
-                String name = sc.nextLine();
-                System.out.print("아이디를 입력해주세요: ");
-                String id = sc.nextLine();
-                System.out.print("비밀번호를 입력 해주세요: ");
-                String pwd = sc.nextLine();
+
 
                 switch (result) {
                     case 1: // 사용자로 회원가입
                         boolean role = false;
+                        System.out.print("본인의 이름을 입력해주세요: ");
+                        String name = sc.nextLine();
+                        System.out.print("아이디를 입력해주세요: ");
+                        String id = sc.nextLine();
+                        System.out.print("비밀번호를 입력 해주세요: ");
+                        String pwd = sc.nextLine();
                         UserDTO newUser = new UserDTO(id, name, pwd, role);
                         if (userDAO.insertuser(getConnection(), newUser)) {
                             System.out.println("회원가입 성공!");
@@ -67,17 +67,21 @@ public class UserController {
 
                     case 2: // 관리자로 회원가입
                         boolean role2 = true;
-                        UserDTO newUser2 = new UserDTO(id, name, pwd, role2);
+
+                        System.out.print("본인의 이름을 입력해주세요: ");
+                        String name1 = sc.nextLine();
+                        System.out.print("아이디를 입력해주세요: ");
+                        String id1 = sc.nextLine();
+                        System.out.print("비밀번호를 입력 해주세요: ");
+                        String pwd1 = sc.nextLine();
+
+                        UserDTO newUser2 = new UserDTO(id1, name1, pwd1, role2);
                         if (userDAO.insertuser(getConnection(), newUser2)) {
                             System.out.println("회원가입 성공!");
                             isSigningUp = false; // 회원가입 성공 후 이전 메뉴로 돌아가기
                         } else {
                             System.out.println("회원가입 실패! 아이디가 이미 존재합니다.");
                         }
-                        break;
-                    case 0:
-                        System.out.println(" 프로그램을 종료하겠습니다. ");
-                        isSigningUp = false;
                         break;
 
                     default:
@@ -96,12 +100,10 @@ public class UserController {
 
         while (!isLoggedIn) {
             try {
-
                 System.out.println("----- 로그인을 진행하겠습니다. -----");
                 System.out.println("1. 로그인");
                 System.out.println("2. 회원탈퇴");
                 System.out.println("3. 이전 메뉴로 돌아가기");
-                System.out.println("0. 종료");
                 System.out.print("원하는 서비스의 번호를 입력해주세요: ");
                 int result = sc.nextInt();
                 sc.nextLine();
@@ -126,15 +128,14 @@ public class UserController {
                     }
                 }
 
-                System.out.print("아이디를 입력해주세요: ");
-                String id = sc.nextLine();
-                System.out.print("비밀번호를 입력해주세요: ");
-                String pwd = sc.nextLine();
-
-                UserDTO loginUser = new UserDTO(id, pwd);
-
                 switch (result) {
                     case 1:
+                        System.out.print("아이디를 입력해주세요: ");
+                        String id = sc.nextLine();
+                        System.out.print("비밀번호를 입력해주세요: ");
+                        String pwd = sc.nextLine();
+                        UserDTO loginUser = new UserDTO(id, pwd);
+
                         if (userDAO.selectuser(getConnection(), loginUser)) {
                             if (loginUser.getUserRole()) {
                                 System.out.println("관리자 로그인 성공!");
@@ -152,30 +153,29 @@ public class UserController {
 
                     case 2:
                         // 회원탈퇴
-                        if (userDAO.deleteuser(getConnection(), loginUser)) {
+
+                        System.out.print("아이디를 입력해주세요: ");
+                        String id1 = sc.nextLine();
+                        System.out.print("비밀번호를 입력해주세요: ");
+                        String pwd1 = sc.nextLine();
+                        UserDTO loginUser1 = new UserDTO(id1, pwd1);
+
+                        if (userDAO.deleteuser(getConnection(), loginUser1)) {
                             System.out.println("회원탈퇴 성공!");
                         } else {
                             System.out.println("회원탈퇴 실패! 아이디와 비밀번호를 확인해주세요.");
                         }
                         break;
 
-                    case 3:
-                        System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
-                        break;
-
-                    case 0:
-                        System.out.println(" 프로그램을 종료합니다. ");
-                        isLoggedIn = false;
-
-                        break;
-
                     default:
-                        System.out.println(" 잘못된 선택 입니다. ");
+                        System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
                 }
+
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
                 sc.nextLine();
             }
-        } return false; // 기본적으로 실패로 반환
+        }  // 기본적으로 실패로 반환
+        return false;
     }
 }
