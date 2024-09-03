@@ -56,11 +56,11 @@ public class ManagerDAO {
         return allMembersInfolist;
     }
 
-    public List<Map<UserDTO, BookDTO>> selectAllBooksInfo(Connection con) {
+    public Map<String, List<BookDTO>> selectAllBooksInfo(Connection con) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
         List<UserDTO> userId =new ArrayList<>();
-        List<BookDTO> allBooksInfolist = new ArrayList<BookDTO>();
+        List<BookDTO> allBooksInfolist = new ArrayList<>();
         Map<String, List<BookDTO>> userBooks = new HashMap<>();
 
 
@@ -70,7 +70,9 @@ public class ManagerDAO {
             pstmt = con.prepareStatement(query);
             pstmt.setBoolean(1, false);  // 대여 가능한 책 목록 조회
             rset = pstmt.executeQuery();
+
             String a="";
+
             while (rset.next()) {
                 BookDTO bookInfo = new BookDTO();
 
@@ -90,6 +92,7 @@ public class ManagerDAO {
             }
 
             userBooks.put(a, allBooksInfolist);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -116,7 +119,7 @@ public class ManagerDAO {
                 }
             }
         }
-        return userBook;
+        return userBooks;
     }
 
     public List<BorrowRecordDTO> selectMemberHistoy(Connection con){
