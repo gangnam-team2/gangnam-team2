@@ -27,13 +27,11 @@ public class BorrowRecordController {
 
             Scanner sc = new Scanner(System.in);
             System.out.println("대여하고 싶은 책의 코드를 입력해주세요.");
+            System.out.print("코드 입력 : ");
             int bookCode = sc.nextInt();
             borrowRecordDTO.setBookCode(bookCode);
             Date borrowDate = Date.valueOf(LocalDate.now());
             borrowRecordDTO.setBorrowDate(borrowDate);
-
-            System.out.println(userDTO.getUserId() + " id ");
-            System.out.println(bookDTO.isBookStatus() +"status");
 
             int result = borrowRecordDAO.rentBook(getConnection(), borrowRecordDTO);
             if (result > 0) {

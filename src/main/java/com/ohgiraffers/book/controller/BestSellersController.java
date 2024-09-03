@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.ohgiraffers.common.JDBCTemplate.close;
+import static com.ohgiraffers.common.JDBCTemplate.getConnection;
+
 public class BestSellersController {
     private BestSellersDAO bestSellersDAO;
     private Scanner sc;
@@ -43,9 +46,9 @@ public class BestSellersController {
                 return;
         }
 
-        Connection con = JDBCTemplate.getConnection();
+        Connection con = getConnection();
         List<BookDTO> bestSellersList = bestSellersDAO.selectBestSellersByPeriod(con, period);
-        JDBCTemplate.close(con);
+        close(con);
 
         if (!bestSellersList.isEmpty()) {
             System.out.println("가장 많이 대여된 도서 목록 (" + period + "):");
