@@ -1,16 +1,13 @@
 package com.ohgiraffers.borrowrecord.controller;
 
 
-import com.ohgiraffers.book.dao.BookDAO;
-import com.ohgiraffers.book.dto.BookDTO;
 import com.ohgiraffers.borrowrecord.dao.BorrowRecordDAO;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.mypage.dao.MypageDAO;
-
-
+import com.ohgiraffers.user.dto.UserDTO;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static com.ohgiraffers.common.JDBCTemplate.getConnection;
@@ -18,50 +15,62 @@ import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 public class BorrowRecordController {
     BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
     BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
-
-//    public void rentBook(){
-//
-//        //borrowRecordDAO.showBookList(getConnection(),borrowRecordDTO);
-//
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("대여하고 싶은 책의 코드를 입력해주세요.");
-//        int bookCode = sc.nextInt();
-//        System.out.println("대여일을 입력해주세요.(년/월/일)");
-//        LocalDate borrowDate = LocalDate.parse(sc.next());
-//        borrowRecordDTO.setBorrowDate(borrowDate);
-//
-//        int result = borrowRecordDAO.rentBook(getConnection(),borrowRecordDTO);
-//        if(result > 0){
-//            System.out.println(borrowDate + " 부터 도서 대여가 시작됩니다. 반납 예정일은 2주 후 입니다.");
-//        }else{
-//            System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
-//        }
-//
-//        //borrowRecordDAO.overDueBook(getConnection(),borrowRecordDTO);
-//    }
+    UserDTO userDTO = new UserDTO();
 
 
+    public void rentBook(){
+        try{
+            borrowRecordDAO.showBookList(getConnection(),borrowRecordDTO);
 
-//    public void returnBook(){
-//
-//        MypageDAO mypageDAO = new MypageDAO();
-//        mypageDAO.currentBorrowBooks(getConnection(),borrowRecordDTO);
-//
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("반납할 책의 코드 번호를 입력해주세요.");
-//        int bookCode = sc.nextInt();
-//        LocalDate returnDate = LocalDate.now();
-//        borrowRecordDTO.setReturnDate(returnDate);
-//
-//        int result = borrowRecordDAO.returnBook(getConnection(),borrowRecordDTO);
-//        if(result > 0){
-//            System.out.println("도서 반납이 완료 되었습니다.");
-//        }else {
-//            System.out.println("도서 반납에 실패했습니다. 다시 시도해주세요.");
-//        }
-//    }
+            Scanner sc = new Scanner(System.in);
+            System.out.println("대여하고 싶은 책의 코드를 입력해주세요.");
+            int bookCode = sc.nextInt();
+            System.out.println("대여일을 입력해주세요.(년-월-일)");
+            Date borrowDate = Date.valueOf(sc.next());
+            borrowRecordDTO.setBorrowDate(borrowDate);
+            System.out.println(borrowDate + " 부터 도서 대여가 시작됩니다. 반납 예정일은 대여 시작일 부터 2주 후인 "+ borrowDate.toLocalDate().plusWeeks(2) + "입니다.");
 
-    private String loggedInUserId;          // 로그인된 사용자 ID를 저장할 필드임
+            LocalDate currentDate = LocalDate.now();
+            if (currentDate.isAfter(borrowRecordDTO.getBorrowDate().toLocalDate())) {
+                int result = borrowRecordDAO.rentBook(getConnection(), borrowRecordDTO);
+                if (result > 0) {
+                    borrowRecordDAO.overDueBook(getConnection(),borrowRecordDTO);
+                }
+            }
+        } catch (
+                InputMismatchException e) {
+            System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
+        }
+    }
+
+
+
+    public void returnBook() {
+        try {
+            MypageDAO mypageDAO = new MypageDAO();
+            mypageDAO.currentBorrowBooks(getConnection(), borrowRecordDTO, userDTO);
+
+            Scanner sc = new Scanner(System.in);
+            System.out.println("반납할 책의 코드 번호를 입력해주세요.");
+            int bookCode = sc.nextInt();
+
+            LocalDate returnDate = LocalDate.now();
+            borrowRecordDTO.setReturnDate(Date.valueOf(returnDate));
+
+            int result = borrowRecordDAO.returnBook(getConnection(), borrowRecordDTO);
+            if (result > 0) {
+                System.out.println("도서 반납이 완료 되었습니다.");
+            } else {
+                System.out.println("도서 반납에 실패했습니다. 다시 시도해주세요.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
+        }
+    }
+
+
+
+   /* private String loggedInUserId;          // 로그인된 사용자 ID를 저장할 필드임
     BookDAO bookDAO = new BookDAO();
 
     // 로그인 후 사용자 ID를 설정하는 메서드
@@ -137,6 +146,6 @@ public class BorrowRecordController {
         }else {
             System.out.println("도서 반납에 실패했습니다. 다시 시도해주세요.");
         }
-    }
+    }*/
 }
 

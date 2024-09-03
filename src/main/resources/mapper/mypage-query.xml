@@ -25,15 +25,16 @@
 
     <entry key="allBorrowBookList">
         SELECT
-        BOOK_CODE, BOOK_TITLE, BORROW_DATE, RETURN_DATE
-        FROM BORROW_RECORDS;
+            BOOK_CODE, BOOK_TITLE, BORROW_DATE, RETURN_DATE
+          FROM BORROW_RECORDS
+        WHERE USER_ID = ?;
     </entry>
 
 
     <entry key="pwdUpdate">
         UPDATE USERS
         SET USER_PWD = ?
-        WHERE USER_PWD = ? ;
+        WHERE USER_PWD = ?;
     </entry>
 
 

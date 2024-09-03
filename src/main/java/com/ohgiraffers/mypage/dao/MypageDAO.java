@@ -31,7 +31,7 @@ public class MypageDAO {
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1,borrowRecordDTO.getBookCode());
-            pstmt.setDate(2, Date.valueOf(borrowRecordDTO.getBorrowDate()));
+            pstmt.setDate(2, borrowRecordDTO.getBorrowDate());
 
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -64,17 +64,17 @@ public class MypageDAO {
     }
 
 
-    public void currentBorrowBooks(Connection con, BorrowRecordDTO borrowRecordDTO){
-        Statement stmt = null;
+    public void currentBorrowBooks(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO){
+
+        PreparedStatement pstmt = null;
         ResultSet rset = null;
-        String query = "SELECT\n" +
-                "            BOOK_CODE, BOOK_TITLE, BORROW_DATE, DUE_DATE\n" +
-                "          FROM BORROW_RECORDS\n" +
-                "        WHERE USER_ID = '" +borrowRecordDTO.getUserId() + "' AND BOOK_STATUS = 'FALSE';";
+        String query = prop.getProperty("currentBorrowBooks");
 
         try {
-            stmt = con.createStatement();
-            rset = stmt.executeQuery(query);
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, userDTO.getUserId());
+            rset = pstmt.executeQuery();
 
             while (rset.next()) {
                 System.out.println(rset.getInt(1)+ " " + rset.getString(2)+ " "
@@ -84,21 +84,21 @@ public class MypageDAO {
             throw new RuntimeException(e);
         }finally {
             close(con);
-            close(stmt);
+            close(pstmt);
             close(rset);
         }
     }
 
 
-    public void allBorrowBookList(Connection con, BorrowRecordDTO borrowRecordDTO){
-        Statement stmt = null;
+    public void allBorrowBookList(Connection con, BorrowRecordDTO borrowRecordDTO,UserDTO userDTO){
+        PreparedStatement pstmt = null;
         ResultSet rset = null;
         String query = prop.getProperty("allBorrowBookList");
 
-
        try {
-            stmt = con.createStatement();
-            rset = stmt.executeQuery(query);
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, userDTO.getUserId());
+            rset = pstmt.executeQuery();
 
             while (rset.next()) {
                 System.out.println(rset.getInt(1)+ " " + rset.getString(2)+ " "+rset.getDate(3)+" "+rset.getDate(4));
@@ -107,7 +107,7 @@ public class MypageDAO {
             throw new RuntimeException(e);
         }finally {
             close(con);
-            close(stmt);
+            close(pstmt);
             close(rset);
         }
    }
