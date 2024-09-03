@@ -31,7 +31,6 @@ public class MypageDAO {
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1,borrowRecordDTO.getBookCode());
-            pstmt.setBoolean(2,false);
 
             result = pstmt.executeUpdate();
 
