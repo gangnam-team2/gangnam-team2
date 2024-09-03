@@ -229,7 +229,7 @@ public boolean totallogin() {
                     System.out.print("비밀번호를 입력해주세요: ");
                     String pwd = sc.nextLine();
 
-                    // 로그인 로직 수행 및 세션 저장
+                    // 로그인 세션 저장
                     login(id, pwd);
 
                     // 이후 로직 (예: 로그인 성공 시 isLoggedIn 변경)
@@ -279,16 +279,16 @@ public boolean totallogin() {
     return false; // 기본적으로 실패로 반환
 }
 
+    // 로그인 세션 저장하기 위함
     public void login(String username, String password) {
-        // 로그인 로직 (유효성 검사 및 데이터베이스 확인)
         UserDTO loginUser = new UserDTO(username, password);
         UserSession userSession = new UserSession();
 
         if (userDAO.selectuser(getConnection(), loginUser)) {
-            userSession.setUserDTO(loginUser); // 로그인된 사용자 정보를 세션에 저장
-            System.out.println("로그인 성공! 사용자 ID: " + loginUser.getUserId()); // 로그로 확인
+            userSession.setUserDTO(loginUser);          // 여기서 로그인된 사용자 정보를 세션에 저장함
+            System.out.println("환영합니다 " + loginUser.getUserId() + "님 !");
         } else {
-            System.out.println("로그인 실패. 아이디나 비밀번호를 확인해주세요.");
+            System.out.println("로그인에 실패하였습니다. 아이디나 비밀번호를 확인해주세요.");
         }
     }
 
