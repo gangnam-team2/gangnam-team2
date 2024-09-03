@@ -13,7 +13,7 @@
 
 
     <entry key="updateRequest">
-        UPDATE BORROW_RECORDS
+        UPDATE BOOKS
         SET BOOK_CODE =?, BOOK_STATUS =0;
     </entry>
 
