@@ -14,7 +14,7 @@
         <![CDATA[
             SELECT request_id, book_title, book_author, book_publisher, requests_status, created_at, book_genre
         FROM requests
-    ]]>
+        ]]>
     </entry>
 
     <!--요청된 도서 추가후 목록에서 도서 지우기-->
