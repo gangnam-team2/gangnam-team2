@@ -1,5 +1,6 @@
 package com.ohgiraffers.mypage.dao;
 
+import com.ohgiraffers.book.usersession.UserSession;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.user.dto.UserDTO;
 
@@ -13,7 +14,6 @@ public class MypageDAO {
     private Properties prop = new Properties();
 
     public MypageDAO() {
-        prop = new Properties();
         try {
             prop.loadFromXML(getClass().getResourceAsStream("/mapper/mypage-query.xml"));
         } catch (Exception e) {
@@ -21,124 +21,126 @@ public class MypageDAO {
         }
     }
 
-
-
-    public int updateRequest(Connection con, BorrowRecordDTO borrowRecordDTO){
+    public int updateRequest(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("updateRequest");
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setInt(1,borrowRecordDTO.getBookCode());
+            pstmt.setInt(1, borrowRecordDTO.getBookCode());
 
             result = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            close(con);
+        } finally {
             close(pstmt);
-        }return result;
+        }
+        return result;
     }
 
-
-    public void currentBorrowBooks(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO){
-
+    public List<BorrowRecordDTO> currentBorrowBooks(Connection con, String userId) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
+        List<BorrowRecordDTO> borrowedBooks = new ArrayList<>();
         String query = prop.getProperty("currentBorrowBooks");
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1, userDTO.getUserId());
+            pstmt.setString(1, userId);
             rset = pstmt.executeQuery();
-            if (rset!=null) {
-                while (rset.next()) {
-                    System.out.println("북코드: " + rset.getInt(1) + "\n" + "제목: " + rset.getString(2) + "\n"
-                            + "대여 날짜: " + rset.getDate(3) + "\n" + "반납 예정일: " + rset.getDate(4));
-                }
-            }else{
-                System.out.println("현재 대여중인 책이 없습니다.");
+
+            while (rset.next()) {
+                BorrowRecordDTO book = new BorrowRecordDTO();
+                book.setBookCode(rset.getInt("book_code"));
+                book.setBookTitle(rset.getString("book_title"));
+                book.setBorrowDate(rset.getDate("borrow_date"));
+                book.setDueDate(rset.getDate("due_date"));
+                borrowedBooks.add(book);
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            close(con);
-            close(pstmt);
+        } finally {
             close(rset);
+            close(pstmt);
         }
+
+        return borrowedBooks;
     }
 
-
-
-    public void myOverDueBooks (Connection con, BorrowRecordDTO borrowRecordDTO) {
-
+    public void myOverDueBooks(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         String query = prop.getProperty("myOverDueBooks");
 
         try {
-           pstmt = con.prepareStatement(query);
-           pstmt.setString(1, borrowRecordDTO.getUserId());
-           rs = pstmt.executeQuery();
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, userDTO.getUserId());
+            rs = pstmt.executeQuery();
 
-            if(rs!=null) {
-                while (rs.next()) {
-                    System.out.println("북코드: " + rs.getInt(1) + "\n"
-                            + "제목: " + rs.getString(2) + "\n" + "대여일: " + rs.getDate(3) + "\n"+ "반납 예정일: " + rs.getDate(4));
-                }
-            }else{
+            if (rs != null && rs.next()) {
+                do {
+                    System.out.printf("북코드: %d | 제목: %s | 대여일: %s | 반납 예정일: %s\n",
+                            rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getDate(4));
+                } while (rs.next());
+            } else {
                 System.out.println("연체된 책이 없습니다.");
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            close(rs);
+            close(pstmt);
         }
     }
 
-    public void allBorrowBookList(Connection con, BorrowRecordDTO borrowRecordDTO,UserDTO userDTO){
+    public void allBorrowBookList(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
         String query = prop.getProperty("allBorrowBookList");
 
-       try {
+        try {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, userDTO.getUserId());
             rset = pstmt.executeQuery();
-            if(rset!=null) {
-                while (rset.next()) {
-                    System.out.println("북코드: " + rset.getInt(1) + "\n" + "제목: " + rset.getString(2) + "\n" + "대여일: " + rset.getDate(3) + "\n" + "반납 예정일: " + rset.getDate(4) + "\n" + "실제 반납일: " + rset.getDate(5));
-                }
-            }else{
+
+            if (rset != null && rset.next()) {
+                do {
+                    System.out.printf("북코드: %d | 제목: %s | 대여일: %s | 반납 예정일: %s | 실제 반납일: %s\n",
+                            rset.getInt(1), rset.getString(2),
+                            rset.getDate(3), rset.getDate(4), rset.getDate(5));
+                } while (rset.next());
+            } else {
                 System.out.println("대여 목록이 없습니다.");
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            close(con);
-            close(pstmt);
+        } finally {
             close(rset);
+            close(pstmt);
         }
     }
 
-
-    public int pwdUpdate (Connection con, UserDTO userDTO, String changePwd){
+    public int pwdUpdate(Connection con, UserDTO userDTO, String changePwd) {
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("pwdUpdate");
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(2,userDTO.getUserPwd());
-            pstmt.setString(1,changePwd);
+            pstmt.setString(1, changePwd);
+            pstmt.setString(2, userDTO.getUserPwd());
 
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            close(con);
+        } finally {
             close(pstmt);
-        }return result;
+        }
+        return result;
     }
 }
