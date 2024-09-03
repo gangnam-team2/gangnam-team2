@@ -16,9 +16,6 @@ public class BorrowRecordDTO {
     private boolean overDueBooks;
     private int borrowCode;
 
-    public BorrowRecordDTO() {
-    }
-
     public BorrowRecordDTO(String userId, int bookCode, Date borrowDate, Date dueDate,
                            Date returnDate, boolean bookStatus, boolean overDueBooks, int borrowCode) {
         this.userId = userId;
@@ -31,6 +28,11 @@ public class BorrowRecordDTO {
         this.borrowCode = borrowCode;
     }
 UserDTO userDTO = new UserDTO();
+
+    public BorrowRecordDTO() {
+
+    }
+
     public int getBorrowCode() {
         return borrowCode;
     }
