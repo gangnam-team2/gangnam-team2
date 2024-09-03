@@ -1,12 +1,9 @@
 package com.ohgiraffers.borrowrecord.controller;
 
 
-import com.mysql.cj.Session;
-import com.ohgiraffers.book.dto.BookDTO;
-import com.ohgiraffers.book.usersession.UserSession;
+import com.ohgiraffers.usersession.UserSession;
 import com.ohgiraffers.borrowrecord.dao.BorrowRecordDAO;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
-import com.ohgiraffers.mypage.dao.MypageDAO;
 import com.ohgiraffers.user.dto.UserDTO;
 import java.sql.Connection;
 import java.sql.Date;

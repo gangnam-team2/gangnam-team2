@@ -1,10 +1,8 @@
 package com.ohgiraffers.borrowrecord.dao;
 
-import com.ohgiraffers.book.controller.BookController;
-import com.ohgiraffers.book.dto.BookDTO;
-import com.ohgiraffers.book.usersession.UserSession;
+import com.ohgiraffers.usersession.UserSession;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
-import com.ohgiraffers.user.dto.UserDTO;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

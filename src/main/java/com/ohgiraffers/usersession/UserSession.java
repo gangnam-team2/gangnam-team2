@@ -1,4 +1,4 @@
-package com.ohgiraffers.book.usersession;
+package com.ohgiraffers.usersession;
 
 import com.ohgiraffers.user.dto.UserDTO;
 
