@@ -39,12 +39,13 @@ public class RequestController { // 도서 요청 컨트롤러, 서현준이가 
                 if(result > 0){
                     System.out.println("도서 요청이 성공적으로 이루어졌습니다.");
                     System.out.println("계속 추가하시겠습니까?\n" +
-                            "Y = 계속 도서 추가하기\n" +
-                            "N = 이전 선택창으로 돌아가기");
-                    String answer = scr.nextLine();
-                    if(answer.equals("Y")){
+                            "1. 계속 도서 추가하기\n" +
+                            "2. 이전 선택창으로 돌아가기");
+                    System.out.print("선택 : ");
+                    int answer = scr.nextInt();
+                    if(answer==1){
                         continue;
-                    }else if(answer.equals("N")){
+                    }else if(answer==2){
                         break;
                     }else{
                         throw new InputMismatchException();
