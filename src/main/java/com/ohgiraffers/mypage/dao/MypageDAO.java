@@ -40,7 +40,6 @@ public class MypageDAO {
             close(con);
             close(pstmt);
         }return result;
-
     }
 
 
@@ -77,8 +76,8 @@ public class MypageDAO {
             rset = pstmt.executeQuery();
 
             while (rset.next()) {
-                System.out.println(rset.getInt(1)+ " " + rset.getString(2)+ " "
-                        + rset.getDate(3)+ " " + rset.getDate(4));
+                System.out.println("북코드: " + rset.getInt(1)+ " " +"제목: " + rset.getString(2)+ " "
+                        +"대여 날짜: " + rset.getDate(3)+ " " +"반납 예정일: " + rset.getDate(4));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

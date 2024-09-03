@@ -17,12 +17,12 @@
 
     <entry key="rentBook">
         UPDATE BORROW_RECORDS
-            SET BOOK_CODE = ?, BOOK_STATUS=false, USER_ID = ?, BORROW_DATE =?;
+            SET BOOK_CODE =?, BOOK_STATUS=0, USER_ID =?, BORROW_DATE =?;
     </entry>
 
     <entry key="returnBook">
-        UPDATE BOOKS, BORROW_RECORDS
-            SET BOOK_CODE =?, BOOK_STATUS=true, RETURN_DATE = ?;
+        UPDATE BORROW_RECORDS
+            SET BOOK_CODE =?, BOOK_STATUS=1, RETURN_DATE = ?;
     </entry>
 
 <!--    &lt;!&ndash; 책 대여를 위한 쿼리 &ndash;&gt;
@@ -44,7 +44,8 @@
 
     <entry key="overDueBooks">
         UPDATE BORROW_RECODES
-        SET BOOK_CODE = ? , BOOK_STATUS = FALSE, USER_ID = ?, OVER_DUE_BOOKS = TRUE;
+          SET BOOK_CODE = ? , BOOK_STATUS = 0, USER_ID = ?, OVER_DUE_BOOKS = 1;
+
     </entry>
 
 <!--    &lt;!&ndash; 현재 로그인한 사용자의 대여 중인 책 목록을 가져오는 쿼리 &ndash;&gt;
