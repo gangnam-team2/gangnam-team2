@@ -10,9 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import static com.ohgiraffers.common.JDBCTemplate.*;
 
@@ -58,31 +56,40 @@ public class ManagerDAO {
         return allMembersInfolist;
     }
 
-    public List<BookDTO> selectAllBooksInfo(Connection con) {
+    public List<Map<UserDTO, BookDTO>> selectAllBooksInfo(Connection con) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
-        List<BookDTO> allBooksInfolist = new ArrayList<>();
+        List<UserDTO> userId =new ArrayList<>();
+        List<BookDTO> allBooksInfolist = new ArrayList<BookDTO>();
+        Map<String, List<BookDTO>> userBooks = new HashMap<>();
+
+
         String query = prop.getProperty("selectBookList");
 
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setBoolean(1, false);  // 대여 가능한 책 목록 조회
             rset = pstmt.executeQuery();
-
+            String a="";
             while (rset.next()) {
                 BookDTO bookInfo = new BookDTO();
-                UserDTO userInfo = new UserDTO();
 
-                userInfo.setUserId(rset.getString("user_id"));
+                a = rset.getString("user_id");
+
                 bookInfo.setBookCode(rset.getInt("book_code"));
                 bookInfo.setBookTitle(rset.getString("book_title"));
                 bookInfo.setBookAuthor(rset.getString("book_author"));
                 bookInfo.setBookPublisher(rset.getString("book_publisher"));
                 bookInfo.setBookGenre(rset.getString("book_genre"));
-                bookInfo.setUserInfo(userInfo);  // 책 정보에 사용자 정보 추가
+
+                // bookInfo.setUserInfo(userInfo);  // 책 정보에 사용자 정보 추가 불가
 
                 allBooksInfolist.add(bookInfo);
+
+
             }
+
+            userBooks.put(a, allBooksInfolist);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -109,7 +116,7 @@ public class ManagerDAO {
                 }
             }
         }
-        return allBooksInfolist;
+        return userBook;
     }
 
     public List<BorrowRecordDTO> selectMemberHistoy(Connection con){

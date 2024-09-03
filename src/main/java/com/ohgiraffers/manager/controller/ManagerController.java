@@ -31,9 +31,9 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
 
                 int num = scr.nextInt();
                 switch (num){
-                    case 1: allMembersInfo(); break loop;
-                    case 2: findBookList(); break loop;
-                    case 3: memberHistoy(); break loop;
+                    case 1: allMembersInfo(); break;
+                    case 2: findBookList(); break;
+                    case 3: memberHistoy(); break;
                     case 4: break loop;
 
                     default: break;
@@ -54,7 +54,8 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
         allMembersInfo = managerDAO.selectAllMembersInfo(getConnection());
         System.out.println("회원 정보 리스트");
         for (UserDTO member : allMembersInfo){
-            System.out.println(member);
+            System.out.println("USER ID: " + member.getUserId() + "USER NAME: " + member.getUserName()
+            + "USER JOIN DATE" + member.getUserCreatedAt() + "USER UPDATE DATE" + member.getUserUpdatedAt());
         }
     }
 
@@ -63,7 +64,7 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
         allBookList = managerDAO.selectAllBooksInfo(getConnection());
         System.out.println("대여 중인 책과 그 회원 목록:");
         for (BookDTO book : allBookList) {
-            System.out.println(book);
+            System.out.println(book.);
         }
     }
 
