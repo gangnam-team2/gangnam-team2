@@ -23,6 +23,12 @@
         ]]>
     </entry>
 
+    <entry key="updateBookStatus">
+        <![CDATA[
+            UPDATE books SET book_status = ? WHERE book_code = ?
+        ]]>
+    </entry>
+
 
     <entry key="returnBook">
         UPDATE BORROW_RECORDS
