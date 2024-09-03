@@ -61,19 +61,19 @@ public class BorrowRecordDAO {
         int result = 0;
         String query = prop.getProperty("rentBook");
 
-        try {
-            pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, borrowRecordDTO.getBookCode());
-            pstmt.setString(2, borrowRecordDTO.getUserId());
-            pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
+            try {
+                pstmt = con.prepareStatement(query);
+                pstmt.setInt(1, borrowRecordDTO.getBookCode());
+                pstmt.setString(2, borrowRecordDTO.getUserId());
+                pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
 
-            result = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(pstmt);
-            close(con);
-        }
+                result = pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                close(pstmt);
+                close(con);
+            }
 
         return result;
     }
@@ -131,7 +131,7 @@ public class BorrowRecordDAO {
             pstmt.setInt(1, borrowRecordDTO.getBookCode());
             pstmt.setString(2, borrowRecordDTO.getUserId());
             pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
-
+            
             // dueDate는 Mysql에서 자동으로 추가 되니까 따로 추가 ㄴㄴ
 
             result = pstmt.executeUpdate();

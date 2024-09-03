@@ -11,7 +11,7 @@ public class BookDTO {
     private String bookAuthor;
     private String bookPublisher;
     private String bookGenre;
-    private boolean bookStatus; // true: 대여 중, false: 대여 가능
+    private boolean bookStatus; // true: 대여 가능, false: 대여 불가능
     private int borrowCount;
 
     public BookDTO() {}

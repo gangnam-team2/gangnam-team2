@@ -95,7 +95,8 @@ public class MypageDAO {
         ResultSet rset = null;
         String query = prop.getProperty("allBorrowBookList");
 
-        try {
+       try {
+
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, userDTO.getUserId());
             rset = pstmt.executeQuery();
