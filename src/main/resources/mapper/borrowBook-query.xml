@@ -23,6 +23,14 @@
         ]]>
     </entry>
 
+    <entry key="incrementBorrowCount">
+        <![CDATA[
+            UPDATE books
+              SET borrow_count = borrow_count + 1
+            WHERE book_code = ?
+        ]]>
+    </entry>
+
     <entry key="deleteBorrowRecord">
         <![CDATA[
             DELETE FROM borrow_records WHERE book_code = ? AND user_id = ?

@@ -22,8 +22,11 @@ public class BorrowRecordController {
         try {
             BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
             BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
+
+            // showBookList를 호출해서 List형식으로 반환
             List<Integer> availableBookCodes = borrowRecordDAO.showBookList(getConnection(), borrowRecordDTO);
 
+            // availableBookCodes 이거는 리스트가 비어 있으면 대여할 수 있는 책이 있는지 없는지 검증
             if (availableBookCodes.isEmpty()) {
                 System.out.println("대여 가능한 책이 없습니다.");
                 return;
@@ -34,6 +37,7 @@ public class BorrowRecordController {
             System.out.print("도서 코드 입력 : ");
             int bookCode = sc.nextInt();
 
+            // availableBookCodes여기에 사용자가 입력한 도서 코드가 없으면 실행 -> 리스트로 가져온 북 리스트에서 북 코드 비교
             if (!availableBookCodes.contains(bookCode)) {
                 System.out.println("이미 대여되었거나 존재하지 않는 도서입니다. 다시 시도해주세요.");
                 return;
