@@ -35,6 +35,7 @@ public class BorrowRecordDAO {
                 stmt = con.createStatement();
                 rs = stmt.executeQuery(query);
                 if (rs != null) {
+                    System.out.println("============= 대여 가능한 도서 =============");
                     while (rs.next()) {
                         System.out.println("북코드: " + rs.getInt(1) + " "
                                 + "제목: " + rs.getString(2) + " "
@@ -43,6 +44,7 @@ public class BorrowRecordDAO {
                                 + "출판사: " + rs.getString(5));
                         bookList.add(rs.getInt(1));
                     }
+                    System.out.println("=======================================");
                 } else {
                     System.out.println("대여 가능한 책이 없습니다.");
                 }
