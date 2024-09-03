@@ -1,16 +1,15 @@
 package com.ohgiraffers.borrowrecord.dto;
 
-import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
-import java.util.Date;
+import java.sql.Date;
+
 
 public class BorrowRecordDTO {
 
     private String userId;                // 대여자 아이디
     private int bookCode;              // 대여한 도서 코드
-    private LocalDate borrowDate;           // 대여일
-    private LocalDate dueDate;              // 반납 예정일
-    private LocalDate returnDate;           // 실제 반납일
+    private Date borrowDate;           // 대여일
+    private Date dueDate;              // 반납 예정일
+    private Date returnDate;           // 실제 반납일
     private boolean bookStatus;
     private boolean overDueBooks;
     private int borrowCode;
@@ -18,8 +17,8 @@ public class BorrowRecordDTO {
     public BorrowRecordDTO() {
     }
 
-    public BorrowRecordDTO(String userId, int bookCode, LocalDate borrowDate, LocalDate dueDate,
-                           LocalDate returnDate, boolean bookStatus, boolean overDueBooks, int borrowCode) {
+    public BorrowRecordDTO(String userId, int bookCode, Date borrowDate, Date dueDate,
+                           Date returnDate, boolean bookStatus, boolean overDueBooks, int borrowCode) {
         this.userId = userId;
         this.bookCode = bookCode;
         this.borrowDate = borrowDate;
@@ -54,27 +53,27 @@ public class BorrowRecordDTO {
         this.bookCode = bookCode;
     }
 
-    public LocalDate getBorrowDate() {
+    public Date getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(LocalDate borrowDate) {
+    public void setBorrowDate(Date borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public LocalDate getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
-    public LocalDate getReturnDate() {
+    public Date getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 

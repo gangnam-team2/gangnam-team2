@@ -5,63 +5,63 @@
 
     <entry key="showBookList">
         SELECT
-            BOOK_CODE,
-            BOOK_TITLE,
-            BOOK_AUTHOR,
-            BOOK_GENRE,
-            BOOK_PUBLISHER
-          FROM BOOKS
-        WHERE BOOK_STATUS = 'TRUE';
+        BOOK_CODE,
+        BOOK_TITLE,
+        BOOK_AUTHOR,
+        BOOK_GENRE,
+        BOOK_PUBLISHER
+        FROM BOOKS
+        WHERE BOOK_STATUS = 1;
     </entry>
 
 
-    <!--entry key="rentBook">
-        UPDATE BORROW_RECORDS
-            SET BOOK_CODE = ?, BOOK_STATUS=false, USER_ID = ?, BORROW_DATE =?;
-    </entry>-->
-
-    <!--<entry key="returnBook">
-        UPDATE BOOKS, BORROW_RECORDS
-            SET BOOK_CODE =?, BOOK_STATUS=true, RETURN_DATE = ?;
-    </entry>-->
-
-    <!-- 책 대여를 위한 쿼리 -->
     <entry key="rentBook">
-        <![CDATA[
-        INSERT INTO borrow_records (book_code, user_id, borrow_date)
-        VALUES (?, ?, ?)
-    ]]>
+        UPDATE BORROW_RECORDS
+        SET BOOK_CODE = ?, BOOK_STATUS=false, USER_ID = ?, BORROW_DATE =?;
     </entry>
 
-    <!-- 책 반납을 위한 쿼리 -->
     <entry key="returnBook">
-        <![CDATA[
-            UPDATE borrow_records
-              SET return_date = ?
-            WHERE book_code = ? AND user_id = ? AND return_date IS NULL
-        ]]>
+        UPDATE BOOKS, BORROW_RECORDS
+        SET BOOK_CODE =?, BOOK_STATUS=true, RETURN_DATE = ?;
     </entry>
+
+    <!--    &lt;!&ndash; 책 대여를 위한 쿼리 &ndash;&gt;
+        <entry key="rentBook">
+            <![CDATA[
+            INSERT INTO borrow_records (book_code, user_id, borrow_date)
+            VALUES (?, ?, ?)
+        ]]>
+        </entry>-->
+
+    <!--    &lt;!&ndash; 책 반납을 위한 쿼리 &ndash;&gt;
+        <entry key="returnBook">
+            <![CDATA[
+                UPDATE borrow_records
+                  SET return_date = ?
+                WHERE book_code = ? AND user_id = ? AND return_date IS NULL
+            ]]>
+        </entry>-->
 
     <entry key="overDueBooks">
         UPDATE BORROW_RECODES
-          SET BOOK_CODE = ? , BOOK_STATUS = FALSE, USER_ID = ?, OVER_DUE_BOOKS = TRUE;
+        SET BOOK_CODE = ? , BOOK_STATUS = FALSE, USER_ID = ?, OVER_DUE_BOOKS = TRUE;
     </entry>
 
-    <!-- 현재 로그인한 사용자의 대여 중인 책 목록을 가져오는 쿼리 -->
-    <entry key="getBorrowedBooksByUser">
-        <![CDATA[
-            SELECT book_code, borrow_date, due_date
-             FROM borrow_records
-            WHERE user_id = ? AND return_date IS NULL
-        ]]>
-    </entry>
+    <!--    &lt;!&ndash; 현재 로그인한 사용자의 대여 중인 책 목록을 가져오는 쿼리 &ndash;&gt;
+        <entry key="getBorrowedBooksByUser">
+            <![CDATA[
+                SELECT book_code, borrow_date, due_date
+                 FROM borrow_records
+                WHERE user_id = ? AND return_date IS NULL
+            ]]>
+        </entry>
 
-    <!-- 대여 가능한 책 목록을 가져오는 쿼리 -->
-    <entry key="getAvailableBooks">
-        <![CDATA[
-            SELECT book_code, book_title, book_author, book_genre
-              FROM books
-            WHERE book_status = false
-        ]]>
-    </entry>
+        &lt;!&ndash; 대여 가능한 책 목록을 가져오는 쿼리 &ndash;&gt;
+        <entry key="getAvailableBooks">
+            <![CDATA[
+                SELECT book_code, book_title, book_author, book_genre
+                  FROM books
+                WHERE book_status = false
+            ]]>
+        </entry>-->
 </properties>
