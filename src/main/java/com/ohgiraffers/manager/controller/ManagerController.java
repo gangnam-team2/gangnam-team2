@@ -6,6 +6,7 @@ import com.ohgiraffers.manager.dao.ManagerDAO;
 import com.ohgiraffers.user.dto.UserDTO;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,24 +15,37 @@ import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 public class ManagerController {
 
 private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manager-query.xml");
+    Scanner scr = new Scanner(System.in);
 
     public void displayManager(){
-        System.out.println("사용자 관리 모드 입니다.");
 
-        System.out.println("1. 회원들의 정보를 조회합니다.");
-        System.out.println("2. 대여 중인 책과 회원들을 조회합니다.");
-        System.out.println("3. 현재 연체 중인 회원들을 조회합니다.");
-        System.out.print("선택 : ");
-        Scanner scr = new Scanner(System.in);
-        int num = scr.nextInt();
-        switch (num){
-            case 1: allMembersInfo(); break;
-            case 2: findBookList(); break;
-            case 3: memberHistoy(); break;
+        loop: while(true){
+            try {
+                System.out.println("사용자 관리 모드 입니다.");
 
-            default: break;
+                System.out.println("1. 회원들의 정보를 조회합니다.");
+                System.out.println("2. 대여 중인 책과 회원들을 조회합니다.");
+                System.out.println("3. 현재 연체 중인 회원들을 조회합니다.");
+                System.out.println("4. 이전 선택창으로 돌아가기");
+                System.out.print("선택 : ");
 
+                int num = scr.nextInt();
+                switch (num){
+                    case 1: allMembersInfo(); break loop;
+                    case 2: findBookList(); break loop;
+                    case 3: memberHistoy(); break loop;
+                    case 4: break loop;
+
+                    default: break;
+
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("선택창 내의 숫자를 입력해 주세요.");
+                scr.nextLine();
+            }
         }
+
+
 
     }
 
