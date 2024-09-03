@@ -3,26 +3,16 @@
 
 <properties>
     <entry key="insertRequestedBook">
-        INSERT INTO REQUESTS
-        (
-        USER_ID,
-        BOOK_TITLE,
-        BOOK_AUTHOR,
-        BOOK_PUBLISHER
-
-        )VALUES
-        (
-        ?,
-        ?,
-        ?,
-        ?
-        )
+        <![CDATA[
+            INSERT INTO requests (user_id, book_title, book_author, book_publisher, book_genre)
+        VALUES (?, ?, ?, ?, ?)
+        ]]>
     </entry>
 
     <!--요청된 도서 가져오기-->
     <entry key="getRequestedBooks">
         <![CDATA[
-        SELECT request_id, book_title, book_author, book_publisher, requests_status, created_at, book_genre, book_quantity
+            SELECT request_id, book_title, book_author, book_publisher, requests_status, created_at, book_genre
         FROM requests
     ]]>
     </entry>
