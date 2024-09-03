@@ -18,40 +18,43 @@ import static com.ohgiraffers.common.JDBCTemplate.*;
 
 public class BorrowRecordController {
 
-    public void rentBook(){
-        try{
+    public void rentBook() {
+        try {
             BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
             BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
-            List<Integer> a = borrowRecordDAO.showBookList(getConnection(),borrowRecordDTO);
+            List<Integer> availableBookCodes = borrowRecordDAO.showBookList(getConnection(), borrowRecordDTO);
+
+            if (availableBookCodes.isEmpty()) {
+                System.out.println("대여 가능한 책이 없습니다.");
+                return;
+            }
+
             Scanner sc = new Scanner(System.in);
             System.out.println("대여하고 싶은 책의 코드를 입력해주세요.");
-            System.out.print("코드 입력 : ");
+            System.out.print("도서 코드 입력 : ");
             int bookCode = sc.nextInt();
-            if (true) {
-                loop:for (int i = 0; i < a.size(); i++) {
 
-                    if (bookCode != a.get(i)) {
-                        System.out.println("이미 대여된 책입니다.");
-                        break loop;
-                    }else{ borrowRecordDTO.setBookCode(bookCode);
-
-                        Date borrowDate = Date.valueOf(LocalDate.now());
-                        borrowRecordDTO.setBorrowDate(borrowDate);
-
-                        int result = borrowRecordDAO.rentBook(getConnection(), borrowRecordDTO);
-                        if (result > 0) {
-                            System.out.println("대여가 완료 되었습니다. 대여 시작일은 " + borrowDate + ", 반납 예정일은 대여 시작일로부터 2주 후인 " + borrowDate.toLocalDate().plusWeeks(2) + "입니다.");
-                        } else {
-                            System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
-                        }
-                }
+            if (!availableBookCodes.contains(bookCode)) {
+                System.out.println("이미 대여되었거나 존재하지 않는 도서입니다. 다시 시도해주세요.");
+                return;
             }
-            }else{
-                System.out.println("뭐 잘못됨");
+
+            borrowRecordDTO.setBookCode(bookCode);
+            Date borrowDate = Date.valueOf(LocalDate.now());
+            borrowRecordDTO.setBorrowDate(borrowDate);
+
+            int result = borrowRecordDAO.rentBook(getConnection(), borrowRecordDTO);
+            if (result > 0) {
+                System.out.println("대여가 완료되었습니다. 대여 시작일은 " + borrowDate +
+                        ", 반납 예정일은 대여 시작일로부터 2주 후인 " + borrowDate.toLocalDate().plusWeeks(2) + "입니다.");
+            } else {
+                System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
             }
+
         } catch (InputMismatchException e) {
             System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
         } finally {
+
         }
     }
 
