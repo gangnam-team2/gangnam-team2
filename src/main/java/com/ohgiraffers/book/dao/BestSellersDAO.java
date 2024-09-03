@@ -30,7 +30,22 @@ public class BestSellersDAO {
         ResultSet rs = null;
         List<BookDTO> bestSellers = new ArrayList<>();
 
-        String query = prop.getProperty("selectBestSellersByPeriod").replace("#{period}", period);
+        String periodInterval;
+        switch (period) {
+            case "이번주":
+                periodInterval = "WEEK";
+                break;
+            case "이번달":
+                periodInterval = "MONTH";
+                break;
+            case "올해":
+                periodInterval = "YEAR";
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid period: " + period);
+        }
+
+        String query = prop.getProperty("selectBestSellersByPeriod").replace("#{period}", periodInterval);
 
         try {
             pstmt = con.prepareStatement(query);
@@ -40,10 +55,12 @@ public class BestSellersDAO {
                 BookDTO book = new BookDTO();
                 book.setBookCode(rs.getInt("book_code"));
                 book.setBookTitle(rs.getString("book_title"));
+                book.setBookAuthor(rs.getString("book_author"));
+                book.setBookGenre(rs.getString("book_genre"));
                 book.setBorrowCount(rs.getInt("borrow_count"));
                 bestSellers.add(book);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             close(rs);

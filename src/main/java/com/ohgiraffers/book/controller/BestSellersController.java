@@ -1,9 +1,7 @@
 package com.ohgiraffers.book.controller;
 
 import com.ohgiraffers.book.dao.BestSellersDAO;
-import com.ohgiraffers.book.dto.BestSellersDTO;
 import com.ohgiraffers.book.dto.BookDTO;
-import com.ohgiraffers.common.JDBCTemplate;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
@@ -31,15 +29,16 @@ public class BestSellersController {
         sc.nextLine();
 
         String period = null;
+
         switch (choice) {
             case 1:
-                period = "WEEK";
+                period = "이번주";
                 break;
             case 2:
-                period = "MONTH";
+                period = "이번달";
                 break;
             case 3:
-                period = "YEAR";
+                period = "올해";
                 break;
             default:
                 System.out.println("잘못된 선택입니다.");
@@ -51,12 +50,15 @@ public class BestSellersController {
         close(con);
 
         if (!bestSellersList.isEmpty()) {
-            System.out.println("가장 많이 대여된 도서 목록 (" + period + "):");
+            System.out.println("==================== " + period + "의 베스트셀러입니다. ====================");
             for (BookDTO book : bestSellersList) {
-                System.out.println(book.getBookTitle() + " - 대여 횟수: " + book.getBorrowCount());
+                System.out.printf("도서 제목: %s | 도서 저자: %s | 도서 장르: %s | 대여 횟수: %d\n",
+                        book.getBookTitle(), book.getBookAuthor(), book.getBookGenre(), book.getBorrowCount());
+                System.out.println("---------------------------------------------------------------------");
             }
         } else {
             System.out.println("해당 기간의 베스트셀러가 없습니다.");
         }
     }
 }
+

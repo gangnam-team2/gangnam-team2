@@ -63,6 +63,7 @@ public class BorrowRecordDAO {
             int result = 0;
             String rentBookQuery = prop.getProperty("rentBook");
             String updateBookStatusQuery = prop.getProperty("updateBookStatus");
+            String incrementBorrowCountQuery = prop.getProperty("incrementBorrowCount");
 
             try {
                 // 여기는 도서 대여 정보를 삽입
@@ -78,6 +79,11 @@ public class BorrowRecordDAO {
                     pstmt = con.prepareStatement(updateBookStatusQuery);
                     pstmt.setBoolean(1, true); // 책을 대여했으므로 상태를 true로 설정 이러면 다른 사람은 대여 불가
                     pstmt.setInt(2, borrowRecordDTO.getBookCode());
+                    pstmt.executeUpdate();
+
+                    // borrow_count 증가
+                    pstmt = con.prepareStatement(incrementBorrowCountQuery);
+                    pstmt.setInt(1, borrowRecordDTO.getBookCode());
                     pstmt.executeUpdate();
                 }
             } catch (SQLException e) {
@@ -134,6 +140,8 @@ public class BorrowRecordDAO {
         return result;
     }
 
+    // 대여 가능한 도서들의 여부를 확인하려고 만든 메서드 -> 사용자가 대여중인 도서 목록 가져오려고
+    // 이게 있어야 내가 뭘 대여했는지 알 수 있고 그래야 대여 가능한 도서에서만 대여를 할 수 있음.
     public List<BorrowRecordDTO> getBorrowedBooks(Connection con, String userId) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
