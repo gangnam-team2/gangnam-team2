@@ -11,7 +11,7 @@
             BOOK_GENRE,
             BOOK_PUBLISHER
           FROM BOOKS
-        WHERE BOOK_STATUS = 1;
+        WHERE BOOK_STATUS = 0;
     </entry>
 
 
@@ -51,6 +51,17 @@
         UPDATE BORROW_RECODES
           SET BOOK_CODE = ?, USER_ID = ?, OVER_DUE_BOOKS = ?;
     </entry>
+
+
+    <entry key="overDueBookList">
+        SELECT
+            a.USER_ID, a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
+          FROM BORROW_RECORDS a JOIN BOOKS b
+        ON a.BOOK_CODE = b.BOOK_CODE
+        WHERE OVER_DUE_BOOKS = 1;
+    </entry>
+
+
 
 <!--    &lt;!&ndash; 현재 로그인한 사용자의 대여 중인 책 목록을 가져오는 쿼리 &ndash;&gt;
     <entry key="getBorrowedBooksByUser">

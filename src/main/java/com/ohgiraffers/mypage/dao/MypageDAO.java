@@ -4,7 +4,6 @@ import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.user.dto.UserDTO;
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.*;
 
 import static com.ohgiraffers.common.JDBCTemplate.*;
@@ -23,37 +22,19 @@ public class MypageDAO {
     }
 
 
-    public int updateRequest1(Connection con, BorrowRecordDTO borrowRecordDTO){
+
+    public int updateRequest(Connection con, BorrowRecordDTO borrowRecordDTO){
         PreparedStatement pstmt = null;
         int result = 0;
-        String query = prop.getProperty("updateRequest1");
+        String query = prop.getProperty("updateRequest");
 
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1,borrowRecordDTO.getBookCode());
-            pstmt.setDate(2, borrowRecordDTO.getBorrowDate());
+            pstmt.setBoolean(2,false);
 
             result = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }finally {
-            close(con);
-            close(pstmt);
-        }return result;
-    }
 
-
-    public int updateRequest2(Connection con, BorrowRecordDTO borrowRecordDTO){
-        PreparedStatement pstmt = null;
-        int result = 0;
-        String query = prop.getProperty("updateRequest2");
-
-        try {
-            pstmt = con.prepareStatement(query);
-            pstmt.setInt(1,borrowRecordDTO.getBookCode());
-            pstmt.setBoolean(2,true);
-
-            result = pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {
@@ -73,16 +54,14 @@ public class MypageDAO {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, userDTO.getUserId());
             rset = pstmt.executeQuery();
+            if (rset.next()) {
 
+            }
             while (rset.next()) {
                 System.out.println("북코드: " + rset.getInt(1)+ " " +"제목: " + rset.getString(2)+ " "
                         +"대여 날짜: " + rset.getDate(3)+ " " +"반납 예정일: " + rset.getDate(4));
             }
 
-            if (borrowRecordDTO.isOverDueBooks() == true){
-                System.out.println("현재 연체 된 책이 있습니다.");
-                overDueBooks(getConnection(), borrowRecordDTO, userDTO);
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {

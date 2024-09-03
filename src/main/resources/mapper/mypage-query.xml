@@ -8,26 +8,20 @@
             a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
           FROM BORROW_RECORDS a JOIN BOOKS b
         ON a.BOOK_CODE = b.BOOK_CODE
-        WHERE USER_ID = ? AND BOOK_STATUS = 0;
+        WHERE USER_ID = ? AND BOOK_STATUS = 1;
     </entry>
 
 
-    <entry key="updateRequest1">
+    <entry key="updateRequest">
         UPDATE BORROW_RECORDS
-        SET BOOK_CODE =?, BORROW_DATE =?;
-    </entry>
-
-
-    <entry key="updateRequest2">
-        UPDATE BORROW_RECORDS
-        SET BOOK_CODE =?, BOOK_STATUS =?;
+        SET BOOK_CODE =?, BOOK_STATUS =0;
     </entry>
 
 
     <entry key="allBorrowBookList">
         SELECT
-        a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE, a.RETURN_DATE
-        FROM BORROW_RECORDS a JOIN BOOKS b
+            a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE, a.RETURN_DATE
+          FROM BORROW_RECORDS a JOIN BOOKS b
         ON a.BOOK_CODE = b.BOOK_CODE
         WHERE USER_ID = ?
     </entry>
@@ -40,7 +34,7 @@
     </entry>
 
 
-    <entry key="overDueBooks">
+    <entry key="myOverDueBooks">
         SELECT
             a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
           FROM BORROW_RECORDS a JOIN BOOKS b
