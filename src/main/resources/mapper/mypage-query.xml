@@ -26,10 +26,10 @@
 
     <entry key="allBorrowBookList">
         SELECT
-        a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
+        a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE, a.RETURN_DATE
         FROM BORROW_RECORDS a JOIN BOOKS b
         ON a.BOOK_CODE = b.BOOK_CODE
-        WHERE USER_ID = ? AND BOOK_STATUS = 0;
+        WHERE USER_ID = ?
     </entry>
 
 
@@ -37,6 +37,15 @@
         UPDATE USERS
             SET USER_PWD = ?
         WHERE USER_PWD = ?;
+    </entry>
+
+
+    <entry key="overDueBooks">
+        SELECT
+            a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
+          FROM BORROW_RECORDS a JOIN BOOKS b
+        ON a.BOOK_CODE = b.BOOK_CODE
+        WHERE USER_ID = ? AND OVER_DUE_BOOKS = 1;
     </entry>
 
 
