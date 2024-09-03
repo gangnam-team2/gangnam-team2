@@ -40,7 +40,6 @@ public class BookDAO {
             pstmt.setString(4, bookDTO.getBookGenre());
             pstmt.setBoolean(5, bookDTO.isBookStatus());
             pstmt.setInt(6, bookDTO.getBorrowCount());
-            pstmt.setInt(7, bookDTO.getBookQuantity());
 
             result = pstmt.executeUpdate();
 
@@ -68,8 +67,7 @@ public class BookDAO {
             pstmt.setString(4, bookDTO.getBookGenre());
             pstmt.setBoolean(5, bookDTO.isBookStatus());
             pstmt.setInt(6, bookDTO.getBorrowCount());
-            pstmt.setInt(7, bookDTO.getBookQuantity());
-            pstmt.setInt(8, bookDTO.getBookCode());
+            pstmt.setInt(7, bookDTO.getBookCode());
 
             result = pstmt.executeUpdate();
 
@@ -123,8 +121,7 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count"),
-                        rs.getInt("book_quantity")
+                        rs.getInt("borrow_count")
                 );
             }
 
@@ -158,8 +155,7 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count"),
-                        rs.getInt("book_quantity")
+                        rs.getInt("borrow_count")
                 );
                 books.add(bookDTO);
             }
@@ -194,8 +190,7 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count"),
-                        rs.getInt("book_quantity")
+                        rs.getInt("borrow_count")
                 );
                 books.add(bookDTO);
             }
@@ -229,8 +224,7 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count"),
-                        rs.getInt("book_quantity")
+                        rs.getInt("borrow_count")
                 );
                 books.add(bookDTO);
             }
@@ -282,7 +276,7 @@ public class BookDAO {
                 bookDTO.setBookAuthor(rs.getString("book_author"));
                 bookDTO.setBookPublisher(rs.getString("book_publisher"));
                 bookDTO.setBookGenre(rs.getString("book_genre"));
-                bookDTO.setBookQuantity(rs.getInt("book_quantity"));
+
                 availableBooks.add(bookDTO);
             }
         } catch (SQLException e) {
