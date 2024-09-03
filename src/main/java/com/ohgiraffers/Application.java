@@ -105,13 +105,14 @@ public class Application {
                             bookController.manageBooksMenu(sc);
                         } else {
                             System.out.println("사용자: 도서 검색 메뉴 선택");
-                            bookController.searchBooksByTitle();
+                            bookController.searchBookMenu(sc);
                         }
                         break;
                     case 2:
                         if (userRole) {
                             System.out.println("관리자: 연체 도서 목록 선택");
-                            bookController.searchOverdueBooks();  // 연체 도서 목록은 관리자 기능
+                           // bookController.searchOverdueBooks();  // 연체 도서 목록은 관리자 기능
+                            borrowRecordController.overDueBooks();
                         } else {
                             System.out.println("사용자: 대여 및 반납 기능 선택");
                             System.out.println("1. 대여   2. 반납");

@@ -27,24 +27,24 @@
         ]]>
     </entry>
 
-    <!--책 코드로 찾기-->
+    <!--책 코드로 도서 가져오기-->
     <entry key="getBookByCode">
         <![CDATA[
             SELECT * FROM books WHERE book_code = ?
         ]]>
     </entry>
 
-    <!--책 제목으로 찾기-->
-    <entry key="searchBooksByTitle">
+    <!--책 코드로 도서 검색-->
+    <entry key="searchBooksByCode">
         <![CDATA[
-            SELECT * FROM books WHERE book_title LIKE ?
+            SELECT * FROM books WHERE book_code = ?
         ]]>
     </entry>
 
-    <!--책 카테고리로 찾기-->
-    <entry key="searchBooksByCategory">
+    <!--책 제목으로 도서 검색-->
+    <entry key="searchBooksByTitle">
         <![CDATA[
-            SELECT b.* FROM books b JOIN book_category bc ON b.book_code = bc.book_code WHERE bc.category_id = ?
+            SELECT * FROM books WHERE book_title LIKE ?
         ]]>
     </entry>
 

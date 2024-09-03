@@ -66,6 +66,8 @@ public class BorrowRecordDAO {
                 pstmt.setInt(1, borrowRecordDTO.getBookCode());
                 pstmt.setString(2, borrowRecordDTO.getUserId());
                 pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
+                BookDTO bookDTO = new BookDTO();
+                bookDTO.setBookStatus(true);
 
                 result = pstmt.executeUpdate();
             } catch (SQLException e) {
@@ -88,6 +90,8 @@ public class BorrowRecordDAO {
             pstmt =con.prepareStatement(query);
             pstmt.setInt(1,borrowRecordDTO.getBookCode());
             pstmt.setDate(2, borrowRecordDTO.getReturnDate());
+            BookDTO bookDTO = new BookDTO();
+            bookDTO.setBookStatus(true);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -109,6 +113,7 @@ public class BorrowRecordDAO {
                 pstmt = con.prepareStatement(query);
                 pstmt.setInt(1,borrowRecordDTO.getBookCode());
                 pstmt.setString(2,borrowRecordDTO.getUserId());
+                pstmt.setBoolean(3,true);
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -119,6 +124,29 @@ public class BorrowRecordDAO {
         }
         return result;
     }
+
+    public void overDueBookList (Connection con, BorrowRecordDTO borrowRecordDTO) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        String query = prop.getProperty("overDueBookList");
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+            if(rs!=null) {
+                while (rs.next()) {
+                    System.out.println("ID: "+ rs.getString(1) + " " + "북코드: " + rs.getInt(2) + " "
+                    + "제목: " + rs.getString(3) + " " + "대여일: " + rs.getDate(4) + " "+ "반납 예정일: " + rs.getDate(5));
+                }
+            }else{
+                System.out.println("연체된 책이 없습니다.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 /*    // 책 대여 메소드
     public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {

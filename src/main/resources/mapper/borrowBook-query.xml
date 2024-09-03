@@ -11,19 +11,24 @@
             BOOK_GENRE,
             BOOK_PUBLISHER
           FROM BOOKS
-        WHERE BOOK_STATUS = 1;
+        WHERE BOOK_STATUS = 0;
     </entry>
 
 
     <entry key="rentBook">
-        UPDATE BORROW_RECORDS
-            SET BOOK_CODE =?, BOOK_STATUS=0, USER_ID =?, BORROW_DATE =?;
+        <![CDATA[
+        INSERT INTO BORROW_RECORDS
+        (book_code, user_id, borrow_date)
+        VALUES (?, ?, ?)
+        ]]>
     </entry>
+
 
     <entry key="returnBook">
         UPDATE BORROW_RECORDS
-            SET BOOK_CODE =?, BOOK_STATUS=1, RETURN_DATE = ?;
+            SET BOOK_CODE =?, RETURN_DATE = ?;
     </entry>
+
 
 <!--    &lt;!&ndash; 책 대여를 위한 쿼리 &ndash;&gt;
     <entry key="rentBook">
@@ -31,9 +36,9 @@
         INSERT INTO borrow_records (book_code, user_id, borrow_date)
         VALUES (?, ?, ?)
     ]]>
-    </entry>-->
 
-<!--    &lt;!&ndash; 책 반납을 위한 쿼리 &ndash;&gt;
+
+<!-    &lt;!&ndash; 책 반납을 위한 쿼리 &ndash;&gt;
     <entry key="returnBook">
         <![CDATA[
             UPDATE borrow_records
@@ -44,9 +49,19 @@
 
     <entry key="overDueBooks">
         UPDATE BORROW_RECODES
-          SET BOOK_CODE = ? , BOOK_STATUS = 0, USER_ID = ?, OVER_DUE_BOOKS = 1;
-
+          SET BOOK_CODE = ?, USER_ID = ?, OVER_DUE_BOOKS = ?;
     </entry>
+
+
+    <entry key="overDueBookList">
+        SELECT
+            a.USER_ID, a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
+          FROM BORROW_RECORDS a JOIN BOOKS b
+        ON a.BOOK_CODE = b.BOOK_CODE
+        WHERE OVER_DUE_BOOKS = 1;
+    </entry>
+
+
 
 <!--    &lt;!&ndash; 현재 로그인한 사용자의 대여 중인 책 목록을 가져오는 쿼리 &ndash;&gt;
     <entry key="getBorrowedBooksByUser">

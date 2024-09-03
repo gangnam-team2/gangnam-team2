@@ -1,6 +1,7 @@
 package com.ohgiraffers.borrowrecord.controller;
 
 
+import com.ohgiraffers.book.dto.BookDTO;
 import com.ohgiraffers.borrowrecord.dao.BorrowRecordDAO;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.mypage.dao.MypageDAO;
@@ -16,6 +17,8 @@ public class BorrowRecordController {
     BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
     BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
     UserDTO userDTO = new UserDTO();
+    BookDTO bookDTO = new BookDTO();
+    MypageDAO mypageDAO = new MypageDAO();
 
 
     public void rentBook(){
@@ -25,35 +28,39 @@ public class BorrowRecordController {
             Scanner sc = new Scanner(System.in);
             System.out.println("대여하고 싶은 책의 코드를 입력해주세요.");
             int bookCode = sc.nextInt();
-            System.out.println("대여일을 입력해주세요.(년-월-일)");
-            Date borrowDate = Date.valueOf(sc.next());
+            borrowRecordDTO.setBookCode(bookCode);
+            Date borrowDate = Date.valueOf(LocalDate.now());
             borrowRecordDTO.setBorrowDate(borrowDate);
-            System.out.println(borrowDate + " 부터 도서 대여가 시작됩니다. 반납 예정일은 대여 시작일 부터 2주 후인 "+ borrowDate.toLocalDate().plusWeeks(2) + "입니다.");
 
-            LocalDate currentDate = LocalDate.now();
-            if (currentDate.isAfter(borrowRecordDTO.getBorrowDate().toLocalDate())) {
-                int result = borrowRecordDAO.rentBook(getConnection(), borrowRecordDTO);
-                if (result > 0) {
-                    borrowRecordDAO.overDueBook(getConnection(),borrowRecordDTO);
-                }
+            System.out.println(userDTO.getUserId() + " id ");
+            System.out.println(bookDTO.isBookStatus() +"status");
+
+            int result = borrowRecordDAO.rentBook(getConnection(), borrowRecordDTO);
+            if (result > 0) {
+                System.out.println("대여가 완료 되었습니다. 대여 시작일은 " + borrowDate + ", 반납 예정일은 대여 시작일로부터 2주 후인 "+ borrowDate.toLocalDate().plusWeeks(2) + "입니다.");
+                }else{
+                System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
             }
         } catch (
                 InputMismatchException e) {
-            System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
         }
     }
 
+    public void overDueBook() {
 
+
+
+        borrowRecordDAO.overDueBook(getConnection(),borrowRecordDTO);
+    }
 
     public void returnBook() {
         try {
-            MypageDAO mypageDAO = new MypageDAO();
             mypageDAO.currentBorrowBooks(getConnection(), borrowRecordDTO, userDTO);
 
             Scanner sc = new Scanner(System.in);
             System.out.println("반납할 책의 코드 번호를 입력해주세요.");
             int bookCode = sc.nextInt();
-
+            bookDTO.setBookCode(bookCode);
             LocalDate returnDate = LocalDate.now();
             borrowRecordDTO.setReturnDate(Date.valueOf(returnDate));
 
@@ -65,6 +72,16 @@ public class BorrowRecordController {
             }
         } catch (InputMismatchException e) {
             System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
+        }
+    }
+
+    public void overDueBooks(){
+        int result = borrowRecordDAO.overDueBook(getConnection(), borrowRecordDTO);
+        if (result > 0) {
+            System.out.println("-----------연체된 책 목록------------");
+            borrowRecordDAO.overDueBookList(getConnection(), borrowRecordDTO);
+        }else {
+            System.out.println("연체 목록을 가져오지 못했습니다. 다시 시도해주세요.");
         }
     }
 
