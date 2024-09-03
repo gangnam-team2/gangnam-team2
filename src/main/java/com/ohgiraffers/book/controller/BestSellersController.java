@@ -44,7 +44,7 @@ public class BestSellersController {
         }
 
         Connection con = JDBCTemplate.getConnection();
-        List<BookDTO> bestSellersList = bestSellersDAO.selectTopBorrowedBooksByPeriod(con, period);
+        List<BookDTO> bestSellersList = bestSellersDAO.selectBestSellersByPeriod(con, period);
         JDBCTemplate.close(con);
 
         if (!bestSellersList.isEmpty()) {

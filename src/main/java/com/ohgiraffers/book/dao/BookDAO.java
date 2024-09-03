@@ -1,6 +1,11 @@
 package com.ohgiraffers.book.dao;
 
 import com.ohgiraffers.book.dto.BookDTO;
+import com.ohgiraffers.common.JDBCTemplate;
+import com.ohgiraffers.request.controller.RequestController;
+import com.ohgiraffers.request.dao.RequestDAO;
+import com.ohgiraffers.request.dto.RequestDTO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +39,8 @@ public class BookDAO {
             pstmt.setString(3, bookDTO.getBookPublisher());
             pstmt.setString(4, bookDTO.getBookGenre());
             pstmt.setBoolean(5, bookDTO.isBookStatus());
-            pstmt.setInt(6, bookDTO.getBorrowCount());  // borrow_count 설정
+            pstmt.setInt(6, bookDTO.getBorrowCount());
+            pstmt.setInt(7, bookDTO.getBookQuantity());
 
             result = pstmt.executeUpdate();
 
@@ -61,8 +67,9 @@ public class BookDAO {
             pstmt.setString(3, bookDTO.getBookPublisher());
             pstmt.setString(4, bookDTO.getBookGenre());
             pstmt.setBoolean(5, bookDTO.isBookStatus());
-            pstmt.setInt(6, bookDTO.getBorrowCount());  // borrow_count 설정
-            pstmt.setInt(7, bookDTO.getBookCode());
+            pstmt.setInt(6, bookDTO.getBorrowCount());
+            pstmt.setInt(7, bookDTO.getBookQuantity());
+            pstmt.setInt(8, bookDTO.getBookCode());
 
             result = pstmt.executeUpdate();
 
@@ -101,7 +108,7 @@ public class BookDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         BookDTO bookDTO = null;
-        String query = prop.getProperty("getBookById");
+        String query = prop.getProperty("getBookByCode");
 
         try {
             pstmt = con.prepareStatement(query);
@@ -116,7 +123,8 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count")  // borrow_count 추가
+                        rs.getInt("borrow_count"),
+                        rs.getInt("book_quantity")
                 );
             }
 
@@ -150,7 +158,8 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count")  // borrow_count 추가
+                        rs.getInt("borrow_count"),
+                        rs.getInt("book_quantity")
                 );
                 books.add(bookDTO);
             }
@@ -185,7 +194,8 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count")  // borrow_count 추가
+                        rs.getInt("borrow_count"),
+                        rs.getInt("book_quantity")
                 );
                 books.add(bookDTO);
             }
@@ -219,7 +229,8 @@ public class BookDAO {
                         rs.getString("book_publisher"),
                         rs.getString("book_genre"),
                         rs.getBoolean("book_status"),
-                        rs.getInt("borrow_count")  // borrow_count 추가
+                        rs.getInt("borrow_count"),
+                        rs.getInt("book_quantity")
                 );
                 books.add(bookDTO);
             }
@@ -233,4 +244,55 @@ public class BookDAO {
         }
         return books;
     }
+
+
+    public void insertBookIntoDB(Connection con, BookDTO bookDTO) throws SQLException {
+        con = null;
+        BookDAO bookDAO = new BookDAO();
+        int result = 0;
+        try {
+            result = bookDAO.insertBook(con, bookDTO);
+        } finally {
+            close(con);
+        }
+
+        if (result > 0) {
+            System.out.println("도서가 추가되었습니다.");
+        } else {
+            System.out.println("도서 추가에 실패하였습니다.");
+        }
+    }
+
+    // 대여 가능한 책 리스트를 가져오는 메서드
+    // !!!! 근데 로그인한 아이디에서 대여한건지 검증 필요 !!!!
+    public List<BookDTO> getAvailableBooks(Connection con) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<BookDTO> availableBooks = new ArrayList<>();
+        String query = prop.getProperty("getAvailableBooks");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                BookDTO bookDTO = new BookDTO();
+                bookDTO.setBookCode(rs.getInt("book_code"));
+                bookDTO.setBookTitle(rs.getString("book_title"));
+                bookDTO.setBookAuthor(rs.getString("book_author"));
+                bookDTO.setBookPublisher(rs.getString("book_publisher"));
+                bookDTO.setBookGenre(rs.getString("book_genre"));
+                bookDTO.setBookQuantity(rs.getInt("book_quantity"));
+                availableBooks.add(bookDTO);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+
+        return availableBooks;
+    }
+
 }

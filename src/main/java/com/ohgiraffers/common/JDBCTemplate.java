@@ -21,6 +21,7 @@ public class JDBCTemplate {
                 String password = prop.getProperty("password");
 
                 con = DriverManager.getConnection(url,user,password);
+                //con.setAutoCommit(false);   // 자동 커밋 모드를 비활성화
             } catch (IOException | SQLException e) {
                 throw new RuntimeException(String.valueOf(e));
             }

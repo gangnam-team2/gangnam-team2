@@ -18,4 +18,20 @@
         ?
         )
     </entry>
+
+    <!--요청된 도서 가져오기-->
+    <entry key="getRequestedBooks">
+        <![CDATA[
+        SELECT request_id, book_title, book_author, book_publisher, requests_status, created_at, book_genre, book_quantity
+        FROM requests
+    ]]>
+    </entry>
+
+    <!--요청된 도서 추가후 목록에서 도서 지우기-->
+    <entry key="deleteRequestedBook">
+        <![CDATA[
+            DELETE FROM requests WHERE request_id = ?
+        ]]>
+    </entry>
+
 </properties>
