@@ -1,12 +1,11 @@
 package com.ohgiraffers.mypage.controller;
 
 
-import com.ohgiraffers.book.usersession.UserSession;
+import com.ohgiraffers.usersession.UserSession;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.mypage.dao.MypageDAO;
 import com.ohgiraffers.user.dto.UserDTO;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
 import static com.ohgiraffers.common.JDBCTemplate.*;

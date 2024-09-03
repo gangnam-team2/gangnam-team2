@@ -1,6 +1,5 @@
 package com.ohgiraffers.mypage.dao;
 
-import com.ohgiraffers.book.usersession.UserSession;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.user.dto.UserDTO;
 

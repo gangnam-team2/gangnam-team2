@@ -1,15 +1,12 @@
 package com.ohgiraffers.user.controller;
 
-import com.ohgiraffers.book.usersession.UserSession;
+import com.ohgiraffers.usersession.UserSession;
 import com.ohgiraffers.user.dao.UserDAO;
 import com.ohgiraffers.user.dto.UserDTO;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static com.ohgiraffers.common.JDBCTemplate.*;
 import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 
 public class UserController {
