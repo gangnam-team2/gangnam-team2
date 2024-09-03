@@ -8,4 +8,8 @@ public class UserSession {
     public static UserDTO getUserDTO() {
         return userDTO;
     }
+
+    public static void setUserDTO(UserDTO userDTO) {
+        UserSession.userDTO = userDTO;
+    }
 }
