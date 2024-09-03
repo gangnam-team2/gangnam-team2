@@ -68,7 +68,7 @@ public class ManagerDAO {
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setBoolean(1, false);  // 대여 가능한 책 목록 조회
+            pstmt.setBoolean(1, true);  // 대여 가능한 책 목록 조회
             rset = pstmt.executeQuery();
 
             String a="";
