@@ -66,6 +66,8 @@ public class BorrowRecordDAO {
                 pstmt.setInt(1, borrowRecordDTO.getBookCode());
                 pstmt.setString(2, borrowRecordDTO.getUserId());
                 pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
+                BookDTO bookDTO = new BookDTO();
+                bookDTO.setBookStatus(true);
 
                 result = pstmt.executeUpdate();
             } catch (SQLException e) {
@@ -88,6 +90,8 @@ public class BorrowRecordDAO {
             pstmt =con.prepareStatement(query);
             pstmt.setInt(1,borrowRecordDTO.getBookCode());
             pstmt.setDate(2, borrowRecordDTO.getReturnDate());
+            BookDTO bookDTO = new BookDTO();
+            bookDTO.setBookStatus(true);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -109,7 +113,9 @@ public class BorrowRecordDAO {
                 pstmt = con.prepareStatement(query);
                 pstmt.setInt(1,borrowRecordDTO.getBookCode());
                 pstmt.setString(2,borrowRecordDTO.getUserId());
-
+                pstmt.setBoolean(3,true);
+                BookDTO bookDTO = new BookDTO();
+                bookDTO.setBookStatus(false);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }finally {

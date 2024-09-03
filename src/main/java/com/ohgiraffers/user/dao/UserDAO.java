@@ -56,7 +56,7 @@ public class UserDAO {
             ps.setString(1, userDTO.getUserId());
             ps.setString(2, userDTO.getUserPwd());
             result = ps.executeQuery();
-
+            System.out.println("======================현재 로그인 한 아이디 : " + userDTO.getUserId());
             if (result.next()) {
                 // user_role 값을 가져와서 UserDTO에 설정
                 int role = result.getInt("user_role");
