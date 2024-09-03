@@ -18,7 +18,7 @@ public class RequestController { // 도서 요청 컨트롤러, 서현준이가 
 
     private static RequestDAO requestDAO = new RequestDAO();
 
-    public static void insertRequestedBook() {
+    public static void insertRequestedBook() throws SQLException {
         Scanner scr = new Scanner(System.in);
         RequestDTO requestDTO = new RequestDTO();
         int result = 0;

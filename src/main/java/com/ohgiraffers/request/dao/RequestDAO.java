@@ -33,31 +33,30 @@ public class RequestDAO
 
 
 
-    public int insertRequestedBook(Connection con, RequestDTO requestDTO)
-    {
+    public int insertRequestedBook(Connection con, RequestDTO requestDTO) throws SQLException {
         PreparedStatement pstmt = null;
         int result = 0;
-
         String query = prop.getProperty("insertRequestedBook");
 
-        try
-        {
+        try {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1, requestDTO.getUserId()); // 유저 아이디
-            pstmt.setString(2, requestDTO.getBookTitle()); // 책 이름
-            pstmt.setString(3, requestDTO.getBookAuthor()); // 작가
-            pstmt.setString(4, requestDTO.getBookPublisher()); // 출판사
+            pstmt.setString(1, requestDTO.getUserId());
+            pstmt.setString(2, requestDTO.getBookTitle());
+            pstmt.setString(3, requestDTO.getBookAuthor());
+            pstmt.setString(4, requestDTO.getBookPublisher());
+
+            // book_genre가 없으면 기본값 '미정'을 설정
+            if (requestDTO.getBookGenre() == null || requestDTO.getBookGenre().isEmpty()) {
+                pstmt.setString(5, "미정");
+            } else {
+                pstmt.setString(5, requestDTO.getBookGenre());
+            }
 
             result = pstmt.executeUpdate();
-
-        }catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }finally
-        {
-            close(con);
+        } finally {
             close(pstmt);
         }
+
         return result;
     }
 
@@ -90,7 +89,6 @@ public class RequestDAO
                 book.setRequestStatus(rs.getBoolean("requests_status"));
                 book.setCreatedAt(rs.getTimestamp("created_at"));
                 book.setBookGenre(rs.getString("book_genre"));
-                book.setBookQuantity(rs.getInt("book_quantity"));
 
                 requestedBooks.add(book);
             }
@@ -127,7 +125,6 @@ public class RequestDAO
             newBook.setBookPublisher(requestedBook.getBookPublisher());
             newBook.setBookGenre(requestedBook.getBookGenre() != null ? requestedBook.getBookGenre() : "미정");
             newBook.setBookStatus(true);
-            newBook.setBookQuantity(requestedBook.getBookQuantity());
 
             // 로그 추가 - 디버깅용
             System.out.println("Request ID: " + requestedBook.getRequestId());
@@ -140,20 +137,11 @@ public class RequestDAO
             boolean isDeleted = requestDAO.deleteRequest(con, requestedBook.getRequestId());
 
             if (isDeleted) {
-                con.commit(); // 성공적으로 완료되면 커밋
                 System.out.println("요청된 도서가 목록에서 삭제되었습니다.");
             } else {
-                con.rollback(); // 실패하면 롤백
                 System.out.println("요청된 도서 삭제에 실패하였습니다.");
             }
         } catch (SQLException e) {
-            if (con != null) {
-                try {
-                    con.rollback(); // 롤백
-                } catch (SQLException rollbackEx) {
-                    rollbackEx.printStackTrace();
-                }
-            }
             e.printStackTrace();
         } finally {
             if (con != null) {

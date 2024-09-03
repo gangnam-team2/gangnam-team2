@@ -64,22 +64,6 @@ public class BookController {
                 continue;
             }
 
-            // 도서 수량 입력 및 검증
-            System.out.print("도서 수량 : ");
-            int bookQuantity = 0;
-            if (sc.hasNextInt()) {
-                bookQuantity = sc.nextInt();
-                sc.nextLine(); // Clear the newline character from the buffer
-                if (bookQuantity < 0) {
-                    System.out.println("도서 수량은 0보다 작을 수 없습니다.");
-                    continue;
-                }
-            } else {
-                System.out.println("유효한 숫자를 입력하세요.");
-                sc.next(); // Clear the invalid input
-                continue;
-            }
-
             boolean bookStatus = true; // true = 도서 대여 가능
 
             BookDTO bookDTO = new BookDTO();
@@ -88,7 +72,6 @@ public class BookController {
             bookDTO.setBookPublisher(bookPublisher);
             bookDTO.setBookGenre(bookGenre);
             bookDTO.setBookStatus(bookStatus);
-            bookDTO.setBookQuantity(bookQuantity);
 
             insertBookIntoDB(bookDTO);
 
@@ -106,19 +89,19 @@ public class BookController {
 
             if (sc.hasNextInt()) {
                 bookCode = sc.nextInt();
-                sc.nextLine(); // Clear the newline character from the buffer
+                sc.nextLine();
             } else {
                 System.out.println("유효한 도서 코드를 입력하세요.");
-                sc.next(); // Clear the invalid input
+                sc.next();
                 continue;
             }
 
-            Connection con = JDBCTemplate.getConnection();
+            Connection con = getConnection();
             BookDTO bookDTO = bookDAO.getBookById(con, bookCode);
 
             if (bookDTO == null) {
                 System.out.println("해당 도서를 찾을 수 없습니다.");
-                JDBCTemplate.close(con);
+                close(con);
                 return;
             }
 
@@ -150,29 +133,14 @@ public class BookController {
                 continue;
             }
 
-            System.out.print("도서 수량 : ");
-            int bookQuantity = 0;
-            if (sc.hasNextInt()) {
-                bookQuantity = sc.nextInt();
-                sc.nextLine(); // Clear the newline character from the buffer
-                if (bookQuantity < 0) {
-                    System.out.println("도서 수량은 0보다 작을 수 없습니다.");
-                    continue;
-                }
-            } else {
-                System.out.println("유효한 숫자를 입력하세요.");
-                sc.next(); // Clear the invalid input
-                continue;
-            }
-
             System.out.print("도서 상태 (true: 대여 중, false: 대여 가능): ");
             boolean bookStatus = false;
             if (sc.hasNextBoolean()) {
                 bookStatus = sc.nextBoolean();
-                sc.nextLine(); // Clear the newline character from the buffer
+                sc.nextLine();
             } else {
                 System.out.println("유효한 값을 입력하세요 (true 또는 false).");
-                sc.next(); // Clear the invalid input
+                sc.next();
                 continue;
             }
 
@@ -181,7 +149,6 @@ public class BookController {
             bookDTO.setBookPublisher(bookPublisher);
             bookDTO.setBookGenre(bookGenre);
             bookDTO.setBookStatus(bookStatus);
-            bookDTO.setBookQuantity(bookQuantity);
 
             int result = 0;
             try {
@@ -205,9 +172,9 @@ public class BookController {
         int bookCode = sc.nextInt();
         sc.nextLine();
 
-        Connection con = JDBCTemplate.getConnection();
+        Connection con = getConnection();
         int result = bookDAO.deleteBook(con, bookCode);
-        JDBCTemplate.close(con);
+        close(con);
 
         if (result > 0) {
             System.out.println("도서가 삭제되었습니다.");
@@ -222,9 +189,9 @@ public class BookController {
         int bookCode = sc.nextInt();
         sc.nextLine();
 
-        Connection con = JDBCTemplate.getConnection();
+        Connection con = getConnection();
         BookDTO bookDTO = bookDAO.getBookById(con, bookCode);
-        JDBCTemplate.close(con);
+        close(con);
 
         if (bookDTO != null) {
             System.out.println(bookDTO);
@@ -238,9 +205,9 @@ public class BookController {
         System.out.print("검색할 도서 제목: ");
         String title = sc.nextLine();
 
-        Connection con = JDBCTemplate.getConnection();
+        Connection con = getConnection();
         List<BookDTO> books = bookDAO.searchBooksByTitle(con, title);
-        JDBCTemplate.close(con);
+        close(con);
 
         if (!books.isEmpty()) {
             for (BookDTO book : books) {
@@ -257,9 +224,9 @@ public class BookController {
         int categoryId = sc.nextInt();
         sc.nextLine();
 
-        Connection con = JDBCTemplate.getConnection();
+        Connection con = getConnection();
         List<BookDTO> books = bookDAO.searchBooksByCategory(con, categoryId);
-        JDBCTemplate.close(con);
+        close(con);
 
         if (!books.isEmpty()) {
             for (BookDTO book : books) {
@@ -273,9 +240,9 @@ public class BookController {
     public void searchOverdueBooks() {
         System.out.println("=====연체된 도서 목록 조회======");
 
-        Connection con = JDBCTemplate.getConnection();
+        Connection con = getConnection();
         List<BookDTO> books = bookDAO.getOverdueBooks(con);
-        JDBCTemplate.close(con);
+        close(con);
 
         if (!books.isEmpty()) {
             for (BookDTO book : books) {
@@ -379,10 +346,10 @@ public class BookController {
 
     // 실제 DB에 도서를 추가하는 로직을 담당하는 메서드
     private void insertBookIntoDB(BookDTO bookDTO) {
-        Connection con = JDBCTemplate.getConnection();
+        Connection con = getConnection();
 
         int result = bookDAO.insertBook(con, bookDTO);
-        JDBCTemplate.close(con);
+        close(con);
 
         if (result > 0) {
             System.out.println("도서가 추가되었습니다.");
@@ -402,14 +369,13 @@ public class BookController {
             newBook.setBookGenre("미정");  // 기본 장르 값을 미정으로 설정
         }
         newBook.setBookStatus(true);
-        newBook.setBookQuantity(1); // 기본 수량 설정
 
         // DB에 도서 추가
         insertBookIntoDB(newBook);
 
         // 요청 목록에서 도서 삭제
         RequestDAO requestDAO = new RequestDAO();
-        Connection con = JDBCTemplate.getConnection();
+        Connection con = getConnection();
         boolean isDeleted = false;
 
         try {
@@ -423,7 +389,7 @@ public class BookController {
             System.out.println("요청된 도서 삭제 중 오류 발생.");
             e.printStackTrace();
         } finally {
-            JDBCTemplate.close(con);
+            close(con);
         }
     }
 }
