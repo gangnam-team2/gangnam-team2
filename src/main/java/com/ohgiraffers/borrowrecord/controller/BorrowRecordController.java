@@ -9,35 +9,45 @@ import com.ohgiraffers.user.dto.UserDTO;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 
 public class BorrowRecordController {
-    BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
-    BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
-    UserDTO userDTO = new UserDTO();
-    BookDTO bookDTO = new BookDTO();
-    MypageDAO mypageDAO = new MypageDAO();
 
 
     public void rentBook(){
         try{
-            borrowRecordDAO.showBookList(getConnection(),borrowRecordDTO);
+            BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
+            BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
+            List<Integer> a = borrowRecordDAO.showBookList(getConnection(),borrowRecordDTO);
 
             Scanner sc = new Scanner(System.in);
             System.out.println("대여하고 싶은 책의 코드를 입력해주세요.");
             System.out.print("코드 입력 : ");
             int bookCode = sc.nextInt();
-            borrowRecordDTO.setBookCode(bookCode);
-            Date borrowDate = Date.valueOf(LocalDate.now());
-            borrowRecordDTO.setBorrowDate(borrowDate);
+            if (true) {
+                loop:for (int i = 0; i < a.size(); i++) {
 
-            int result = borrowRecordDAO.rentBook(getConnection(), borrowRecordDTO);
-            if (result > 0) {
-                System.out.println("대여가 완료 되었습니다. 대여 시작일은 " + borrowDate + ", 반납 예정일은 대여 시작일로부터 2주 후인 "+ borrowDate.toLocalDate().plusWeeks(2) + "입니다.");
-                }else{
-                System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
+                    if (bookCode != a.get(i)) {
+                        System.out.println("이미 대여된 책입니다.");
+                        break loop;
+                    }else{ borrowRecordDTO.setBookCode(bookCode);
+
+                        Date borrowDate = Date.valueOf(LocalDate.now());
+                        borrowRecordDTO.setBorrowDate(borrowDate);
+
+                        int result = borrowRecordDAO.rentBook(getConnection(), borrowRecordDTO);
+                        if (result > 0) {
+                            System.out.println("대여가 완료 되었습니다. 대여 시작일은 " + borrowDate + ", 반납 예정일은 대여 시작일로부터 2주 후인 " + borrowDate.toLocalDate().plusWeeks(2) + "입니다.");
+                        } else {
+                            System.out.println("도서 대여에 실패했습니다. 다시 시도해주세요.");
+                        }
+                }
+            }
+            }else{
+                System.out.println("뭐 잘못됨");
             }
         } catch (InputMismatchException e) {
             System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
@@ -47,6 +57,12 @@ public class BorrowRecordController {
 
     public void returnBook() {
         try {
+            BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
+            BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
+            UserDTO userDTO = new UserDTO();
+            BookDTO bookDTO = new BookDTO();
+            MypageDAO mypageDAO = new MypageDAO();
+
             mypageDAO.currentBorrowBooks(getConnection(), borrowRecordDTO, userDTO);
 
             Scanner sc = new Scanner(System.in);
@@ -68,6 +84,9 @@ public class BorrowRecordController {
     }
 
     public void overDueBooks(){
+
+        BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
+        BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
         int result = borrowRecordDAO.overDueBook(getConnection(), borrowRecordDTO);
         if (result > 0) {
             System.out.println("-----------연체된 책 목록------------");

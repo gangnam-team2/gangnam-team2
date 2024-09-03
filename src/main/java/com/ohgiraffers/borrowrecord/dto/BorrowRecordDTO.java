@@ -30,7 +30,7 @@ public class BorrowRecordDTO {
         this.overDueBooks = overDueBooks;
         this.borrowCode = borrowCode;
     }
-UserDTO userDTO = new UserDTO();
+
     public int getBorrowCode() {
         return borrowCode;
     }
@@ -44,7 +44,6 @@ UserDTO userDTO = new UserDTO();
     }
 
     public void setUserId(String userId) {
-        this.userId = userDTO.getUserId();
     }
 
     public int getBookCode() {

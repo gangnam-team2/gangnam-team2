@@ -5,6 +5,8 @@ import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.user.dto.UserDTO;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import static com.ohgiraffers.common.JDBCTemplate.*;
 
@@ -24,8 +26,8 @@ public class BorrowRecordDAO {
     }
 
 
-        public void showBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
-
+        public List<Integer> showBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
+            List<Integer> bookList = new ArrayList<Integer>();
             Statement stmt = null;
             ResultSet rs = null;
             String query = prop.getProperty("showBookList");
@@ -39,6 +41,7 @@ public class BorrowRecordDAO {
                                 + "작가: " + rs.getString(3) + " "
                                 + "장르: " + rs.getString(4) + " "
                                 + "출판사: " + rs.getString(5));
+                        bookList.add(rs.getInt(1));
                     }
                 } else {
                     System.out.println("대여 가능한 책이 없습니다.");
@@ -49,8 +52,10 @@ public class BorrowRecordDAO {
                 close(rs);
                 close(stmt);
                 close(con);
-            }
+            }return bookList;
         }
+
+
 
 
         public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
@@ -66,7 +71,7 @@ public class BorrowRecordDAO {
                 pstmt.setInt(1, borrowRecordDTO.getBookCode());
                 pstmt.setString(2, borrowRecordDTO.getUserId());
                 pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
-                ;
+
                 result = pstmt.executeUpdate();
 
                 // 도서 상태를 업데이트
@@ -82,7 +87,6 @@ public class BorrowRecordDAO {
                 close(pstmt);
                 close(con);
             }
-
             return result;
         }
 
@@ -97,7 +101,7 @@ public class BorrowRecordDAO {
                 pstmt.setInt(1, borrowRecordDTO.getBookCode());
                 pstmt.setDate(2, borrowRecordDTO.getReturnDate());
                 BookDTO bookDTO = new BookDTO();
-                bookDTO.setBookStatus(true);
+                bookDTO.setBookStatus(false);
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
