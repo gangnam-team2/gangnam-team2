@@ -21,40 +21,47 @@ public class Application {
         UserController usercontroller = new UserController();
 
 
-        while (running) {
-            System.out.println("\n== 도서 대여 프로그램 ==");
-            System.out.println("1. 회원가입");
-            System.out.println("2. 로그인");
-            System.out.println("0. 종료");
-            System.out.print("선택: ");
-            int choice = sc.nextInt();
-            sc.nextLine();
+            while (running) {
+                try {
+                    System.out.println("\n== 도서 대여 프로그램 ==");
+                    System.out.println("1. 회원가입");
+                    System.out.println("2. 로그인");
+                    System.out.println("0. 종료");
+                    System.out.print("선택: ");
+                    int choice = sc.nextInt();
+                    sc.nextLine();
 
-            switch (choice) {
-                case 1:
-                    // 사용자, 관리자 회원가입
-                    // insert
-                    usercontroller.totalsignup();
-                    continue;
+                    switch (choice) {
+                        case 1:
+                            // 사용자, 관리자 회원가입
+                            // insert
+                            usercontroller.totalsignup();
+                            continue;
 
 
-                case 2:
-                    // 로그인 및 해당 역할에 따른 메뉴 표시
-                    // select
-                    boolean userRole = usercontroller.totallogin();
-                    if (userRole == true || userRole == false) {
-                        displayMenu(sc, userRole);
+                        case 2:
+                            // 로그인 및 해당 역할에 따른 메뉴 표시
+                            // select
+                            boolean userRole = usercontroller.totallogin();
+                            if (userRole == true || userRole == false) {
+                                displayMenu(sc, userRole);
+                            }
+                            break;
+                        case 0:
+                            System.out.println("프로그램을 종료합니다.");
+                            running = false;
+                            break;
+                        default:
+                            System.out.println("잘못된 선택입니다. 다시 시도하세요.");
+                            break;
+
+
                     }
-                    break;
-                case 0:
-                    System.out.println("프로그램을 종료합니다.");
-                    running = false;
-                    break;
-                default:
-                    System.out.println("잘못된 선택입니다. 다시 시도하세요.");
-                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+                    sc.nextLine();
+                }
             }
-        }
     }
 
     // 역할에 따른 메뉴 출력 및 컨트롤러 호출
@@ -176,6 +183,7 @@ public class Application {
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
                 sc.nextLine();  // 잘못된 입력 비워버리기
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

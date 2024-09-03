@@ -5,8 +5,9 @@
 
     <entry key="currentBorrowBooks">
         SELECT
-            BOOK_CODE, BOOK_TITLE, BORROW_DATE, DUE_DATE
-          FROM BORROW_RECORDS
+            a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
+          FROM BORROW_RECORDS a JOIN BOOKS b
+        ON a.BOOK_CODE = b.BOOK_CODE
         WHERE USER_ID = ? AND BOOK_STATUS = 0;
     </entry>
 
@@ -25,9 +26,10 @@
 
     <entry key="allBorrowBookList">
         SELECT
-            BOOK_CODE, BOOK_TITLE, BORROW_DATE, RETURN_DATE
-          FROM BORROW_RECORDS
-        WHERE USER_ID = ?;
+        a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
+        FROM BORROW_RECORDS a JOIN BOOKS b
+        ON a.BOOK_CODE = b.BOOK_CODE
+        WHERE USER_ID = ? AND BOOK_STATUS = 0;
     </entry>
 
 

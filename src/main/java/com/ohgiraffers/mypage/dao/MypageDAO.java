@@ -40,14 +40,13 @@ public class MypageDAO {
             close(con);
             close(pstmt);
         }return result;
-
     }
 
 
     public int updateRequest2(Connection con, BorrowRecordDTO borrowRecordDTO){
-       PreparedStatement pstmt = null;
+        PreparedStatement pstmt = null;
         int result = 0;
-       String query = prop.getProperty("updateRequest2");
+        String query = prop.getProperty("updateRequest2");
 
         try {
             pstmt = con.prepareStatement(query);
@@ -60,7 +59,7 @@ public class MypageDAO {
         }finally {
             close(con);
             close(pstmt);
-       }return result;
+        }return result;
     }
 
 
@@ -77,8 +76,8 @@ public class MypageDAO {
             rset = pstmt.executeQuery();
 
             while (rset.next()) {
-                System.out.println(rset.getInt(1)+ " " + rset.getString(2)+ " "
-                        + rset.getDate(3)+ " " + rset.getDate(4));
+                System.out.println("북코드: " + rset.getInt(1)+ " " +"제목: " + rset.getString(2)+ " "
+                        +"대여 날짜: " + rset.getDate(3)+ " " +"반납 예정일: " + rset.getDate(4));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -96,6 +95,7 @@ public class MypageDAO {
         String query = prop.getProperty("allBorrowBookList");
 
        try {
+
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, userDTO.getUserId());
             rset = pstmt.executeQuery();
@@ -110,7 +110,7 @@ public class MypageDAO {
             close(pstmt);
             close(rset);
         }
-   }
+    }
 
 
     public int pwdUpdate (Connection con, UserDTO userDTO, String changePwd){
@@ -126,7 +126,7 @@ public class MypageDAO {
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-       }finally {
+        }finally {
             close(con);
             close(pstmt);
         }return result;

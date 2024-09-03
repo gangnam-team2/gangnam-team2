@@ -29,6 +29,7 @@ public class MypageController {
         currentBorrowBookList();
 
        System.out.println("변경 신청할 책의 북코드를 입력해주세요.");
+
         borrowRecordDTO.setBookCode(sc.nextInt());
         System.out.println("변경 사항을 골라주세요.");
         System.out.println("1.대여일 변경  2.대여 취소");
@@ -38,7 +39,9 @@ public class MypageController {
                 System.out.println("대여일 변경 날짜를 입력해주세요.");
                 LocalDate changeDate = LocalDate.parse(sc.next());
                 borrowRecordDTO.setBorrowDate(Date.valueOf(changeDate));
+
                int result = mypageDAO.updateRequest1(getConnection(), borrowRecordDTO);
+
                 if (result > 0) {
                     System.out.println("도서 대여일 수정 완료");
                 } else {
