@@ -102,6 +102,7 @@ public class Application {
                     System.out.println("4. 베스트셀러 목록");
                     System.out.println("5. 회원탈퇴");
                     System.out.println("0. 로그아웃");
+
                 } else if (userRole == 0) {  // 일반 사용자
                     System.out.println("\n== 사용자 메뉴 ==");
                     System.out.println("1. 도서 검색");
@@ -224,6 +225,7 @@ public class Application {
                             }
                         } else {
                             System.out.println("관리자 " + logind + "님 회원탈퇴 기능 선택");
+                            userRole = 1;
                             usercontroller.deleteuser();
                             isRunning = false;
                             break;
@@ -234,8 +236,8 @@ public class Application {
                         if (userRole == 0) {
                             System.out.println(logind +"님 회원탈퇴 기능 선택");
                             usercontroller.deleteuser();
-                            isRunning = false;
                             break;
+
                         } else {
                             System.out.println("잘못된 선택입니다.");
                         }
