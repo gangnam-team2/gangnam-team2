@@ -110,6 +110,8 @@ public class BorrowRecordController {
 
         BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
         BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
+
+        borrowRecordDAO.getBorrowRecords(getConnection(), borrowRecordDTO);
         int result = borrowRecordDAO.overDueBook(getConnection(), borrowRecordDTO);
         if (result > 0) {
             System.out.println("-----------연체된 책 목록------------");

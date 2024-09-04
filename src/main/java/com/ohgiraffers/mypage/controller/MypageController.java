@@ -33,6 +33,8 @@ public class MypageController {
         System.out.println("====================================================================");
     }
 
+
+
     public void updateRequestBook() {
         MypageDAO mypageDAO = new MypageDAO();
         Scanner sc = new Scanner(System.in);
@@ -74,7 +76,7 @@ public class MypageController {
         BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
         UserDTO userDTO = UserSession.getUserDTO();  // 세션에서 사용자 정보 가져오기
 
-        System.out.println("============== 현재 " + userDTO.getUserId() + "님이 대여중인 책 목록 ==============");
+        System.out.println("==============  " + userDTO.getUserId() + "님의 대여기록  ==============");
         mypageDAO.allBorrowBookList(getConnection(), borrowRecordDTO, userDTO);
         System.out.println("==========================================================");
     }
@@ -84,9 +86,8 @@ public class MypageController {
         BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
         UserDTO userDTO = UserSession.getUserDTO();  // 세션에서 사용자 정보 가져오기
         BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
-
+        borrowRecordDAO.getBorrowRecords(getConnection(),borrowRecordDTO);
         int result = borrowRecordDAO.overDueBook(getConnection(), borrowRecordDTO);
-
         if (result > 0) {
             System.out.println("============== 현재 " + userDTO.getUserId() + "님의 연체중인 책 목록 ==============");
             mypageDAO.myOverDueBooks(getConnection(), borrowRecordDTO, userDTO);

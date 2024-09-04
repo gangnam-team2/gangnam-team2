@@ -6,6 +6,7 @@ import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import static com.ohgiraffers.common.JDBCTemplate.*;
@@ -180,28 +181,57 @@ public class BorrowRecordDAO {
         return borrowedBooks;
     }
 
+    public List<Integer> getBorrowRecords(Connection con, BorrowRecordDTO borrowRecordDTO) {
+        Statement stmt = null;
+        ResultSet rset = null;
+        List<Integer> borrowRecords = new ArrayList<Integer>();
+        String query = prop.getProperty("borrowRecords");
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+            while (rset.next()) {
+                borrowRecordDTO.setBorrowCode(rset.getInt("borrow_code"));
+                borrowRecordDTO.setUserId(rset.getString("user_id"));
+                borrowRecordDTO.setBookTitle(rset.getString("book_title"));
+                borrowRecordDTO.setBookCode(rset.getInt("book_code"));
+                borrowRecordDTO.setBorrowDate(rset.getDate("borrow_date"));
+                borrowRecordDTO.setDueDate(rset.getDate("due_date"));
+                borrowRecordDTO.setReturnDate(rset.getDate("return_date"));
+                borrowRecordDTO.setOverDueBooks(rset.getBoolean("over_due_books"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(stmt);
+            close(rset);
+        }return borrowRecords;
+    }
+
+
 
         public int overDueBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
 
             PreparedStatement pstmt = null;
             int result = 0;
             String query = prop.getProperty("overDueBooks");
-            LocalDate currentDate = LocalDate.now();
-            if (currentDate.isAfter(borrowRecordDTO.getDueDate().toLocalDate())) {
-                try {
-                    pstmt = con.prepareStatement(query);
-                    pstmt.setInt(1, borrowRecordDTO.getBookCode());
-                    pstmt.setBoolean(2, true);
 
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    close(con);
-                    close(pstmt);
+                if (LocalDate.now().isAfter(borrowRecordDTO.getDueDate().toLocalDate())) {
+                    try {
+                        pstmt = con.prepareStatement(query);
+                        pstmt.setDate(1, borrowRecordDTO.getDueDate());
+                        result = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    } finally {
+                        close(con);
+                        close(pstmt);
+                    }
                 }
-            }
             return result;
         }
+
+
 
         public void overDueBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
             Statement stmt = null;
