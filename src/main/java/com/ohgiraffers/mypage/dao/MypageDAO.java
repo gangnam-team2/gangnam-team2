@@ -2,8 +2,10 @@ package com.ohgiraffers.mypage.dao;
 
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.user.dto.UserDTO;
+import com.ohgiraffers.usersession.UserSession;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
 import static com.ohgiraffers.common.JDBCTemplate.*;
@@ -67,9 +69,9 @@ public class MypageDAO {
             close(rset);
             close(pstmt);
         }
-
         return borrowedBooks;
     }
+
 
     /** 연체된 도서를 출력하는 메서드*/
     public void myOverDueBooks(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO) {
