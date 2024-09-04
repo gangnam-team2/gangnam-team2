@@ -76,6 +76,7 @@ public class Application {
         MypageController mypageController   = new MypageController();
         BorrowRecordController borrowRecordController = new BorrowRecordController();
         boolean isRunning = true;
+        String logind = UserSession.getUserDTO().getUserId();
 
         while (isRunning) {
             try {
@@ -105,16 +106,16 @@ public class Application {
                 switch (choice) {
                     case 1:
                         if (userRole == 1) {
-                            System.out.println("관리자: 도서 관리 메뉴 선택");
+                            System.out.println("관리자 " + logind + "님 도서 관리 메뉴 선택");
                             bookController.manageBooksMenu(sc);
                         } else if (userRole == 0) {
-                            System.out.println(UserSession.getUserDTO().getUserId() +"님 도서 검색 메뉴 선택");
+                            System.out.println(logind +"님 도서 검색 메뉴 선택");
                             bookController.searchBookMenu(sc);
                         }
                         break;
                     case 2:
                         if (userRole == 1) {
-                            System.out.println("관리자: 연체 도서 목록 선택");
+                            System.out.println("관리자 " + logind + "님 연체 도서 목록 선택");
                            // bookController.searchOverdueBooks();  // 연체 도서 목록은 관리자 기능
                             borrowRecordController.overDueBooks();
                         } else {
@@ -136,26 +137,26 @@ public class Application {
                         break;
                     case 3:
                         if (userRole == 1) {
-                            System.out.println("관리자 " +UserSession.getUserDTO().getUserId() + "님 사용자 관리 메뉴 선택");
+                            System.out.println("관리자 " + logind + "님 사용자 관리 메뉴 선택");
                             managerController.displayManager();
                         } else if(userRole == 0){
-                            System.out.println(UserSession.getUserDTO().getUserId() +"님 베스트셀러 목록 선택");
+                            System.out.println(logind +"님 베스트셀러 목록 선택");
                             bestSellersController.showBestSellers();
                         }
                         break;
                     case 4:
                         if (userRole == 1) {
-                            System.out.println("관리자: 베스트셀러 목록 선택");
+                            System.out.println("관리자 " + logind + "님 베스트셀러 목록 선택");
                             bestSellersController.showBestSellers();  // 베스트셀러 목록은 관리자도 볼 수 있음
                         } else if(userRole == 0) {
-                            System.out.println(UserSession.getUserDTO().getUserId() +"님 도서 요청 선택");
+                            System.out.println(logind +"님 도서 요청 선택");
                             RequestController.insertRequestedBook();
                         }
                         break;
                     case 5:
 
                         if (userRole == 0) {
-                            System.out.println("사용자: 마이페이지 선택");
+                            System.out.println(logind + "님 마이페이지 선택");
                             System.out.println("1. 현재 대여 신청 책 목록\n" + "2. 전체 대여 목록\n" + "3. 대여 취소\n" + "4. 연체 목록 조회\n"+ "5. 비밀번호 변경");
                             int choice3 = sc.nextInt();
                             switch (choice3) {
@@ -168,13 +169,13 @@ public class Application {
                                     System.out.println("다시 시도해 주세요.");
                             }
                         } else {
-                            System.out.println("관리자 " +UserSession.getUserDTO().getUserId() + "님 회원탈퇴 기능 선택");
+                            System.out.println("관리자 " + logind + "님 회원탈퇴 기능 선택");
                             // 관리자 회원탈퇴 기능 구현
                         }
                         break;
                     case 6:
                         if (userRole == 0) {
-                            System.out.println(UserSession.getUserDTO().getUserId() +"님 회원탈퇴 기능 선택");
+                            System.out.println(logind +"님 회원탈퇴 기능 선택");
                             // 사용자 회원탈퇴 기능 구현
                         } else {
                             System.out.println("잘못된 선택입니다.");
@@ -188,9 +189,8 @@ public class Application {
                         System.out.println("잘못된 선택입니다.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+                System.out.println("잘못된 입력입니다. 올바른 메뉴를 선택해주세요.");
                 sc.nextLine();  // 잘못된 입력 비워버리기
-                System.out.println("엔터를 누르시면 이전 메뉴로 돌아갑니다.");
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
