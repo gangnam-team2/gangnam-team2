@@ -94,7 +94,7 @@ public class UserController {
         }
     }
 
-public boolean totallogin() {
+public int totallogin() {
     Scanner sc = new Scanner(System.in);
     boolean isLoggedIn = false;
 
