@@ -285,20 +285,17 @@ public class UserController {
         boolean isLoggedIn = false;
 
         // 회원탈퇴 로직
-
-
         while (!isLoggedIn) {
-
-        System.out.print("아이디를 입력해주세요: ");
-        String id1 = sc.nextLine();
-        System.out.print("비밀번호를 입력해주세요: ");
-        String pwd1 = sc.nextLine();
-        System.out.println(" 정말로 탈퇴 하시겠습니까 ? ");
-        System.out.println(" 1. 네  \n 2. 아니요 ");
-        System.out.print("메뉴를 선택해주세요 : ");
-
             System.out.println("==  회원 탈퇴를 진행하겠습니다.  ==");
             System.out.println(" 아이디 비밀번호를 다시 확인해주세요. ");
+
+            System.out.print("아이디를 입력해주세요: ");
+            String id1 = sc.nextLine();
+            System.out.print("비밀번호를 입력해주세요: ");
+            String pwd1 = sc.nextLine();
+            System.out.println(" 정말로 탈퇴 하시겠습니까 ? ");
+            System.out.println(" 1. 네  \n 2. 아니요 ");
+            System.out.print("메뉴를 선택해주세요 : ");
 
             int subChoice = sc.nextInt();
             sc.nextLine();
