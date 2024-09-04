@@ -123,5 +123,23 @@ public class BorrowRecordController {
             System.out.println("연체 목록을 가져오지 못했습니다. 다시 시도해주세요.");
         }
     }
+
+    /** borrow_records 테이블의 user_id 값 모두 출력*/
+    public void printAllUserIds() {
+        Connection con = getConnection();
+        BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
+        List<String> userIds = borrowRecordDAO.getAllUserIds(con);
+        close(con);
+
+        if (!userIds.isEmpty()) {
+            System.out.println("----- 대여 기록에 있는 사용자 ID 목록 -----");
+            for (String userId : userIds) {
+                System.out.println(userId);
+            }
+            System.out.println("---------------------------------------");
+        } else {
+            System.out.println("대여 기록에 사용자 정보가 없습니다.");
+        }
+    }
 }
 
