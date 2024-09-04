@@ -70,7 +70,8 @@ public class BorrowRecordDAO {
                 pstmt = con.prepareStatement(rentBookQuery);
                 pstmt.setInt(1, borrowRecordDTO.getBookCode());
                 pstmt.setString(2, UserSession.getUserDTO().getUserId());
-                pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
+                pstmt.setString(3, borrowRecordDTO.getBookTitle());
+                pstmt.setDate(4, borrowRecordDTO.getBorrowDate());
 
                 result = pstmt.executeUpdate();
 
@@ -176,14 +177,13 @@ public class BorrowRecordDAO {
 
             PreparedStatement pstmt = null;
             int result = 0;
-            String query = prop.getProperty("overDueBook");
+            String query = prop.getProperty("overDueBooks");
             LocalDate currentDate = LocalDate.now();
             if (currentDate.isAfter(borrowRecordDTO.getDueDate().toLocalDate())) {
                 try {
                     pstmt = con.prepareStatement(query);
                     pstmt.setInt(1, borrowRecordDTO.getBookCode());
-                    pstmt.setString(2, borrowRecordDTO.getUserId());
-                    pstmt.setBoolean(3, true);
+                    pstmt.setBoolean(2, true);
 
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
