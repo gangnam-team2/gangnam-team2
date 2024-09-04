@@ -75,11 +75,8 @@ public class Application {
         ManagerController managerController = new ManagerController();
         MypageController mypageController = new MypageController();
         BorrowRecordController borrowRecordController = new BorrowRecordController();
-<<<<<<< HEAD
         UserController usercontroller = new UserController();
-=======
-        UserController userController = new UserController();
->>>>>>> 3b729e11cede56c1a2ea6a107e570ce9bfd11be2
+
         boolean isRunning = true;
         String logind = UserSession.getUserDTO().getUserId();
 
@@ -216,31 +213,18 @@ public class Application {
                             }
                         } else {
                             System.out.println("관리자 " + logind + "님 회원탈퇴 기능 선택");
-<<<<<<< HEAD
                             usercontroller.deleteuser();
                             isRunning = false;
                             break;
-
-=======
-                            // 관리자 회원탈퇴 기능 구현 -- 세션에서 연결 끊어줘야 됨
-                            //userController.deleteAccount();
->>>>>>> 3b729e11cede56c1a2ea6a107e570ce9bfd11be2
                         }
-                        break;
+
 
                     case 6:
                         if (userRole == 0) {
-<<<<<<< HEAD
                             System.out.println(logind +"님 회원탈퇴 기능 선택");
                             usercontroller.deleteuser();
                             isRunning = false;
                             break;
-
-=======
-                            System.out.println(logind + "님 회원탈퇴 기능 선택");
->>>>>>> 3b729e11cede56c1a2ea6a107e570ce9bfd11be2
-                            // 사용자 회원탈퇴 기능 구현
-                            //userController.deleteAccount();
                         } else {
                             System.out.println("잘못된 선택입니다.");
                         }
