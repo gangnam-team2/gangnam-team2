@@ -39,7 +39,7 @@ public class UserDAO {
             return result > 0;
 
         } catch (SQLException e) {
-            System.out.println(" 잘못된 값이 입력되셨습니다. 다시 시도해주세요. ");
+            System.out.println( " ... ");
         }
         return false;
     }
@@ -56,7 +56,7 @@ public class UserDAO {
             ps.setString(2, userDTO.getUserPwd());
             result = ps.executeQuery();
             if (result.next()) {
-                // user_role 값을 가져와서 UserDTO에 설정
+
                 int role = result.getInt("user_role");
                 userDTO.setUserRole(role == 1);  // 1이면 사용자, 0이면 관리자
                 return true; // 로그인 성공
