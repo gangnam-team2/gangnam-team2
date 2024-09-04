@@ -57,7 +57,7 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
             /*"회원 아이디: " + member.getUserId()
                           + "   회원 이름: " + member.getUserName()
                           + "   가입일" + member.getUserCreatedAt()
-                          + "   정보 수정일" + member.getUserUpdatedAt()*/);
+                          + "   정보 수정일" + member.getUserUpdatedAt()*/
         }
     }
 
