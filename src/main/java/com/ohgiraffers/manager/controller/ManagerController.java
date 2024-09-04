@@ -14,6 +14,7 @@ public class ManagerController {
 private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manager-query.xml");
     Scanner scr = new Scanner(System.in);
 
+    /** 관리자 메뉴 출력 메서드*/
     public void displayManager(){
 
         loop: while(true){
@@ -46,6 +47,7 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
 
     }
 
+    /** 모든 회원 정보를 보여주는 메서드*/
     public void allMembersInfo(){
         List<UserDTO> allMembersInfo;
         allMembersInfo = managerDAO.selectAllMembersInfo(getConnection());
@@ -56,6 +58,7 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
         }
     }
 
+    /** 대여중인 책과 회원들을 출력하는 메서드*/
     public void findBookList() {
         Map<String, List<BookDTO>> userBooks= managerDAO.selectAllBooksInfo(getConnection());
         System.out.println("대여 중인 책과 그 회원 목록:");
@@ -73,7 +76,7 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
 
         }
     }
-
+        /** 연체 이력이 있는 회원을 출력하는 메서드*/
         public void memberHistoy () {
             List<BorrowRecordDTO> lateMember;
             lateMember = managerDAO.selectMemberHistoy(getConnection());

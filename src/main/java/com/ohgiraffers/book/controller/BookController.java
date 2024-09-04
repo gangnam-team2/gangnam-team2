@@ -2,6 +2,8 @@ package com.ohgiraffers.book.controller;
 
 import com.ohgiraffers.book.dao.BookDAO;
 import com.ohgiraffers.book.dto.BookDTO;
+import com.ohgiraffers.borrowrecord.dao.BorrowRecordDAO;
+import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.common.JDBCTemplate;
 import com.ohgiraffers.request.controller.RequestController;
 import com.ohgiraffers.request.dao.RequestDAO;
@@ -26,6 +28,7 @@ public class BookController {
         requestDAO = new RequestDAO();
     }
 
+    /** 도서추가 메서드*/
     public void insertBook() throws SQLException {
         boolean validInput = false;
 
@@ -79,6 +82,7 @@ public class BookController {
         }
     }
 
+    /** 도서 수정 메서드*/
     public void updateBook() {
         boolean validInput = false;
 
@@ -166,6 +170,7 @@ public class BookController {
         }
     }
 
+    /** 도서 삭제 메서드*/
     public void deleteBook() {
         System.out.println("=====도서 삭제======");
         System.out.print("삭제할 도서 코드: ");
@@ -183,6 +188,7 @@ public class BookController {
         }
     }
 
+    /**조건 별 도서 검색 메서드*/
     public static void searchBookMenu(Scanner sc) {
         System.out.println("== 도서 검색 ==");
         System.out.println("1. 도서 제목으로 검색");
@@ -206,24 +212,7 @@ public class BookController {
         }
     }
 
-    public void searchBookById() {
-        System.out.println("=====도서 검색 (코드로 검색)=====");
-        System.out.print("검색할 도서 코드: ");
-        int bookCode = sc.nextInt();
-        sc.nextLine();
-
-        Connection con = getConnection();
-        BookDTO bookDTO = bookDAO.getBookById(con, bookCode);
-        close(con);
-
-        if (bookDTO != null) {
-            System.out.println(bookDTO);
-        } else {
-            System.out.println("해당 도서를 찾을 수 없습니다.");
-        }
-    }
-
-    // 도서 코드로 도서 찾기
+    /** 도서 식별번호를 이용한 도서 찾기 메서드*/
     public static void searchBooksByCode() {
         System.out.println("=====도서 검색 (코드로 검색)=====");
         System.out.print("검색할 도서 코드: ");
@@ -257,7 +246,7 @@ public class BookController {
         }
     }
     
-    // 도서 제목으로 도서 찾기
+    /** 도서 제목으로 도서 찾는 메서드*/
     public static void searchBooksByTitle() {
         System.out.println("=====도서 제목으로 찾기=====");
         System.out.print("검색할 도서 제목: ");
@@ -292,6 +281,7 @@ public class BookController {
         }
     }
 
+    /** 연체된 도서 목록을 조회하는 메서드 - 추후 필요시 사용*/
     public void searchOverdueBooks() {
         System.out.println("=====연체된 도서 목록 조회======");
 
@@ -320,6 +310,7 @@ public class BookController {
 
     private final RequestController requestController = new RequestController();
 
+    /** 관리자 전용 도서 메뉴를 출력하는 메서드*/
     public void manageBooksMenu(Scanner sc) throws SQLException {
         boolean managing = true;
 
@@ -358,7 +349,7 @@ public class BookController {
     }
 
 
-    // 요청된 도서 목록을 보여주고 선택적으로 도서 목록에 추가하는 메서드
+        /** 요청된 도서 목록을 보여주고 선택적으로 도서 목록에 추가하는 메서드*/
         public void showRequestedBooks(Scanner sc) throws SQLException {
             List<RequestDTO> requestedBooks = requestController.getRequestedBooks();
 
@@ -411,6 +402,7 @@ public class BookController {
             }
         }
 
+        /** 요청된 도서를 추가하는 메서드*/
         private void insertBookIntoDB(BookDTO bookDTO) throws SQLException {
             Connection con = getConnection();
             int result = 0;
@@ -428,6 +420,7 @@ public class BookController {
             }
         }
 
+        /** 요청된 도서를 추가하는 메서드*/
         public void addRequestedBook(RequestDTO requestedBook) throws SQLException {
             BookDTO newBook = new BookDTO();
             newBook.setBookTitle(requestedBook.getBookTitle());

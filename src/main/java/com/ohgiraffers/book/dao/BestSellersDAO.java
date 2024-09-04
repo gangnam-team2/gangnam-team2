@@ -25,6 +25,7 @@ public class BestSellersDAO {
         }
     }
 
+    /** 기간별 베스트셀러 조회시 출력하는 메서드*/
     public List<BookDTO> selectBestSellersByPeriod(Connection con, String period) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;

@@ -23,6 +23,7 @@ public class UserDAO {
         }
     }
 
+    /** 회원가입 정보를 추가하는 메서드*/
     public boolean insertuser(Connection con, UserDTO userDTO) {
         // 회원가입 정보 insert / signup
         PreparedStatement ps = null;
@@ -46,6 +47,7 @@ public class UserDAO {
 
 
 
+    /** 로그인하기 위해 사용자 정보를 가져오는 메서드*/
     public boolean selectuser(Connection con, UserDTO userDTO) {
         PreparedStatement ps = null;
         ResultSet result = null;
@@ -83,7 +85,7 @@ public class UserDAO {
     }
 
 
-
+    /** 회원탈퇴 메서드*/
     public boolean deleteuser(Connection con, UserDTO userDTO) {
 
         // 회원탈퇴 delete

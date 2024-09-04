@@ -20,7 +20,7 @@ public class Application {
 
         UserController usercontroller = new UserController();
 
-
+            // 메인 페이지
             while (running) {
                 try {
                     System.out.println("\n== 도서 대여 프로그램 ==");
