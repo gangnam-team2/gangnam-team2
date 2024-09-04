@@ -43,7 +43,7 @@ public class BestSellersDAO {
                 periodInterval = "YEAR";
                 break;
             default:
-                throw new IllegalArgumentException("Invalid period: " + period);
+                throw new IllegalArgumentException(period + "은 유효하지 않는 기간입니다.");
         }
 
         String query = prop.getProperty("selectBestSellersByPeriod").replace("#{period}", periodInterval);
