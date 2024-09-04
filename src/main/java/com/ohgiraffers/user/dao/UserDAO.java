@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 
+
 public class UserDAO {
 
     private Properties prop = new Properties();
@@ -23,6 +24,7 @@ public class UserDAO {
         }
     }
 
+    /** 회원가입 정보를 추가하는 메서드*/
     public boolean insertuser(Connection con, UserDTO userDTO) {
         // 회원가입 정보 insert / signup
         PreparedStatement ps = null;
@@ -46,6 +48,7 @@ public class UserDAO {
 
 
 
+    /** 로그인하기 위해 사용자 정보를 가져오는 메서드*/
     public boolean selectuser(Connection con, UserDTO userDTO) {
         PreparedStatement ps = null;
         ResultSet result = null;
@@ -83,7 +86,7 @@ public class UserDAO {
     }
 
 
-
+    /** 회원탈퇴 메서드*/
     public boolean deleteuser(Connection con, UserDTO userDTO) {
 
         // 회원탈퇴 delete
@@ -99,11 +102,8 @@ public class UserDAO {
             return result > 0;
 
         } catch (SQLException e) {
-            System.out.println( " 회원 탈퇴 실패! 잘못된 아이디 또는 비밀번호를 입력하셨습니다. ");
+            return false;
         }
-        return false;
     }
-
-
 }
 

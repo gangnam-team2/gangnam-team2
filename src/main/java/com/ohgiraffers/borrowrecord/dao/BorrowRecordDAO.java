@@ -6,6 +6,7 @@ import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import static com.ohgiraffers.common.JDBCTemplate.*;
@@ -25,7 +26,7 @@ public class BorrowRecordDAO {
         }
     }
 
-
+        /** 대여 가능한 도서 목록을 출력하는 메서드*/
         public List<Integer> showBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
             List<Integer> bookList = new ArrayList<Integer>();
             Statement stmt = null;
@@ -57,7 +58,7 @@ public class BorrowRecordDAO {
             }return bookList;
         }
 
-
+        /**도서 대여하는 메서드*/
     public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -111,6 +112,7 @@ public class BorrowRecordDAO {
     }
 
 
+    /** 도서 반납하는 메서드*/
     public int returnBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -149,8 +151,8 @@ public class BorrowRecordDAO {
         return result;
     }
 
-    // 대여 가능한 도서들의 여부를 확인하려고 만든 메서드 -> 사용자가 대여중인 도서 목록 가져오려고
-    // 이게 있어야 내가 뭘 대여했는지 알 수 있고 그래야 대여 가능한 도서에서만 대여를 할 수 있음.
+    /**대여 가능한 도서들의 여부를 확인하려고 만든 메서드 -> 사용자가 대여중인 도서 목록 가져오려고
+    이게 있어야 내가 뭘 대여했는지 알 수 있고 그래야 대여 가능한 도서에서만 대여를 할 수 있음.*/
     public List<BorrowRecordDTO> getBorrowedBooks(Connection con, String userId) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -181,25 +183,51 @@ public class BorrowRecordDAO {
     }
 
 
+    public List<Integer> getBorrowRecords(Connection con, BorrowRecordDTO borrowRecordDTO) {
+        Statement stmt = null;
+        ResultSet rset = null;
+        List<Integer> borrowRecords = new ArrayList<Integer>();
+        String query = prop.getProperty("borrowRecords");
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+            while (rset.next()) {
+                borrowRecordDTO.setBorrowCode(rset.getInt("borrow_code"));
+                borrowRecordDTO.setUserId(rset.getString("user_id"));
+                borrowRecordDTO.setBookTitle(rset.getString("book_title"));
+                borrowRecordDTO.setBookCode(rset.getInt("book_code"));
+                borrowRecordDTO.setBorrowDate(rset.getDate("borrow_date"));
+                borrowRecordDTO.setDueDate(rset.getDate("due_date"));
+                borrowRecordDTO.setReturnDate(rset.getDate("return_date"));
+                borrowRecordDTO.setOverDueBooks(rset.getBoolean("over_due_books"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(stmt);
+            close(rset);
+        }return borrowRecords;
+    }
+
         public int overDueBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
 
             PreparedStatement pstmt = null;
             int result = 0;
             String query = prop.getProperty("overDueBooks");
-            LocalDate currentDate = LocalDate.now();
-            if (currentDate.isAfter(borrowRecordDTO.getDueDate().toLocalDate())) {
-                try {
-                    pstmt = con.prepareStatement(query);
-                    pstmt.setInt(1, borrowRecordDTO.getBookCode());
-                    pstmt.setBoolean(2, true);
 
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    close(con);
-                    close(pstmt);
+                if (LocalDate.now().isAfter(borrowRecordDTO.getDueDate().toLocalDate())) {
+                    try {
+                        pstmt = con.prepareStatement(query);
+                        pstmt.setDate(1, borrowRecordDTO.getDueDate());
+                        result = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    } finally {
+                        close(con);
+                        close(pstmt);
+                    }
                 }
-            }
             return result;
         }
 
@@ -223,7 +251,30 @@ public class BorrowRecordDAO {
                 throw new RuntimeException(e);
             }
         }
+
+    // borrow_records 테이블에 있는 모든 user_id를 가져오는 메서드
+    public List<String> getAllUserIds(Connection con) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<String> userIds = new ArrayList<>();
+        String query = prop.getProperty("getAllUserIds");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                userIds.add(rs.getString("user_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+
+        return userIds;
     }
+}
 
 
 

@@ -68,6 +68,12 @@
             SET BOOK_CODE =?, RETURN_DATE = ?;
     </entry>
 
+    <entry key="getAllUserIds">
+        <![CDATA[
+            SELECT DISTINCT user_id FROM borrow_records
+        ]]>
+    </entry>
+
 
 <!--    &lt;!&ndash; 책 대여를 위한 쿼리 &ndash;&gt;
     <entry key="rentBook">
@@ -86,10 +92,21 @@
         ]]>
     </entry>-->
 
-    <entry key="overDueBooks">
-        UPDATE BORROW_RECODES
-          SET BOOK_CODE = ?, OVER_DUE_BOOKS = ?;
+
+    <entry key="borrowRecords">
+        SELECT * FROM borrow_records;
     </entry>
+
+
+
+    <entry key="overDueBooks">
+        UPDATE BORROW_RECORDS
+        SET OVER_DUE_BOOKS = 1
+        WHERE DUE_DATE = ?;
+    </entry>
+
+
+
 
 
     <entry key="overDueBookList">

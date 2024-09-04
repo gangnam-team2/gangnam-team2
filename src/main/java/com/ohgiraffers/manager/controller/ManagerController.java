@@ -14,6 +14,7 @@ public class ManagerController {
 private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manager-query.xml");
     Scanner scr = new Scanner(System.in);
 
+    /** 관리자 메뉴 출력 메서드*/
     public void displayManager(){
 
         loop: while(true){
@@ -33,7 +34,8 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
                     case 3: memberHistoy(); break;
                     case 4: break loop;
 
-                    default: break;
+                    default:
+                        System.out.println("선택창 내의 숫자를 입력해 주세요.");break;
 
                 }
             } catch (InputMismatchException e) {
@@ -46,21 +48,25 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
 
     }
 
+    /** 모든 회원 정보를 보여주는 메서드*/
     public void allMembersInfo(){
         List<UserDTO> allMembersInfo;
         allMembersInfo = managerDAO.selectAllMembersInfo(getConnection());
         System.out.println("회원 정보 리스트");
         for (UserDTO member : allMembersInfo){
-            System.out.printf("회원 아이디: %s | 회원 이름: % | 가입일: $s | 정보 수정일: %s\n",
+
+            System.out.printf("회원 아이디: %s | 회원 이름: %s | 가입일: $s | 정보 수정일: %s\n",
                     member.getUserId(), member.getUserName(), member.getUserCreatedAt(), member.getUserUpdatedAt());
 
             /*"회원 아이디: " + member.getUserId()
                           + "   회원 이름: " + member.getUserName()
                           + "   가입일" + member.getUserCreatedAt()
                           + "   정보 수정일" + member.getUserUpdatedAt()*/
+
         }
     }
 
+    /** 대여중인 책과 회원들을 출력하는 메서드*/
     public void findBookList() {
         List<BorrowRecordDTO> booksInfoAndUserId;
         booksInfoAndUserId =managerDAO.selectBooksAndUser(getConnection());
@@ -98,7 +104,7 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
         }*/
 
     }
-
+        /** 연체 이력이 있는 회원을 출력하는 메서드*/
         public void memberHistoy () {
             List<BorrowRecordDTO> lateMember;
             lateMember = managerDAO.selectMemberHistoy(getConnection());
