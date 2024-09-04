@@ -1,5 +1,6 @@
 package com.ohgiraffers.user.controller;
 
+import com.ohgiraffers.Application;
 import com.ohgiraffers.usersession.UserSession;
 import com.ohgiraffers.user.dao.UserDAO;
 import com.ohgiraffers.user.dto.UserDTO;
@@ -45,7 +46,7 @@ public class UserController {
                         continue; // 회원가입을 계속 진행
                     } else {
                         System.out.println("잘못된 선택입니다. 다시 시도해주세요.");
-                         // 잘못된 입력이므로 다시 회원가입 화면으로 돌아가기
+                        // 잘못된 입력이므로 다시 회원가입 화면으로 돌아가기
                     }
                 }
 
@@ -279,38 +280,51 @@ public class UserController {
     }
 
     public void deleteuser() {
-
+        UserSession userSession = new UserSession();
         Scanner sc = new Scanner(System.in);
+        boolean isLoggedIn = false;
 
         // 회원탈퇴 로직
-        System.out.println("==  회원 탈퇴를 진행하겠습니다.  ==");
-        System.out.println(" 아이디 비밀번호를 다시 확인해주세요. ");
 
-        System.out.print("아이디를 입력해주세요: ");
-        String id1 = sc.nextLine();
-        System.out.print("비밀번호를 입력해주세요: ");
-        String pwd1 = sc.nextLine();
-        System.out.println(" 정말로 탈퇴 하시겠습니까 ? ");
-        System.out.println(" 1. 네  \n 2. 아니요 ");
+        while (!isLoggedIn) {
 
-        int subChoice = sc.nextInt();
-        UserDTO loginUser1 = new UserDTO(id1, pwd1);
+            System.out.println("==  회원 탈퇴를 진행하겠습니다.  ==");
+            System.out.println(" 아이디 비밀번호를 다시 확인해주세요. ");
 
-        if (subChoice == 1) {
-            if (userDAO.deleteuser(getConnection(), loginUser1)) {
-                System.out.println(" 회원탈퇴 성공!");
-            }else{
-                System.out.println( " 회원탈퇴 실패 ! 아이디와 비밀번호를 확인해주세요. ");
-            }
-        }
-        else if (subChoice == 2) {
+            System.out.print("아이디를 입력해주세요: ");
+            String id1 = sc.nextLine();
+            System.out.print("비밀번호를 입력해주세요: ");
+            String pwd1 = sc.nextLine();
+            System.out.println(" 정말로 탈퇴 하시겠습니까 ? ");
+            System.out.println(" 1. 네  \n 2. 아니요 ");
+
+
+            int subChoice = sc.nextInt();
+            sc.nextLine();
+
+            UserDTO loginUser1 = new UserDTO(id1, pwd1);
+
+            if (subChoice == 1) {
+                if (userDAO.deleteuser(getConnection(), loginUser1)) {
+                    System.out.println(" 회원탈퇴 성공!");
+                    break;
+
+                } else {
+                    System.out.println(" 회원탈퇴 실패 ! 아이디와 비밀번호를 확인해주세요. ");
+                    isLoggedIn = false;
+                }
+            } else if (subChoice == 2) {
                 System.out.println(" 회원탈퇴 취소 ! 회원탈퇴를 종료합니다. ");
+                break;
 
             } else {
                 System.out.println("회원탈퇴 실패! 아이디와 비밀번호를 확인해주세요.");
+                isLoggedIn = false;
             }
         }
     }
+}
+
 
 
 
