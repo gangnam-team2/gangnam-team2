@@ -43,6 +43,10 @@
         ]]>
     </entry>
 
+    <entry key="selectBookTitleByCode">
+        SELECT book_title FROM books WHERE book_code = ?
+    </entry>
+
     <entry key="getBorrowedBooks">
         <![CDATA[
             SELECT br.book_code, b.book_title, br.borrow_date

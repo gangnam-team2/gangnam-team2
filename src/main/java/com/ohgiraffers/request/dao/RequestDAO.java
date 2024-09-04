@@ -4,6 +4,7 @@ import com.ohgiraffers.book.dao.BookDAO;
 import com.ohgiraffers.book.dto.BookDTO;
 import com.ohgiraffers.common.JDBCTemplate;
 import com.ohgiraffers.request.dto.RequestDTO;
+import com.ohgiraffers.usersession.UserSession;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class RequestDAO {
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1, requestDTO.getUserId());
+            pstmt.setString(1, UserSession.getUserDTO().getUserId());
             pstmt.setString(2, requestDTO.getBookTitle());
             pstmt.setString(3, requestDTO.getBookAuthor());
             pstmt.setString(4, requestDTO.getBookPublisher());
