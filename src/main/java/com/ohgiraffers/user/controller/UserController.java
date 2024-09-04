@@ -13,6 +13,7 @@ public class UserController {
 
     private static UserDAO userDAO = new UserDAO("src/main/resources/mapper/user-query.xml");
 
+    /** 사용자, 관리자로 나뉘어 회원가입을 진행하는 메서드*/
     public static void totalsignup() {
         // user, admin 회원가입
         Scanner sc = new Scanner(System.in);
@@ -95,6 +96,7 @@ public class UserController {
         }
     }
 
+    /** 관리자, 사용자로 나뉘어 로그인하는 메서드*/
 public int totallogin() {
     Scanner sc = new Scanner(System.in);
     boolean isLoggedIn = false;
@@ -189,7 +191,7 @@ public int totallogin() {
     return 2;
 }
 
-    // 로그인 세션 저장하기 위함
+    /** 로그인 세션에 저장하기 위해 필요한 메서드*/
     public int login(String Id, String password) {
 
         UserDTO loginUser = new UserDTO(Id, password);

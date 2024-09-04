@@ -15,6 +15,7 @@ import static com.ohgiraffers.common.JDBCTemplate.*;
 
 public class BorrowRecordController {
 
+    /** 도서 대여 메서드*/
     public void rentBook() {
         try {
             BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
@@ -57,8 +58,10 @@ public class BorrowRecordController {
         } finally {
 
         }
+
     }
 
+    /** 도서 반납 메서드*/
     public void returnBook() {
         Connection con = getConnection();
         try {
@@ -106,6 +109,7 @@ public class BorrowRecordController {
     }
 
 
+    /** 연체된 도서 목록 출력 메서드*/
     public void overDueBooks(){
 
         BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
@@ -114,6 +118,7 @@ public class BorrowRecordController {
         if (result > 0) {
             System.out.println("-----------연체된 책 목록------------");
             borrowRecordDAO.overDueBookList(getConnection(), borrowRecordDTO);
+            System.out.println("------------------------------------");
         }else {
             System.out.println("연체 목록을 가져오지 못했습니다. 다시 시도해주세요.");
         }

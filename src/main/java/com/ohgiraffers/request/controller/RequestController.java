@@ -16,6 +16,7 @@ public class RequestController {
 
     private static RequestDAO requestDAO = new RequestDAO();
 
+    /** 요청된 도서를 추가하는 메서드*/
     public static boolean insertRequestedBook() throws SQLException {
         Scanner scr = new Scanner(System.in);
         RequestDTO requestDTO = new RequestDTO();
@@ -62,6 +63,7 @@ public class RequestController {
         return result > 0;
     }
 
+    /** 요청된 도서를 가져오는 메서드*/
     public List<RequestDTO> getRequestedBooks() {
         Connection con = getConnection();
         List<RequestDTO> requestedBooks = requestDAO.getRequestedBooks(con);
@@ -69,6 +71,7 @@ public class RequestController {
         return requestedBooks;
     }
 
+    /** 요청된 도서를 삭제하는 메서드*/
     public boolean deleteRequestedBook(int requestId) {
         Connection con = getConnection();
         boolean isDeleted = false;
