@@ -387,6 +387,7 @@ public class BookController {
             if (choice == 1) {
                 System.out.println("추가할 도서 번호를 선택하세요:");
                 int bookChoice = sc.nextInt();
+                System.out.print("선택 : ");
                 sc.nextLine();
 
                 if (bookChoice > 0 && bookChoice <= requestedBooks.size()) {
@@ -433,7 +434,7 @@ public class BookController {
             newBook.setBookAuthor(requestedBook.getBookAuthor());
             newBook.setBookPublisher(requestedBook.getBookPublisher());
             newBook.setBookGenre(requestedBook.getBookGenre() != null ? requestedBook.getBookGenre() : "미정");
-            newBook.setBookStatus(true);
+            newBook.setBookStatus(false);
 
             // DB에 도서 추가
             insertBookIntoDB(newBook);
