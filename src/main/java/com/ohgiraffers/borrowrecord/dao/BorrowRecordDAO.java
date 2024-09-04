@@ -225,7 +225,30 @@ public class BorrowRecordDAO {
                 throw new RuntimeException(e);
             }
         }
+
+    // borrow_records 테이블에 있는 모든 user_id를 가져오는 메서드
+    public List<String> getAllUserIds(Connection con) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<String> userIds = new ArrayList<>();
+        String query = prop.getProperty("getAllUserIds");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                userIds.add(rs.getString("user_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+
+        return userIds;
     }
+}
 
 
 
