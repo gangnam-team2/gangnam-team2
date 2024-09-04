@@ -19,7 +19,7 @@ public class BestSellersController {
     }
 
     /** 기간별 베스트셀러 도서 출력 메서드*/
-    public void showBestSellers() {
+    public void showBestSellers(Scanner sc) {
         System.out.println("조회할 기간을 선택하세요");
         System.out.println("1. 이번주 베스트셀러");
         System.out.println("2. 최근 한달간 베스트셀러");
