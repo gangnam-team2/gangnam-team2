@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 
+
 public class UserDAO {
 
     private Properties prop = new Properties();
@@ -104,6 +105,5 @@ public class UserDAO {
             return false;
         }
     }
-
 }
 
