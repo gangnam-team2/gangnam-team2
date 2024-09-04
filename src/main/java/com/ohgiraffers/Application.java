@@ -15,16 +15,28 @@ import java.util.Scanner;
 
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         UserController usercontroller = new UserController();
 
         Scanner sc = new Scanner(System.in);
         boolean running = true;
-
             // 메인 페이지
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
             while (running) {
                 try {
-                    System.out.println("\n== 도서 대여 프로그램 ==");
+
+                    System.out.print("\n== 도서 대여 프로그램 ==\n");
                     System.out.println("1. 회원가입");
                     System.out.println("2. 로그인");
                     System.out.println("0. 종료");
@@ -79,7 +91,6 @@ public class Application {
 
         boolean isRunning = true;
         String logind = UserSession.getUserDTO().getUserId();
-
         while (isRunning) {
             try {
                 // 관리자와 사용자 메뉴를 나눔

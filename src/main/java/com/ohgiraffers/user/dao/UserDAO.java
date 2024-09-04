@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static jdk.internal.net.http.common.Utils.close;
+
 
 public class UserDAO {
 
@@ -104,6 +106,5 @@ public class UserDAO {
             return false;
         }
     }
-
 }
 

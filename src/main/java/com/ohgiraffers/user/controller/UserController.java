@@ -292,6 +292,7 @@ public class UserController {
         String pwd1 = sc.nextLine();
         System.out.println(" 정말로 탈퇴 하시겠습니까 ? ");
         System.out.println(" 1. 네  \n 2. 아니요 ");
+        System.out.print("메뉴를 선택해주세요 : ");
 
         int subChoice = sc.nextInt();
         UserDTO loginUser1 = new UserDTO(id1, pwd1);
