@@ -42,9 +42,12 @@ public class Application {
                         case 2:
                             // 로그인 및 해당 역할에 따른 메뉴 표시
                             // select
-                            boolean userRole = usercontroller.totallogin();
-                            if (userRole == true || userRole == false) {
+                            int userRole = usercontroller.totallogin();
+                            if (userRole == 1 || userRole == 0) {
                                 displayMenu(sc, userRole);
+                            } else if (userRole == 2) {
+                                System.out.println( " 로그인 실패 !" );
+
                             }
                             break;
                         case 0:
@@ -65,7 +68,7 @@ public class Application {
     }
 
     // 역할에 따른 메뉴 출력 및 컨트롤러 호출
-    private static void displayMenu(Scanner sc, boolean userRole) {
+    private static void displayMenu(Scanner sc, int userRole) {
         BookController bookController = new BookController();
         BestSellersController bestSellersController = new BestSellersController();
         ManagerController managerController = new ManagerController();
@@ -75,7 +78,7 @@ public class Application {
 
         while (isRunning) {
             try {
-                if (userRole) {                                     // 관리자
+                if (userRole == 1) {                                     // 관리자
                     System.out.println("\n== 관리자 메뉴 ==");
                     System.out.println("1. 도서 관리");
                     System.out.println("2. 연체된 도서 목록");
@@ -83,7 +86,7 @@ public class Application {
                     System.out.println("4. 베스트셀러 목록");
                     System.out.println("5. 회원탈퇴");
                     System.out.println("0. 로그아웃");
-                } else {                                            // 일반 사용자
+                } else if(userRole == 0) {                                            // 일반 사용자
                     System.out.println("\n== 사용자 메뉴 ==");
                     System.out.println("1. 도서 검색");
                     System.out.println("2. 대여 및 반납");
@@ -100,16 +103,16 @@ public class Application {
 
                 switch (choice) {
                     case 1:
-                        if (userRole) {
+                        if (userRole == 1) {
                             System.out.println("관리자: 도서 관리 메뉴 선택");
                             bookController.manageBooksMenu(sc);
-                        } else {
+                        } else if (userRole == 0) {
                             System.out.println("사용자: 도서 검색 메뉴 선택");
                             bookController.searchBookMenu(sc);
                         }
                         break;
                     case 2:
-                        if (userRole) {
+                        if (userRole == 1) {
                             System.out.println("관리자: 연체 도서 목록 선택");
                            // bookController.searchOverdueBooks();  // 연체 도서 목록은 관리자 기능
                             borrowRecordController.overDueBooks();
@@ -131,25 +134,26 @@ public class Application {
                         }
                         break;
                     case 3:
-                        if (userRole) {
+                        if (userRole == 1) {
                             System.out.println("관리자: 사용자 관리 메뉴 선택");
                             managerController.displayManager();
-                        } else {
+                        } else if(userRole == 0){
                             System.out.println("사용자: 베스트셀러 목록 선택");
                             bestSellersController.showBestSellers();
                         }
                         break;
                     case 4:
-                        if (userRole) {
+                        if (userRole == 1) {
                             System.out.println("관리자: 베스트셀러 목록 선택");
                             bestSellersController.showBestSellers();  // 베스트셀러 목록은 관리자도 볼 수 있음
-                        } else {
+                        } else if(userRole == 0) {
                             System.out.println("사용자: 도서 요청 선택");
                             RequestController.insertRequestedBook();
                         }
                         break;
                     case 5:
-                        if (!userRole) {
+
+                        if (userRole == 0) {
                             System.out.println("사용자: 마이페이지 선택");
                             System.out.println("1. 현재 대여 신청 책 목록\n" + "2. 전체 대여 목록\n" + "3. 대여 취소\n" + "4. 연체 목록 조회\n"+ "5. 비밀번호 변경");
                             int choice3 = sc.nextInt();
@@ -168,7 +172,7 @@ public class Application {
                         }
                         break;
                     case 6:
-                        if (!userRole) {
+                        if (userRole == 0) {
                             System.out.println("사용자: 회원탈퇴 기능 선택");
                             // 사용자 회원탈퇴 기능 구현
                         } else {

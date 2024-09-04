@@ -18,8 +18,8 @@
     <entry key="rentBook">
         <![CDATA[
         INSERT INTO BORROW_RECORDS
-        (book_code, user_id, borrow_date)
-        VALUES (?, ?, ?)
+        (book_code, user_id, book_title, borrow_date)
+        VALUES (?, ?, ?, ?)
         ]]>
     </entry>
 
@@ -41,6 +41,10 @@
         <![CDATA[
             UPDATE books SET book_status = ? WHERE book_code = ?
         ]]>
+    </entry>
+
+    <entry key="selectBookTitleByCode">
+        SELECT book_title FROM books WHERE book_code = ?
     </entry>
 
     <entry key="getBorrowedBooks">
@@ -84,7 +88,7 @@
 
     <entry key="overDueBooks">
         UPDATE BORROW_RECODES
-          SET BOOK_CODE = ?, USER_ID = ?, OVER_DUE_BOOKS = ?;
+          SET BOOK_CODE = ?, OVER_DUE_BOOKS = ?;
     </entry>
 
 

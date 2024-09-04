@@ -58,40 +58,55 @@ public class BorrowRecordDAO {
         }
 
 
-        public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
-            PreparedStatement pstmt = null;
-            int result = 0;
-            String rentBookQuery = prop.getProperty("rentBook");
-            String updateBookStatusQuery = prop.getProperty("updateBookStatus");
-            String incrementBorrowCountQuery = prop.getProperty("incrementBorrowCount");
+    public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String rentBookQuery = prop.getProperty("rentBook");
+        String updateBookStatusQuery = prop.getProperty("updateBookStatus");
+        String incrementBorrowCountQuery = prop.getProperty("incrementBorrowCount");
+        String selectBookTitleByCodeQuery = prop.getProperty("selectBookTitleByCode"); // XML에서 쿼리 가져오기
 
-            try {
-                // 여기는 도서 대여 정보를 삽입
-                pstmt = con.prepareStatement(rentBookQuery);
-                pstmt.setInt(1, borrowRecordDTO.getBookCode());
-                pstmt.setString(2, UserSession.getUserDTO().getUserId());
-                pstmt.setDate(3, borrowRecordDTO.getBorrowDate());
+        try {
+            // 대여하려는 책의 제목을 가져오는 쿼리
+            pstmt = con.prepareStatement(selectBookTitleByCodeQuery);
+            pstmt.setInt(1, borrowRecordDTO.getBookCode());
+            ResultSet rs = pstmt.executeQuery();
 
-                result = pstmt.executeUpdate();
-
-                // 여기서는 도서 상태를 업데이트
-                if (result > 0) {
-                    pstmt = con.prepareStatement(updateBookStatusQuery);
-                    pstmt.setBoolean(1, true); // 책을 대여했으므로 상태를 true로 설정 이러면 다른 사람은 대여 불가
-                    pstmt.setInt(2, borrowRecordDTO.getBookCode());
-                    pstmt.executeUpdate();
-
-                    // borrow_count 증가
-                    pstmt = con.prepareStatement(incrementBorrowCountQuery);
-                    pstmt.setInt(1, borrowRecordDTO.getBookCode());
-                    pstmt.executeUpdate();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                close(pstmt);
-                close(con);
+            if (rs.next()) {
+                borrowRecordDTO.setBookTitle(rs.getString("book_title"));
+            } else {
+                throw new SQLException("해당 코드의 책을 찾을 수 없습니다.");
             }
+            rs.close();
+            pstmt.close();
+
+            // 도서 대여 정보를 삽입
+            pstmt = con.prepareStatement(rentBookQuery);
+            pstmt.setInt(1, borrowRecordDTO.getBookCode());
+            pstmt.setString(2, UserSession.getUserDTO().getUserId());
+            pstmt.setString(3, borrowRecordDTO.getBookTitle());  // bookTitle 설정
+            pstmt.setDate(4, borrowRecordDTO.getBorrowDate());
+
+            result = pstmt.executeUpdate();
+
+            // 여기서는 도서 상태를 업데이트
+            if (result > 0) {
+                pstmt = con.prepareStatement(updateBookStatusQuery);
+                pstmt.setBoolean(1, true); // 책을 대여했으므로 상태를 true로 설정
+                pstmt.setInt(2, borrowRecordDTO.getBookCode());
+                pstmt.executeUpdate();
+
+                // borrow_count 증가
+                pstmt = con.prepareStatement(incrementBorrowCountQuery);
+                pstmt.setInt(1, borrowRecordDTO.getBookCode());
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+            close(con);
+        }
         return result;
     }
 
@@ -103,7 +118,6 @@ public class BorrowRecordDAO {
 
         String deleteBorrowRecordQuery = prop.getProperty("deleteBorrowRecord");
         String updateBookStatusQuery = prop.getProperty("updateBookStatus");
-        String updateBorrowCountQuery = prop.getProperty("updateBorrowCount");
 
         try {
 
@@ -119,11 +133,6 @@ public class BorrowRecordDAO {
                 pstmt = con.prepareStatement(updateBookStatusQuery);
                 pstmt.setBoolean(1, false);
                 pstmt.setInt(2, borrowRecordDTO.getBookCode());
-                pstmt.executeUpdate();
-
-                // borrow_count 값을 증가시킴
-                pstmt = con.prepareStatement(updateBorrowCountQuery);
-                pstmt.setInt(1, borrowRecordDTO.getBookCode());
                 pstmt.executeUpdate();
 
             } else {
@@ -176,14 +185,13 @@ public class BorrowRecordDAO {
 
             PreparedStatement pstmt = null;
             int result = 0;
-            String query = prop.getProperty("overDueBook");
+            String query = prop.getProperty("overDueBooks");
             LocalDate currentDate = LocalDate.now();
             if (currentDate.isAfter(borrowRecordDTO.getDueDate().toLocalDate())) {
                 try {
                     pstmt = con.prepareStatement(query);
                     pstmt.setInt(1, borrowRecordDTO.getBookCode());
-                    pstmt.setString(2, borrowRecordDTO.getUserId());
-                    pstmt.setBoolean(3, true);
+                    pstmt.setBoolean(2, true);
 
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
