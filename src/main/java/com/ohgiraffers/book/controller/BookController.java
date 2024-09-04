@@ -32,6 +32,9 @@ public class BookController {
     public void insertBook() throws SQLException {
         boolean validInput = false;
 
+        // 특수문자 입력 못하게 정규식사용 -> 알파벳, 숫자, 공백만 허용
+        String regex = "^[a-zA-Z0-9\\s]+$";
+
         while (!validInput) {
             System.out.println("=====새 도서 추가=====");
 
@@ -41,6 +44,9 @@ public class BookController {
             if (bookTitle.isEmpty()) {
                 System.out.println("도서 제목은 비워둘 수 없습니다.");
                 continue;
+            } else if (!bookTitle.matches(regex)) {
+                System.out.println("도서 제목에 특수문자는 사용할 수 없습니다.");
+                continue;
             }
 
             // 도서 저자 입력
@@ -48,6 +54,9 @@ public class BookController {
             String bookAuthor = sc.nextLine().trim();
             if (bookAuthor.isEmpty()) {
                 System.out.println("도서 저자는 비워둘 수 없습니다.");
+                continue;
+            } else if (!bookAuthor.matches(regex)) {
+                System.out.println("도서 저자에 특수문자는 사용할 수 없습니다.");
                 continue;
             }
 
@@ -57,6 +66,9 @@ public class BookController {
             if (bookPublisher.isEmpty()) {
                 System.out.println("도서 출판사는 비워둘 수 없습니다.");
                 continue;
+            } else if (!bookPublisher.matches(regex)) {
+                System.out.println("도서 출판사에 특수문자는 사용할 수 없습니다.");
+                continue;
             }
 
             // 도서 장르 입력
@@ -65,10 +77,15 @@ public class BookController {
             if (bookGenre.isEmpty()) {
                 System.out.println("도서 장르는 비워둘 수 없습니다.");
                 continue;
+            } else if (!bookGenre.matches(regex)) {
+                System.out.println("도서 장르에 특수문자는 사용할 수 없습니다.");
+                continue;
             }
 
-            boolean bookStatus = false; // false = 도서 대여 가능
+            // 도서 상태는 기본적으로 대여 가능으로 설정 (false)
+            boolean bookStatus = false;
 
+            // BookDTO 객체에 값 설정
             BookDTO bookDTO = new BookDTO();
             bookDTO.setBookTitle(bookTitle);
             bookDTO.setBookAuthor(bookAuthor);
@@ -76,15 +93,19 @@ public class BookController {
             bookDTO.setBookGenre(bookGenre);
             bookDTO.setBookStatus(bookStatus);
 
+            // 데이터베이스에 도서 추가
             insertBookIntoDB(bookDTO);
 
-            validInput = true; // 입력이 모두 유효할 경우 루프를 종료
+            validInput = true; // 모든 입력이 유효하면 루프 종료
         }
     }
 
     /** 도서 수정 메서드*/
     public void updateBook() {
         boolean validInput = false;
+
+        // 특수문자 입력 못하게 정규식사용 -> 알파벳, 숫자, 공백만 허용
+        String regex = "^[a-zA-Z0-9\\s]+$";
 
         while (!validInput) {
             System.out.println("=====도서 정보 수정=====");
@@ -96,7 +117,7 @@ public class BookController {
                 sc.nextLine();
             } else {
                 System.out.println("유효한 도서 코드를 입력하세요.");
-                sc.next();
+                sc.next();  // 잘못된 입력은 여기서 제거
                 continue;
             }
 
@@ -109,45 +130,63 @@ public class BookController {
                 return;
             }
 
+            // 새 도서 제목 입력
             System.out.print("새 도서 제목: ");
             String bookTitle = sc.nextLine().trim();
             if (bookTitle.isEmpty()) {
                 System.out.println("도서 제목은 비워둘 수 없습니다.");
                 continue;
+            } else if (!bookTitle.matches(regex)) {
+                System.out.println("도서 제목에 특수문자는 사용할 수 없습니다.");
+                continue;
             }
 
+            // 새 도서 저자 입력
             System.out.print("새 도서 저자: ");
             String bookAuthor = sc.nextLine().trim();
             if (bookAuthor.isEmpty()) {
                 System.out.println("도서 저자는 비워둘 수 없습니다.");
                 continue;
+            } else if (!bookAuthor.matches(regex)) {
+                System.out.println("도서 저자에 특수문자는 사용할 수 없습니다.");
+                continue;
             }
 
+            // 새 도서 출판사 입력
             System.out.print("새 도서 출판사: ");
             String bookPublisher = sc.nextLine().trim();
             if (bookPublisher.isEmpty()) {
                 System.out.println("도서 출판사는 비워둘 수 없습니다.");
                 continue;
+            } else if (!bookPublisher.matches(regex)) {
+                System.out.println("도서 출판사에 특수문자는 사용할 수 없습니다.");
+                continue;
             }
 
+            // 새 도서 장르 입력
             System.out.print("새 도서 장르: ");
             String bookGenre = sc.nextLine().trim();
             if (bookGenre.isEmpty()) {
                 System.out.println("도서 장르는 비워둘 수 없습니다.");
                 continue;
+            } else if (!bookGenre.matches(regex)) {
+                System.out.println("도서 장르에 특수문자는 사용할 수 없습니다.");
+                continue;
             }
 
+            // 대여 상태 입력
             System.out.print("대여 상태 (true: 대여 중, false: 대여 가능): ");
             boolean bookStatus = false;
             if (sc.hasNextBoolean()) {
                 bookStatus = sc.nextBoolean();
-                sc.nextLine();
+                sc.nextLine();  // 개행 문자 제거
             } else {
                 System.out.println("유효한 값을 입력하세요 (true 또는 false).");
-                sc.next();
+                sc.next();  // 잘못된 입력 제거
                 continue;
             }
 
+            // BookDTO에 수정된 값 설정
             bookDTO.setBookTitle(bookTitle);
             bookDTO.setBookAuthor(bookAuthor);
             bookDTO.setBookPublisher(bookPublisher);
@@ -158,7 +197,7 @@ public class BookController {
             try {
                 result = bookDAO.updateBook(con, bookDTO);
             } finally {
-                JDBCTemplate.close(con);
+                close(con);
             }
 
             if (result > 0) {

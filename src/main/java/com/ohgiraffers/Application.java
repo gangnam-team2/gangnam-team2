@@ -7,6 +7,7 @@ import com.ohgiraffers.manager.controller.ManagerController;
 import com.ohgiraffers.mypage.controller.MypageController;
 import com.ohgiraffers.request.controller.RequestController;
 import com.ohgiraffers.user.controller.UserController;
+import com.ohgiraffers.usersession.UserSession;
 
 import java.sql.SQLException;
 import java.util.InputMismatchException;
@@ -107,7 +108,7 @@ public class Application {
                             System.out.println("관리자: 도서 관리 메뉴 선택");
                             bookController.manageBooksMenu(sc);
                         } else if (userRole == 0) {
-                            System.out.println("사용자: 도서 검색 메뉴 선택");
+                            System.out.println(UserSession.getUserDTO().getUserId() +"님 도서 검색 메뉴 선택");
                             bookController.searchBookMenu(sc);
                         }
                         break;
@@ -135,10 +136,10 @@ public class Application {
                         break;
                     case 3:
                         if (userRole == 1) {
-                            System.out.println("관리자: 사용자 관리 메뉴 선택");
+                            System.out.println("관리자 " +UserSession.getUserDTO().getUserId() + "님 사용자 관리 메뉴 선택");
                             managerController.displayManager();
                         } else if(userRole == 0){
-                            System.out.println("사용자: 베스트셀러 목록 선택");
+                            System.out.println(UserSession.getUserDTO().getUserId() +"님 베스트셀러 목록 선택");
                             bestSellersController.showBestSellers();
                         }
                         break;
@@ -147,7 +148,7 @@ public class Application {
                             System.out.println("관리자: 베스트셀러 목록 선택");
                             bestSellersController.showBestSellers();  // 베스트셀러 목록은 관리자도 볼 수 있음
                         } else if(userRole == 0) {
-                            System.out.println("사용자: 도서 요청 선택");
+                            System.out.println(UserSession.getUserDTO().getUserId() +"님 도서 요청 선택");
                             RequestController.insertRequestedBook();
                         }
                         break;
@@ -167,13 +168,13 @@ public class Application {
                                     System.out.println("다시 시도해 주세요.");
                             }
                         } else {
-                            System.out.println("관리자: 회원탈퇴 기능 선택");
+                            System.out.println("관리자 " +UserSession.getUserDTO().getUserId() + "님 회원탈퇴 기능 선택");
                             // 관리자 회원탈퇴 기능 구현
                         }
                         break;
                     case 6:
                         if (userRole == 0) {
-                            System.out.println("사용자: 회원탈퇴 기능 선택");
+                            System.out.println(UserSession.getUserDTO().getUserId() +"님 회원탈퇴 기능 선택");
                             // 사용자 회원탈퇴 기능 구현
                         } else {
                             System.out.println("잘못된 선택입니다.");
@@ -189,6 +190,7 @@ public class Application {
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
                 sc.nextLine();  // 잘못된 입력 비워버리기
+                System.out.println("엔터를 누르시면 이전 메뉴로 돌아갑니다.");
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
