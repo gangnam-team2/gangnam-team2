@@ -42,6 +42,7 @@ public class RequestController {
                             "2. 이전 선택창으로 돌아가기");
                     System.out.print("선택 : ");
                     int answer = scr.nextInt();
+                    scr.nextLine();
                     if(answer==1){
                         continue;
                     }else if(answer==2){

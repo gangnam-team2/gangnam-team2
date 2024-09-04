@@ -57,7 +57,6 @@ public class BorrowRecordDAO {
             }return bookList;
         }
 
-
     public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
