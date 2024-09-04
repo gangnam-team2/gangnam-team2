@@ -116,36 +116,46 @@ public class BorrowRecordDAO {
     public int returnBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
-        String logind = UserSession.getUserDTO().getUserId();
-
-        String deleteBorrowRecordQuery = prop.getProperty("deleteBorrowRecord");
+        String updateReturnDateQuery = prop.getProperty("updateReturnDate");
         String updateBookStatusQuery = prop.getProperty("updateBookStatus");
 
+        if (updateReturnDateQuery == null || updateBookStatusQuery == null) {
+            throw new RuntimeException("SQL 쿼리 문자열이 null입니다. XML 파일을 확인하세요.");
+        }
+
         try {
-
-            // 우선 borrow_records 테이블에서 대여하는 사람이 반납하는 거니까 해당 도서 대여 기록 삭제
-            pstmt = con.prepareStatement(deleteBorrowRecordQuery);
-            pstmt.setInt(1, borrowRecordDTO.getBookCode());
-            pstmt.setString(2, logind);
+            // 1. 반납일 업데이트
+            pstmt = con.prepareStatement(updateReturnDateQuery);
+            pstmt.setDate(1, borrowRecordDTO.getReturnDate());
+            pstmt.setInt(2, borrowRecordDTO.getBookCode());
+            pstmt.setString(3, borrowRecordDTO.getUserId());
             result = pstmt.executeUpdate();
-            close(pstmt);
 
+            // 2. 반납 성공 시 book_status 업데이트 (대여 가능 상태로)
             if (result > 0) {
-                // 여기서는 books 테이블에서 book_status를 false로 업데이트 이러면 대여 가능 상태로 변경
                 pstmt = con.prepareStatement(updateBookStatusQuery);
-                pstmt.setBoolean(1, false);
+                pstmt.setBoolean(1, false);  // book_status를 0(false)로 설정, 대여 가능 상태
                 pstmt.setInt(2, borrowRecordDTO.getBookCode());
                 pstmt.executeUpdate();
-
-            } else {
-                System.out.println("대여 기록이 존재하지 않습니다.");
-                return 0; // 대여 기록이 없을 경우 반납 실패 처리
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            close(pstmt);
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();  // close에서 발생하는 예외는 로그로 출력
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();  // close에서 발생하는 예외는 로그로 출력
+                }
+            }
         }
 
         return result;
