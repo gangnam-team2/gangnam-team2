@@ -1,6 +1,7 @@
 package com.ohgiraffers.mypage.controller;
 
 
+import com.ohgiraffers.borrowrecord.dao.BorrowRecordDAO;
 import com.ohgiraffers.usersession.UserSession;
 import com.ohgiraffers.borrowrecord.dto.BorrowRecordDTO;
 import com.ohgiraffers.mypage.dao.MypageDAO;
@@ -82,9 +83,16 @@ public class MypageController {
         MypageDAO mypageDAO = new MypageDAO();
         BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
         UserDTO userDTO = UserSession.getUserDTO();  // 세션에서 사용자 정보 가져오기
+        BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
 
-        System.out.println("============== 현재 " + userDTO.getUserId() + "님의 연체중인 책 목록 ==============");
-        mypageDAO.myOverDueBooks(getConnection(), borrowRecordDTO, userDTO);
+        int result = borrowRecordDAO.overDueBook(getConnection(), borrowRecordDTO);
+
+        if (result > 0) {
+            System.out.println("============== 현재 " + userDTO.getUserId() + "님의 연체중인 책 목록 ==============");
+            mypageDAO.myOverDueBooks(getConnection(), borrowRecordDTO, userDTO);
+            }else {
+                System.out.println("연체 목록을 가져오지 못했습니다. 다시 시도해주세요.");
+            }
         System.out.println("===============================================================================");
     }
 

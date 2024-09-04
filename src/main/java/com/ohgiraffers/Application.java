@@ -152,6 +152,7 @@ public class Application {
                         }
                         break;
                     case 5:
+
                         if (userRole == 0) {
                             System.out.println("사용자: 마이페이지 선택");
                             System.out.println("1. 현재 대여 신청 책 목록\n" + "2. 전체 대여 목록\n" + "3. 대여 취소\n" + "4. 연체 목록 조회\n"+ "5. 비밀번호 변경");
