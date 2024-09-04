@@ -19,7 +19,7 @@ public class Application {
         UserController usercontroller = new UserController();
 
         Scanner sc = new Scanner(System.in);
-        boolean running = true;
+        boolean running = true; // 반복문을 돌리기 위한 변수.
             // 메인 페이지
 //            System.out.print("📕");
 //            Thread.sleep(500);
@@ -33,7 +33,6 @@ public class Application {
 //            Thread.sleep(500);
 //            System.out.print("📖");
 //            Thread.sleep(500);
-
             while (running) {
                 try {
 
@@ -43,7 +42,7 @@ public class Application {
                     System.out.println("0. 종료");
                     System.out.print("원하시는 메뉴의 번호를 선택해주세요 (❁´◡`❁):  \n");
                     int choice = sc.nextInt();
-                    sc.nextLine();
+                    sc.nextLine(); // 개행 받아 먹기 냠냠..
 
                     switch (choice) {
                         case 1:
@@ -57,6 +56,7 @@ public class Application {
                             // 로그인 및 해당 역할에 따른 메뉴 표시
                             // select
                             int userRole = usercontroller.totallogin();
+                            // 1은 관리자, 0은 일반 사용자, 1보다 큰 수는 로그인 실패.
                             if (userRole == 1 || userRole == 0) {
                                 displayMenu(sc, userRole);
                             } else if (userRole == 2) {
@@ -89,7 +89,7 @@ public class Application {
         ManagerController managerController = new ManagerController();
         MypageController mypageController = new MypageController();
         BorrowRecordController borrowRecordController = new BorrowRecordController();
-        UserController usercontroller = new UserController();
+        UserController usercontroller = new UserController(); // 클래스를 객체로 선언 후
 
         boolean isRunning = true;
         String logind = UserSession.getUserDTO().getUserId();
