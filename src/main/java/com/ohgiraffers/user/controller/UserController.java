@@ -191,13 +191,13 @@ public class UserController {
         }
     }
 
+
+public int totallogin() {
+    Scanner sc = new Scanner(System.in);
+    boolean isLoggedIn = false;
     /**
      * 관리자, 사용자로 나뉘어 로그인하는 메서드
      */
-    public int totallogin() {
-        Scanner sc = new Scanner(System.in);
-        boolean isLoggedIn = false;
-
         while (!isLoggedIn) {
             try {
                 System.out.println("----- 로그인을 진행하겠습니다. -----");

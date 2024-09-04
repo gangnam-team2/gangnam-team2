@@ -57,14 +57,57 @@ public class ManagerDAO {
         return allMembersInfolist;
     }
 
+
+
+    /*public Map<String, List<BookDTO>> apthem (String a, List<BookDTO> b){
+
+        // a 가 중복되면 b에 정보가 쌓이도록..
+
+        Map<String, List<BookDTO>> map = new HashMap<>();
+        if (a==a) {
+            map.put(a,new ArrayList<>(b));
+        }else {
+        }
+        return null;
+    }*/
+
     /** 대여 가능한 도서 목록을 출력하는 메서드*/
-    public Map<String, List<BookDTO>> selectAllBooksInfo(Connection con) {
+    public List<BorrowRecordDTO> selectBooksAndUser(Connection con) {
+
+
         PreparedStatement pstmt = null;
         ResultSet rset = null;
-        List<UserDTO> userId =new ArrayList<>();
-        List<BookDTO> allBooksInfolist = new ArrayList<>();
-        Map<String, List<BookDTO>> userBooks = new HashMap<>();
+        List<BorrowRecordDTO> borrowRecords = new ArrayList<>();
+        String query = prop.getProperty("selectBookList");
 
+        try {
+            pstmt = con.prepareStatement(query);
+            rset = pstmt.executeQuery();
+
+            while(rset.next()){
+                BorrowRecordDTO borrowRecord = new BorrowRecordDTO();
+                borrowRecord.setUserId(rset.getString("user_id"));
+                borrowRecord.setBookCode(rset.getInt("book_code"));
+                borrowRecord.setBookTitle(rset.getString("book_title"));
+                borrowRecord.setBorrowDate(rset.getDate("borrow_date"));
+                borrowRecord.setDueDate(rset.getDate("due_date"));
+
+                borrowRecords.add(borrowRecord);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(con);
+            close(pstmt);
+            close(rset);
+        }
+        return borrowRecords;
+    }
+
+        /*List<BookDTO> allBooksInfoList = new ArrayList<>();
+        Map<String, List<BookDTO>> userAndBooks = new HashMap<>();
 
         String query = prop.getProperty("selectBookList");
 
@@ -86,14 +129,16 @@ public class ManagerDAO {
                 bookInfo.setBookPublisher(rset.getString("book_publisher"));
                 bookInfo.setBookGenre(rset.getString("book_genre"));
 
-                // bookInfo.setUserInfo(userInfo);  // 책 정보에 사용자 정보 추가 불가
+                allBooksInfoList.add(bookInfo);
 
-                allBooksInfolist.add(bookInfo);
+                // 여기서 메소드를 이용해서 중복되는 유저 아이디의 책 정보들을 모아서, 유저별로 대여 도서를 보여 줄 수 있도록 한다.
+                apthem(a,allBooksInfoList);
 
+                userAndBooks.put(a, allBooksInfoList);
 
             }
 
-            userBooks.put(a, allBooksInfolist);
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -121,8 +166,8 @@ public class ManagerDAO {
                 }
             }
         }
-        return userBooks;
-    }
+        return userAndBooks;
+    }*/
 
     /** 연체 이력이 있는 회원 정보를 출력하는 메서드*/
     public List<BorrowRecordDTO> selectMemberHistoy(Connection con){
@@ -137,7 +182,8 @@ public class ManagerDAO {
 
             while(rset.next()){
                 BorrowRecordDTO record = new BorrowRecordDTO();
-                record.setUserId(String.valueOf(rset.getInt("user_id")));
+                record.setUserId(rset.getString("user_id"));
+                record.setBookTitle(rset.getString("book_title"));
 
                 lateMember.add(record);
             }
