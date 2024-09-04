@@ -44,7 +44,7 @@ public class BookDAO {
             result = pstmt.executeUpdate();
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(pstmt);
@@ -72,7 +72,7 @@ public class BookDAO {
             result = pstmt.executeUpdate();
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(pstmt);
@@ -93,7 +93,7 @@ public class BookDAO {
             result = pstmt.executeUpdate();
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(pstmt);
@@ -126,7 +126,7 @@ public class BookDAO {
             }
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(rs);
@@ -160,7 +160,7 @@ public class BookDAO {
             }
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(rs);
@@ -195,7 +195,7 @@ public class BookDAO {
             }
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(rs);
@@ -229,7 +229,7 @@ public class BookDAO {
             }
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(rs);
