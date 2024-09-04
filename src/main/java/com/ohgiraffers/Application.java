@@ -14,12 +14,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Application {
+
     public static void main(String[] args) {
+        UserController usercontroller = new UserController();
 
         Scanner sc = new Scanner(System.in);
         boolean running = true;
-
-        UserController usercontroller = new UserController();
 
             // 메인 페이지
             while (running) {
@@ -75,7 +75,8 @@ public class Application {
         ManagerController managerController = new ManagerController();
         MypageController mypageController = new MypageController();
         BorrowRecordController borrowRecordController = new BorrowRecordController();
-        UserController userController = new UserController();
+        UserController usercontroller = new UserController();
+
         boolean isRunning = true;
         String logind = UserSession.getUserDTO().getUserId();
 
@@ -212,16 +213,18 @@ public class Application {
                             }
                         } else {
                             System.out.println("관리자 " + logind + "님 회원탈퇴 기능 선택");
-                            // 관리자 회원탈퇴 기능 구현 -- 세션에서 연결 끊어줘야 됨
-                            //userController.deleteAccount();
+                            usercontroller.deleteuser();
+                            isRunning = false;
+                            break;
                         }
-                        break;
+
 
                     case 6:
                         if (userRole == 0) {
-                            System.out.println(logind + "님 회원탈퇴 기능 선택");
-                            // 사용자 회원탈퇴 기능 구현
-                            //userController.deleteAccount();
+                            System.out.println(logind +"님 회원탈퇴 기능 선택");
+                            usercontroller.deleteuser();
+                            isRunning = false;
+                            break;
                         } else {
                             System.out.println("잘못된 선택입니다.");
                         }

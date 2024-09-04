@@ -101,9 +101,8 @@ public class UserDAO {
             return result > 0;
 
         } catch (SQLException e) {
-            System.out.println( " 회원 탈퇴 실패! 잘못된 아이디 또는 비밀번호를 입력하셨습니다. ");
+            return false;
         }
-        return false;
     }
 
 }
