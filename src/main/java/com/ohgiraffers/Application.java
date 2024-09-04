@@ -19,20 +19,20 @@ public class Application {
         UserController usercontroller = new UserController();
 
         Scanner sc = new Scanner(System.in);
-        boolean running = true;
+        boolean running = true; // 반복문을 돌리기 위한 변수.
             // 메인 페이지
-//            System.out.print("📕");
-//            Thread.sleep(500);
-//            System.out.print("📖");
-//            Thread.sleep(500);
-//            System.out.print("📕");
-//            Thread.sleep(500);
-//            System.out.print("📖");
-//            Thread.sleep(500);
-//            System.out.print("📕");
-//            Thread.sleep(500);
-//            System.out.print("📖");
-//            Thread.sleep(500);
+            /*System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);*/
             while (running) {
                 try {
 
@@ -42,7 +42,7 @@ public class Application {
                     System.out.println("0. 종료");
                     System.out.print("선택: ");
                     int choice = sc.nextInt();
-                    sc.nextLine();
+                    sc.nextLine(); // 개행 받아 먹기 냠냠..
 
                     switch (choice) {
                         case 1:
@@ -56,6 +56,7 @@ public class Application {
                             // 로그인 및 해당 역할에 따른 메뉴 표시
                             // select
                             int userRole = usercontroller.totallogin();
+                            // 1은 관리자, 0은 일반 사용자, 1보다 큰 수는 로그인 실패.
                             if (userRole == 1 || userRole == 0) {
                                 displayMenu(sc, userRole);
                             } else if (userRole == 2) {
@@ -65,16 +66,17 @@ public class Application {
                             break;
                         case 0:
                             System.out.println("프로그램을 종료합니다.");
-                            running = false;
-                            break;
+                            running = false; // 반복문을 끄고
+                            break; // 와일문을 탈출한다.
+                            // 상기 두 줄의 코드를 삭제하고  return;도 가능하다.
                         default:
-                            System.out.println("잘못된 선택입니다. 다시 시도하세요.");
+                            System.out.println("잘못된 선택입니다. 다시 시도하세요."); // 잘 못된 int 값에 대한 대처 방법.
                             break;
 
 
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+                    System.out.println("잘못된 입력입니다. 숫자를 입력하세요."); // 인트가 아닌 값에 대한 대처 방법.
                     sc.nextLine();
                 }
             }
@@ -87,7 +89,7 @@ public class Application {
         ManagerController managerController = new ManagerController();
         MypageController mypageController = new MypageController();
         BorrowRecordController borrowRecordController = new BorrowRecordController();
-        UserController usercontroller = new UserController();
+        UserController usercontroller = new UserController(); // 클래스를 객체로 선언 후
 
         boolean isRunning = true;
         String logind = UserSession.getUserDTO().getUserId();
@@ -185,7 +187,7 @@ public class Application {
 
                     case 5:
                         if (userRole == 0) {
-                            System.out.println(logind + "님 마이페이지 선택");
+                            System.out.println("\n===" + logind + "님의 마이페이지 입니다 ===");
                             System.out.println("1. 현재 대여 신청 책 목록");
                             System.out.println("2. 전체 대여 목록");
                             System.out.println("3. 대여 취소");
