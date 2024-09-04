@@ -110,21 +110,22 @@ public class BorrowRecordController {
 
 
     /** 연체된 도서 목록 출력 메서드*/
-    public void overDueBooks(){
-
+    public void overDueBooks() {
         BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
         BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
 
-        borrowRecordDAO.getBorrowRecords(getConnection(), borrowRecordDTO);
-        int result = borrowRecordDAO.overDueBook(getConnection(), borrowRecordDTO);
+        borrowRecordDAO.getBorrowRecords(getConnection(), borrowRecordDTO); // 대여 기록 조회
+        int result = borrowRecordDAO.overDueBook(getConnection(), borrowRecordDTO); // 연체 여부 확인 및 상태 업데이트
+
         if (result > 0) {
             System.out.println("-----------연체된 책 목록------------");
             borrowRecordDAO.overDueBookList(getConnection(), borrowRecordDTO);
             System.out.println("------------------------------------");
-        }else {
-            System.out.println("연체 목록을 가져오지 못했습니다. 다시 시도해주세요.");
+        } else {
+            System.out.println("도서 연체 목록이 없습니다.");
         }
     }
+
 
     /** borrow_records 테이블의 user_id 값 모두 출력*/
     public void printAllUserIds() {
