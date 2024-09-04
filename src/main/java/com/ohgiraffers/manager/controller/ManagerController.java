@@ -51,8 +51,8 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
         allMembersInfo = managerDAO.selectAllMembersInfo(getConnection());
         System.out.println("회원 정보 리스트");
         for (UserDTO member : allMembersInfo){
-            System.out.println("USER ID: " + member.getUserId() + "USER NAME: " + member.getUserName()
-            + "USER JOIN DATE" + member.getUserCreatedAt() + "USER UPDATE DATE" + member.getUserUpdatedAt());
+            System.out.println("USER ID: " + member.getUserId() + "   USER NAME: " + member.getUserName()
+            + "   USER JOIN DATE" + member.getUserCreatedAt() + "   USER UPDATE DATE" + member.getUserUpdatedAt());
         }
     }
 
