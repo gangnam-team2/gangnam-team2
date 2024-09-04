@@ -57,6 +57,7 @@ UserDTO userDTO = new UserDTO();
     }
 
     public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getBookCode() {

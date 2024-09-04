@@ -15,27 +15,23 @@
 
     <entry key="selectBookList">
         SELECT
-        b.user_id,
-        a.book_code,
-        a.book_title,
-        a.book_author,
-        a.book_publisher,
-        a.book_genre
-        FROM
-        books a
-        LEFT JOIN
-        borrow_records b ON a.book_code = b.book_code
-        WHERE
-        a.book_status = ?;
+            user_id,
+            book_code,
+            book_title,
+            borrow_date,
+            due_date
+          FROM
+            borrow_records;
+
     </entry>
 
     <entry key="selectMemberHistoy"> <!--회원의 연체 이력을 조회할 수 있는 기능을 구현한다.-->
         SELECT
-        a.user_id,
-        b.book_title
-        FROM borrow_records a JOIN books b ON a.book_code = b.book_code
+        user_id,
+        book_title
+        FROM borrow_records
         WHERE
-        (return_date = NULL AND NOW() > due_date) AND (over_due_books = true) <!--현재를 반영하기 어렵다. 관리자가 조회한 시점과 마감일을 비교하는 쿼리문을 써야 할 것 같다.-->
+        over_due_books = false
 
     </entry>
 </properties>
