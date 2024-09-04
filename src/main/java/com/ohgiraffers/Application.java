@@ -40,7 +40,7 @@ public class Application {
                     System.out.println("1. 회원가입");
                     System.out.println("2. 로그인");
                     System.out.println("0. 종료");
-                    System.out.print("원하시는 메뉴의 번호를 선택해주세요 (❁´◡`❁):  \n");
+                    System.out.print("원하시는 메뉴의 번호를 선택해주세요 (❁´◡`❁): ");
                     int choice = sc.nextInt();
                     sc.nextLine(); // 개행 받아 먹기 냠냠..
 
@@ -97,7 +97,7 @@ public class Application {
             try {
                 // 관리자와 사용자 메뉴를 나눔
                 if (userRole == 1) {  // 관리자
-                    System.out.println("\n=== 관리자 메뉴 ===\n");
+                    System.out.println("\n=== 관리자 메뉴 ===");
                     System.out.println("1. 도서 관리");
                     System.out.println("2. 연체된 도서 목록");
                     System.out.println("3. 사용자 관리");
@@ -106,7 +106,7 @@ public class Application {
                     System.out.println("0. 로그아웃");
 
                 } else if (userRole == 0) {  // 일반 사용자
-                    System.out.println("\n=== 사용자 메뉴 ===\n");
+                    System.out.println("\n=== 사용자 메뉴 ===");
                     System.out.println("1. 도서 검색");
                     System.out.println("2. 대여 및 반납");
                     System.out.println("3. 베스트셀러 목록");
@@ -116,7 +116,7 @@ public class Application {
                     System.out.println("0. 로그아웃");
                 }
 
-                System.out.print("원하시는 메뉴의 번호를 선택해주세요(❁´◡`❁):  \n");
+                System.out.print("원하시는 메뉴의 번호를 선택해주세요(❁´◡`❁): ");
                 if (!sc.hasNextInt()) {  // 숫자 입력이 아닌 경우 예외 처리
                     System.out.println("\n잘못된 메뉴를 선택하셨습니다. 다시 시도합니다. ");
                     sc.next();  // 잘못된 입력을 버퍼에서 제거
@@ -132,7 +132,7 @@ public class Application {
                             System.out.println("\n관리자 " + logind + "님! 도서 관리 메뉴를 선택하셨습니다.^0^");
                             bookController.manageBooksMenu(sc);
                         } else {
-                            System.out.println("\n사용자" + logind + "님! 도서 검색 메뉴를 선택하셨습니다.^0^");
+                            System.out.println("\n사용자 " + logind + "님! 도서 검색 메뉴를 선택하셨습니다.^0^");
                             bookController.searchBookMenu(sc);
                         }
                         break;
@@ -143,9 +143,9 @@ public class Application {
                             borrowRecordController.overDueBooks();
                         } else {
                             System.out.println("\n사용자 " + logind + "님! 대여 및 반납 기능 메뉴를 선택하셨습니다.^0^");
-                            System.out.println("\n=== 대여 및 반납 메뉴 ===\n");
+                            System.out.println("\n=== 대여 및 반납 메뉴 ===");
                             System.out.println("1. 대여   2. 반납");
-                            System.out.print("원하시는 메뉴의 번호를 선택해주세요(❁´◡`❁):  \n");
+                            System.out.print("원하시는 메뉴의 번호를 선택해주세요(❁´◡`❁): ");
                             if (!sc.hasNextInt()) {
                                 System.out.println("잘못된 입력입니다. 다시 시도해주세요!");
                                 sc.next();  // 잘못된 입력을 처리
@@ -189,8 +189,8 @@ public class Application {
                     case 5:
                         if (userRole == 0) {
                             System.out.println("\n사용자"+logind + "님! 마이페이지 메뉴를 선택하셨습니다.^0^");
-                            System.out.println("1. 현재 대여 신청 책 목록");
-                            System.out.println("2. 전체 대여 목록");
+                            System.out.println("1. 대여중인 도서 목록");
+                            System.out.println("2. 도서 대여 기록");
                             System.out.println("3. 대여 취소");
                             System.out.println("4. 연체 목록 조회");
                             System.out.println("5. 비밀번호 변경");
