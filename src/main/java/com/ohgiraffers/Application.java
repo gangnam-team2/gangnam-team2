@@ -21,18 +21,18 @@ public class Application {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
             // 메인 페이지
-            System.out.print("📕");
-            Thread.sleep(500);
-            System.out.print("📖");
-            Thread.sleep(500);
-            System.out.print("📕");
-            Thread.sleep(500);
-            System.out.print("📖");
-            Thread.sleep(500);
-            System.out.print("📕");
-            Thread.sleep(500);
-            System.out.print("📖");
-            Thread.sleep(500);
+//            System.out.print("📕");
+//            Thread.sleep(500);
+//            System.out.print("📖");
+//            Thread.sleep(500);
+//            System.out.print("📕");
+//            Thread.sleep(500);
+//            System.out.print("📖");
+//            Thread.sleep(500);
+//            System.out.print("📕");
+//            Thread.sleep(500);
+//            System.out.print("📖");
+//            Thread.sleep(500);
             while (running) {
                 try {
 
@@ -127,7 +127,7 @@ public class Application {
                 switch (choice) {
                     case 1:
                         if (userRole == 1) {
-                            System.out.println("관리자 " + logind +"님 도서 관리 메뉴 선택");
+                            System.out.println("관리자 " + logind + "님 도서 관리 메뉴 선택");
                             bookController.manageBooksMenu(sc);
                         } else {
                             System.out.println(logind + "님 도서 검색 메뉴 선택");
@@ -137,7 +137,7 @@ public class Application {
 
                     case 2:
                         if (userRole == 1) {
-                            System.out.println("관리자 " + logind +"님 연체 도서 목록 선택");
+                            System.out.println("관리자 " + logind + "님 연체 도서 목록 선택");
                             borrowRecordController.overDueBooks();
                         } else {
                             System.out.println(logind + "님 대여 및 반납 기능 선택");
@@ -223,23 +223,20 @@ public class Application {
                                 default:
                                     System.out.println("다시 시도해 주세요.");
                             }
-                        } else {
+                        } else if (userRole == 1) {
                             System.out.println("관리자 " + logind + "님 회원탈퇴 기능 선택");
-                            userRole = 1;
                             usercontroller.deleteuser();
                             isRunning = false;
-                            break;
                         }
-
+                        break;
 
                     case 6:
                         if (userRole == 0) {
-                            System.out.println(logind +"님 회원탈퇴 기능 선택");
+                            System.out.println(logind + "님 회원탈퇴 기능 선택");
                             usercontroller.deleteuser();
-                            break;
-
+                            isRunning = false;
                         } else {
-                            System.out.println("잘못된 선택입니다.");
+                            System.out.println("잘못된 선택입니다. 다시 시도해 주세요.");
                         }
                         break;
 
