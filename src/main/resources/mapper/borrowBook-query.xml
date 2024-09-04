@@ -68,6 +68,12 @@
             SET BOOK_CODE =?, RETURN_DATE = ?;
     </entry>
 
+    <entry key="getAllUserIds">
+        <![CDATA[
+            SELECT DISTINCT user_id FROM borrow_records
+        ]]>
+    </entry>
+
 
 <!--    &lt;!&ndash; 책 대여를 위한 쿼리 &ndash;&gt;
     <entry key="rentBook">
