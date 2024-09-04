@@ -100,9 +100,9 @@
 
 
     <entry key="overDueBooks">
-        UPDATE BORROW_RECORDS
-        SET OVER_DUE_BOOKS = 1
-        WHERE DUE_DATE = ?;
+        UPDATE borrow_records
+        SET over_due_books = ?
+        WHERE book_code = ? AND return_date IS NULL;
     </entry>
 
 
@@ -116,7 +116,6 @@
         ON a.BOOK_CODE = b.BOOK_CODE
         WHERE OVER_DUE_BOOKS = 1;
     </entry>
-
 
     <entry key="updateReturnDate">
         <![CDATA[

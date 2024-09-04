@@ -23,7 +23,7 @@ public class MypageDAO {
         }
     }
 
-    /** 대여한 도서를 출력하는 메서드*/
+    /** 대여한 도서를 취소하는 메서드*/
     public int updateRequest(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -102,7 +102,7 @@ public class MypageDAO {
         }
     }
 
-    /** 대여중인 모든 도서를 출력하는 메서드*/
+    /** 모든 대여기록을 출력하는 메서드*/
     public void allBorrowBookList(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
