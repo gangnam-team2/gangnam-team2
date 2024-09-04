@@ -25,7 +25,7 @@ public class BookDAO {
         }
     }
 
-    // 도서 추가
+    /** 도서 추가하는 메서드*/
     public int insertBook(Connection con, BookDTO bookDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -44,7 +44,7 @@ public class BookDAO {
             result = pstmt.executeUpdate();
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(pstmt);
@@ -52,7 +52,7 @@ public class BookDAO {
         return result;
     }
 
-    // 도서 수정
+    /** 도서 수정하는 메서드*/
     public int updateBook(Connection con, BookDTO bookDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -72,7 +72,7 @@ public class BookDAO {
             result = pstmt.executeUpdate();
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(pstmt);
@@ -80,7 +80,7 @@ public class BookDAO {
         return result;
     }
 
-    // 도서 삭제
+    /** 도서 삭제하는 메서드*/
     public int deleteBook(Connection con, int bookCode) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -93,7 +93,7 @@ public class BookDAO {
             result = pstmt.executeUpdate();
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(pstmt);
@@ -101,7 +101,7 @@ public class BookDAO {
         return result;
     }
 
-    // 도서 코드로 도서 가져오기
+    /** 도서 식별번호로 도서 가져오는 메서드*/
     public BookDTO getBookById(Connection con, int bookCode) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -126,7 +126,7 @@ public class BookDAO {
             }
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(rs);
@@ -135,7 +135,7 @@ public class BookDAO {
         return bookDTO;
     }
 
-    // 도서 코드로 도서 검색
+    /** 도서 식별번호를 이용해 도서 찾는 메서드*/
     public BookDTO searchBooksByCode(Connection con, int bookCode) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -160,7 +160,7 @@ public class BookDAO {
             }
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(rs);
@@ -169,7 +169,7 @@ public class BookDAO {
         return bookDTO;
     }
 
-    // 도서 제목으로 도서 검색
+    /** 도서 제목으로 도서 찾는 메서드*/
     public List<BookDTO> searchBooksByTitle(Connection con, String title) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -195,7 +195,7 @@ public class BookDAO {
             }
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(rs);
@@ -204,7 +204,7 @@ public class BookDAO {
         return books;
     }
 
-    // 연체된 도서 목록 검색
+    /** 연체된 도서 목록을 조회하는 메서드*/
     public List<BookDTO> getOverdueBooks(Connection con) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -229,7 +229,7 @@ public class BookDAO {
             }
 
         } catch (SQLException | NullPointerException e) {
-            System.out.println("잘못된 값이 입력됨...");
+            System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
             e.printStackTrace();
         } finally {
             close(rs);
@@ -239,6 +239,7 @@ public class BookDAO {
     }
 
 
+    /** 요청된 도서를 추가하는 메서드 - 추후 필요시 사용*/
     public void insertBookIntoDB(Connection con, BookDTO bookDTO) throws SQLException {
         con = null;
         BookDAO bookDAO = new BookDAO();
@@ -256,8 +257,7 @@ public class BookDAO {
         }
     }
 
-    // 대여 가능한 책 리스트를 가져오는 메서드
-    // !!!! 근데 로그인한 아이디에서 대여한건지 검증 필요 !!!!
+    /** 대여 가능한 도서를 가져오는 메서드 - 추후 필요시 사용*/
     public List<BookDTO> getAvailableBooks(Connection con) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;

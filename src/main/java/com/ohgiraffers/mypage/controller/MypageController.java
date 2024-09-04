@@ -13,6 +13,7 @@ import static com.ohgiraffers.common.JDBCTemplate.*;
 
 public class MypageController {
 
+    /**현재 로그인한 사용자가 대여한 도서 목록을 출력하는 메서드*/
     public void currentBorrowBookList() {
         MypageDAO mypageDAO = new MypageDAO();
         UserDTO userDTO = UserSession.getUserDTO();  // 세션에서 사용자 정보 가져오기
@@ -33,8 +34,7 @@ public class MypageController {
         System.out.println("====================================================================");
     }
 
-
-
+    /** 현재 로그인한 사용자가 대여한 도서를 출력하는 메서드*/
     public void updateRequestBook() {
         MypageDAO mypageDAO = new MypageDAO();
         Scanner sc = new Scanner(System.in);
@@ -71,6 +71,7 @@ public class MypageController {
         }
     }
 
+    /** 현재 사용자가 대여한 도서를 출력하는메서드*/
     public void allBorrowBookList() {
         MypageDAO mypageDAO = new MypageDAO();
         BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
@@ -81,6 +82,7 @@ public class MypageController {
         System.out.println("==========================================================");
     }
 
+    /** 현재 사용자의 연체된 도서 목록을 출력하는 메서드*/
     public void myOverDueBooks() {
         MypageDAO mypageDAO = new MypageDAO();
         BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
@@ -97,6 +99,7 @@ public class MypageController {
         System.out.println("===============================================================================");
     }
 
+    /** 사용자의 비밀번호를 수정하는 메서드*/
     public void pwdUpdate() {
         MypageDAO mypageDAO = new MypageDAO();
         UserDTO userDTO = UserSession.getUserDTO();  // 세션에서 사용자 정보 가져오기

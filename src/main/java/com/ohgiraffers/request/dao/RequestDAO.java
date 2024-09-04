@@ -31,6 +31,7 @@ public class RequestDAO {
         }
     }
 
+    /** 요청된 도서를 추가하는 메서드*/
     public int insertRequestedBook(Connection con, RequestDTO requestDTO) throws SQLException {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -57,6 +58,7 @@ public class RequestDAO {
         return result;
     }
 
+    /** 요청된 도서를 가져오는 메서드*/
     public List<RequestDTO> getRequestedBooks(Connection con) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -90,6 +92,7 @@ public class RequestDAO {
         return requestedBooks;
     }
 
+    /** 요청된 도서를 삭제하는 메서드*/
     public boolean deleteRequest(Connection con, int requestId) throws SQLException {
         PreparedStatement pstmt = null;
         String query = prop.getProperty("deleteRequestedBook");

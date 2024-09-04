@@ -26,6 +26,7 @@ public class ManagerDAO {
         }
     }
 
+    /** 모든 회원 정보를 출력하는 메서드*/
     public List<UserDTO> selectAllMembersInfo(Connection con){
 
         PreparedStatement pstmt = null;
@@ -56,6 +57,7 @@ public class ManagerDAO {
         return allMembersInfolist;
     }
 
+    /** 대여 가능한 도서 목록을 출력하는 메서드*/
     public Map<String, List<BookDTO>> selectAllBooksInfo(Connection con) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
@@ -122,6 +124,7 @@ public class ManagerDAO {
         return userBooks;
     }
 
+    /** 연체 이력이 있는 회원 정보를 출력하는 메서드*/
     public List<BorrowRecordDTO> selectMemberHistoy(Connection con){
         PreparedStatement pstmt = null;
         ResultSet rset = null;

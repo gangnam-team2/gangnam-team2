@@ -22,6 +22,7 @@ public class MypageDAO {
         }
     }
 
+    /** 대여한 도서를 출력하는 메서드*/
     public int updateRequest(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -41,6 +42,7 @@ public class MypageDAO {
         return result;
     }
 
+    /** 현재 대여중인 도서 목록 메서드*/
     public List<BorrowRecordDTO> currentBorrowBooks(Connection con, String userId) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
@@ -71,8 +73,7 @@ public class MypageDAO {
     }
 
 
-
-
+    /** 연체된 도서를 출력하는 메서드*/
     public void myOverDueBooks(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -100,6 +101,7 @@ public class MypageDAO {
         }
     }
 
+    /** 대여중인 모든 도서를 출력하는 메서드*/
     public void allBorrowBookList(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
@@ -128,6 +130,7 @@ public class MypageDAO {
         }
     }
 
+    /** 비밀번호 수정 메서드*/
     public int pwdUpdate(Connection con, UserDTO userDTO, String changePwd) {
         PreparedStatement pstmt = null;
         int result = 0;

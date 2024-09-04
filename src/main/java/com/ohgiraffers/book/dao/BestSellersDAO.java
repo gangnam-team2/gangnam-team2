@@ -25,6 +25,7 @@ public class BestSellersDAO {
         }
     }
 
+    /** 기간별 베스트셀러 조회시 출력하는 메서드*/
     public List<BookDTO> selectBestSellersByPeriod(Connection con, String period) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -42,7 +43,7 @@ public class BestSellersDAO {
                 periodInterval = "YEAR";
                 break;
             default:
-                throw new IllegalArgumentException("Invalid period: " + period);
+                throw new IllegalArgumentException(period + "은 유효하지 않는 기간입니다.");
         }
 
         String query = prop.getProperty("selectBestSellersByPeriod").replace("#{period}", periodInterval);

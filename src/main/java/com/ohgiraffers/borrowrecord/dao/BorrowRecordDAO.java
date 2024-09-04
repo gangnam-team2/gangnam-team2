@@ -26,7 +26,7 @@ public class BorrowRecordDAO {
         }
     }
 
-
+        /** 대여 가능한 도서 목록을 출력하는 메서드*/
         public List<Integer> showBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
             List<Integer> bookList = new ArrayList<Integer>();
             Statement stmt = null;
@@ -58,7 +58,7 @@ public class BorrowRecordDAO {
             }return bookList;
         }
 
-
+        /**도서 대여하는 메서드*/
     public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -112,6 +112,7 @@ public class BorrowRecordDAO {
     }
 
 
+    /** 도서 반납하는 메서드*/
     public int returnBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -150,8 +151,8 @@ public class BorrowRecordDAO {
         return result;
     }
 
-    // 대여 가능한 도서들의 여부를 확인하려고 만든 메서드 -> 사용자가 대여중인 도서 목록 가져오려고
-    // 이게 있어야 내가 뭘 대여했는지 알 수 있고 그래야 대여 가능한 도서에서만 대여를 할 수 있음.
+    /**대여 가능한 도서들의 여부를 확인하려고 만든 메서드 -> 사용자가 대여중인 도서 목록 가져오려고
+    이게 있어야 내가 뭘 대여했는지 알 수 있고 그래야 대여 가능한 도서에서만 대여를 할 수 있음.*/
     public List<BorrowRecordDTO> getBorrowedBooks(Connection con, String userId) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -181,6 +182,7 @@ public class BorrowRecordDAO {
         return borrowedBooks;
     }
 
+
     public List<Integer> getBorrowRecords(Connection con, BorrowRecordDTO borrowRecordDTO) {
         Statement stmt = null;
         ResultSet rset = null;
@@ -208,8 +210,6 @@ public class BorrowRecordDAO {
         }return borrowRecords;
     }
 
-
-
         public int overDueBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
 
             PreparedStatement pstmt = null;
@@ -231,8 +231,6 @@ public class BorrowRecordDAO {
             return result;
         }
 
-
-
         public void overDueBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
             Statement stmt = null;
             ResultSet rs = null;
@@ -253,7 +251,30 @@ public class BorrowRecordDAO {
                 throw new RuntimeException(e);
             }
         }
+
+    // borrow_records 테이블에 있는 모든 user_id를 가져오는 메서드
+    public List<String> getAllUserIds(Connection con) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<String> userIds = new ArrayList<>();
+        String query = prop.getProperty("getAllUserIds");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                userIds.add(rs.getString("user_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+
+        return userIds;
     }
+}
 
 
 
