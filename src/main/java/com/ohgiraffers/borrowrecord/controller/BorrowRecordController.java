@@ -31,7 +31,7 @@ public class BorrowRecordController {
             }
 
             Scanner sc = new Scanner(System.in);
-            System.out.println("대여하고 싶은 도서의 코드를 입력해주세요 :");
+            System.out.print("대여하고 싶은 도서의 코드를 입력해주세요 :");
             int bookCode = sc.nextInt();
 
             // availableBookCodes여기에 사용자가 입력한 도서 코드가 없으면 실행 -> 리스트로 가져온 북 리스트에서 북 코드 비교
