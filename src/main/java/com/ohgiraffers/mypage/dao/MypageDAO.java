@@ -23,7 +23,7 @@ public class MypageDAO {
         }
     }
 
-    /** 대여한 도서를 취소하는 메서드*/
+    /** 대여한 도서를 취소하는 메서드 -- 현재 사용 X 추후 필요시 이용*/
     public int updateRequest(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -87,7 +87,7 @@ public class MypageDAO {
 
             if (rs != null && rs.next()) {
                 do {
-                    System.out.printf("북코드: %d | 제목: %s | 대여일: %s | 반납 예정일: %s\n",
+                    System.out.printf("도서 식별번호: %d | 제목: %s | 대여일: %s | 반납 예정일: %s\n",
                             rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getDate(4));
                 } while (rs.next());
             } else {

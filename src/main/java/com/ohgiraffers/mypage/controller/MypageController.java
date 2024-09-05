@@ -34,7 +34,7 @@ public class MypageController {
         System.out.println("===============");
     }
 
-    /** 현재 로그인한 사용자가 대여한 도서를 출력하는 메서드*/
+    /** 현재 로그인한 사용자가 대여한 도서를 출력하는 메서드 -- 대여 취소 기능 추후 사용을 위해 주석**/
     public void updateRequestBook() {
         MypageDAO mypageDAO = new MypageDAO();
         Scanner sc = new Scanner(System.in);
@@ -108,16 +108,18 @@ public class MypageController {
         System.out.println("=== 비밀번호 변경 ===");
         System.out.println("현재 비밀번호를 입력해주세요 :");
         String password = sc.nextLine();
-
         if (password.equals(userDTO.getUserPwd())) {
             System.out.println("새로운 비밀번호를 입력해주세요 :");
             String changePwd = sc.nextLine();
-
-            int result = mypageDAO.pwdUpdate(getConnection(), userDTO, changePwd);
-            if (result > 0) {
-                System.out.println("\n비밀번호 변경이 완료되었습니다.");
+            if (changePwd.equals(userDTO.getUserPwd())) {
+                System.out.println("현재 비밀번호와 같습니다. 비밀번호 변경에 실패했습니다. ");
             } else {
-                System.out.println("\n비밀번호 변경에 실패했습니다. ");
+                int result = mypageDAO.pwdUpdate(getConnection(), userDTO, changePwd);
+                if (result > 0) {
+                    System.out.println("비밀번호가 변경되었습니다.");
+                } else {
+                    System.out.println("비밀번호 변경에 실패했습니다. 다시 시도해 주세요.");
+                }
             }
         } else {
             System.out.println("\n현재 사용 중인 비밀번호와 다릅니다. ");

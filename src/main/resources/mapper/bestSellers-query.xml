@@ -3,13 +3,48 @@
 <properties>
 
     <!--기간별 베스트 셀러 도서 뽑아오기-->
+    <!-- 기간별 베스트셀러 조회 쿼리 -->
     <entry key="selectBestSellersByPeriod">
         <![CDATA[
             SELECT b.book_code, b.book_title, b.book_author, b.book_genre, b.borrow_count
-              FROM books b
-            WHERE b.borrow_count > 0
-            ORDER BY b.borrow_count DESC
+            FROM best_sellers bs
+            JOIN books b ON bs.book_code = b.book_code
+            WHERE bs.period = '#{period}'
+            ORDER BY bs.borrow_count DESC
             LIMIT 10
+        ]]>
+    </entry>
+
+    <!-- 주간 베스트셀러 업데이트 쿼리 -->
+    <entry key="updateBestSellersWeek">
+        <![CDATA[
+            INSERT INTO best_sellers (book_code, borrow_count, period)
+            SELECT book_code, borrow_count, 'WEEK'
+            FROM books
+            WHERE borrow_count > 0
+            ON DUPLICATE KEY UPDATE borrow_count = VALUES(borrow_count)
+        ]]>
+    </entry>
+
+    <!-- 월간 베스트셀러 업데이트 쿼리 -->
+    <entry key="updateBestSellersMonth">
+        <![CDATA[
+            INSERT INTO best_sellers (book_code, borrow_count, period)
+            SELECT book_code, borrow_count, 'MONTH'
+            FROM books
+            WHERE borrow_count > 0
+            ON DUPLICATE KEY UPDATE borrow_count = VALUES(borrow_count)
+        ]]>
+    </entry>
+
+    <!-- 연간 베스트셀러 업데이트 쿼리 -->
+    <entry key="updateBestSellersYear">
+        <![CDATA[
+            INSERT INTO best_sellers (book_code, borrow_count, period)
+            SELECT book_code, borrow_count, 'YEAR'
+            FROM books
+            WHERE borrow_count > 0
+            ON DUPLICATE KEY UPDATE borrow_count = VALUES(borrow_count)
         ]]>
     </entry>
 </properties>

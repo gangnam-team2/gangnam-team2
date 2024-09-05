@@ -35,12 +35,13 @@ public class Application {
             Thread.sleep(500);
             while (running) {
                 try {
-
-                    System.out.print("\n=== 도서 대여 프로그램 ===\n");
+                    // 서연님의 로그인, 회원가입 선택창을 시작으로 프로그램이 구현됩니다. 아주 막중!!!하였다!!!
+                    System.out.println("\n=== 도서 대여 프로그램 ===");
                     System.out.println("1. 회원가입");
                     System.out.println("2. 로그인");
                     System.out.println("0. 종료");
-                    System.out.print("\n원하시는 메뉴의 번호를 선택해주세요 : ");
+                    System.out.print("원하시는 메뉴의 번호를 선택해주세요 : ");
+
                     int choice = sc.nextInt();
                     sc.nextLine(); // 개행 받아 먹기 냠냠..
 
@@ -83,30 +84,31 @@ public class Application {
     }
 
     // 역할에 따른 메뉴 출력 및 컨트롤러 호출
-    private static void displayMenu(Scanner sc, int userRole) {
+    private static void displayMenu(Scanner sc, int userRole) { // 로그인 이후 보여질 선택창 메소드, 관리자와 사용자로 나뉜다.
         BookController bookController = new BookController();
         BestSellersController bestSellersController = new BestSellersController();
         ManagerController managerController = new ManagerController();
         MypageController mypageController = new MypageController();
         BorrowRecordController borrowRecordController = new BorrowRecordController();
-        UserController usercontroller = new UserController(); // 클래스를 객체로 선언 후
+        UserController usercontroller = new UserController(); // 클래스를 객체로 선언 후 해당 클래스의 메소드를 사용할 준비를 마쳤다.
 
-        boolean isRunning = true;
-        String logind = UserSession.getUserDTO().getUserId();
-        while (isRunning) {
+        boolean isRunning = true; // 반복문을 돌리기 위한 불린형 변수 선언 및 초기화
+        String logind = UserSession.getUserDTO().getUserId(); // 현재 로그인한 회원의 아이디 DTO 정보를 담은 스트링 변수
+        while (isRunning) { // 무한~ 루프~!🙌
             try {
                 // 관리자와 사용자 메뉴를 나눔
                 if (userRole == 1) {  // 관리자
-                    System.out.println("\n=== 관리자 메뉴 ===");
+                    System.out.println("\n=== 관리자 전용 메뉴 ===");
                     System.out.println("1. 도서 관리");
                     System.out.println("2. 연체된 도서 목록");
                     System.out.println("3. 사용자 관리");
                     System.out.println("4. 베스트셀러 목록");
                     System.out.println("5. 회원탈퇴");
                     System.out.println("0. 로그아웃");
+                    System.out.println("=====================");
 
                 } else if (userRole == 0) {  // 일반 사용자
-                    System.out.println("\n=== 사용자 메뉴 ===");
+                    System.out.println("\n=== 회원 전용 메뉴 ===");
                     System.out.println("1. 도서 검색");
                     System.out.println("2. 대여 및 반납");
                     System.out.println("3. 베스트셀러 목록");
@@ -114,6 +116,7 @@ public class Application {
                     System.out.println("5. 마이페이지");
                     System.out.println("6. 회원탈퇴");
                     System.out.println("0. 로그아웃");
+                    System.out.println("===================");
                 }
 
                 System.out.print("원하시는 메뉴의 번호를 선택해주세요 : ");
@@ -191,9 +194,8 @@ public class Application {
                             System.out.println("\n사용자"+logind + "님! 마이페이지 메뉴를 선택하셨습니다.");
                             System.out.println("1. 대여중인 도서 목록");
                             System.out.println("2. 도서 대여 기록");
-                            System.out.println("3. 대여 취소");
-                            System.out.println("4. 연체 목록 조회");
-                            System.out.println("5. 비밀번호 변경");
+                            System.out.println("3. 연체 목록 조회");
+                            System.out.println("4. 비밀번호 변경");
                             System.out.println("0. 이전으로 돌아가기");
                             System.out.print(" 원하시는 메뉴의 번호를 선택해주세요 : ");
 
@@ -213,12 +215,9 @@ public class Application {
                                     mypageController.allBorrowBookList();
                                     break;
                                 case 3:
-                                    mypageController.updateRequestBook();
-                                    break;
-                                case 4:
                                     mypageController.myOverDueBooks();
                                     break;
-                                case 5:
+                                case 4:
                                     mypageController.pwdUpdate();
                                     break;
                                 case 0:

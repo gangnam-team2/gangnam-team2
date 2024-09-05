@@ -244,11 +244,9 @@ public int totallogin() {
 
                         // 이후 로직 (예: 로그인 성공 시 isLoggedIn 변경)
                         if (UserSession.getUserDTO().getUserRole()) {
-                            System.out.println("\n관리자 로그인 성공!");
                             isLoggedIn = true;
                             return 1; // 관리자 로그인 성공 시 true 반환
                         } else {
-                            System.out.println("\n사용자 로그인 성공!");
                             isLoggedIn = true;
                             return 0; // 일반 사용자 로그인 성공 시 false 반환
                         }

@@ -18,7 +18,7 @@ import java.util.Scanner;
 import static com.ohgiraffers.common.JDBCTemplate.*;
 
 public class BookController {
-    private RequestDAO requestDAO;
+    private RequestDAO requestDAO; // 사용되지 않는 듯 하다.
     private static BookDAO bookDAO;
     private static Scanner sc;
 
@@ -91,10 +91,10 @@ public class BookController {
             bookDTO.setBookAuthor(bookAuthor);
             bookDTO.setBookPublisher(bookPublisher);
             bookDTO.setBookGenre(bookGenre);
-            bookDTO.setBookStatus(bookStatus);
+            bookDTO.setBookStatus(bookStatus); // 상기 특수문자 사용 여부를 확인한 변수들을 DTO에 담는다.
 
             // 데이터베이스에 도서 추가
-            insertBookIntoDB(bookDTO);
+            insertBookIntoDB(bookDTO); // 이 클래스의 제일 하단에 위치한 책 정보를 DB에 추가하는 인설트 메소드 호출
 
             validInput = true; // 모든 입력이 유효하면 루프 종료
         }
@@ -112,7 +112,7 @@ public class BookController {
             System.out.print("수정할 도서 코드를 입력해주세요 : ");
             int bookCode = 0;
 
-            if (sc.hasNextInt()) {
+            if (sc.hasNextInt()) { // 이거 인트여..? 기여 아니여!!
                 bookCode = sc.nextInt();
                 sc.nextLine();
             } else {
@@ -127,7 +127,7 @@ public class BookController {
             if (bookDTO == null) {
                 System.out.println("\n해당 도서를 찾을 수 없습니다. 이전 메뉴로 돌아갑니다 !");
                 close(con);
-                return;
+                return; // 리턴은 메소드를 종료하고 호출한 곳으로 돌아가도록 한다. 단 메인 메소드가 리턴을 만나면 프로그램이 종료된다. 더이상 돌아갈 곳이 없어..
             }
 
             // 새 도서 제목 입력
@@ -195,7 +195,7 @@ public class BookController {
 
             int result = 0;
             try {
-                result = bookDAO.updateBook(con, bookDTO);
+                result = bookDAO.updateBook(con, bookDTO); // DB내 책 정보를 수정하는 업데이트 메소드 호출하며 DTO값을 넘기고, DB로부터 반영 여부를 인트로 받는다.
             } finally {
                 close(con);
             }
@@ -217,7 +217,7 @@ public class BookController {
         sc.nextLine();
 
         Connection con = getConnection();
-        int result = bookDAO.deleteBook(con, bookCode);
+        int result = bookDAO.deleteBook(con, bookCode); // DB내 존재하는 도서를 삭제하는 메소드를 호출하며 책의 코드 번호를 넘기고, DB로부터 반영 여부를 인트로 받는다.
         close(con);
 
         if (result > 0) {
@@ -239,15 +239,15 @@ public class BookController {
 
         switch (searchChoice) {
             case 1:
-                searchBooksByTitle();  // 도서 제목으로 검색
+                searchBooksByTitle();  // 도서 제목으로 검색하는 메소드 호출
                 break;
             case 2:
-                searchBooksByCode();  // 도서 코드로 검색
+                searchBooksByCode();  // 도서 코드로 검색하는 메소드 호출
                 break;
             default:
                 System.out.println("잘못된 선택입니다. 다시 시도하세요.");
                 searchBookMenu(sc);  // 잘못된 선택 시 다시 검색 메뉴로 돌아가기
-                break;
+                break; // 사용자 메뉴로 돌아감. 와일문을 쓰지 않으면 어떻게 되는 지 보여주는 예시로 활용할 수 있을 듯 하다. 절대 귀찮거나 피곤해서가 아니다! 우리 팀장님 그런 사람 아님!! 아무튼 아님!!!
         }
     }
 
@@ -276,7 +276,7 @@ public class BookController {
                     book.getBookAuthor(),
                     book.getBookPublisher(),
                     book.getBookGenre(),
-                    book.isBookStatus() ? "대여 가능" : "대여 중",
+                    book.isBookStatus() ? "대여 가능" : "대여 중", // 이거슨 삼항 연산자, BookStatus가 트루면 대여가 가능하단 뜻이다.
                     book.getBorrowCount()
             );
             System.out.println("=================");  // 각 도서 사이 구분선
@@ -390,7 +390,7 @@ public class BookController {
 
         /** 요청된 도서 목록을 보여주고 선택적으로 도서 목록에 추가하는 메서드*/
         public void showRequestedBooks(Scanner sc) throws SQLException {
-            List<RequestDTO> requestedBooks = requestController.getRequestedBooks();
+            List<RequestDTO> requestedBooks = requestController.getRequestedBooks(); // 요청된 도서들을 리스트로 담은 변수 requestedBooks
 
             if (requestedBooks.isEmpty()) {
                 System.out.println("\n현재 요청된 도서가 없습니다. 이전 메뉴로 돌아갑니다 !");
@@ -400,12 +400,12 @@ public class BookController {
             System.out.println("=== 요청된 도서 목록 ===");
             for (int i = 0; i < requestedBooks.size(); i++) {
                 RequestDTO book = requestedBooks.get(i);
-                System.out.printf("%d. 제목: %s - 저자: %s - 출판사: %s - 장르: %s%n",
+                System.out.printf("%d. 제목: %s - 저자: %s - 출판사: %s - 장르: %s\n",
                         i + 1,
                         book.getBookTitle(),
                         book.getBookAuthor(),
                         book.getBookPublisher(),
-                        book.getBookGenre() != null ? book.getBookGenre() : "미정");
+                        book.getBookGenre() != null ? book.getBookGenre() : "미정"); // 역시 삼항연산자 사용. 값이 있으면 트루로 입력된 장르명을 출력하겠지만, 사용자로부터 장르를 입력받지 못했기에 전부 미정으로 나온다. 그렇다, 도서 요청 북 리스트 인설트는 서현준이가 맡았다. 그래서 좀마니 미흡하다. 팀장님 죄송합니다. 이렇게 세심하게 구현해 놨는데 제가 그만.. ㅠ
             }
             System.out.println("=============================");
 
@@ -420,7 +420,7 @@ public class BookController {
                 sc.nextLine();
 
                 if (bookChoice > 0 && bookChoice <= requestedBooks.size()) {
-                    RequestDTO selectedBook = requestedBooks.get(bookChoice - 1);
+                    RequestDTO selectedBook = requestedBooks.get(bookChoice - 1); // 인덱스 넘버로 체크하기에 -1를 해주었다. 0이 1이라고 보면 되시겄다.
 
                     // 도서를 DB에 추가
                     addRequestedBook(selectedBook);
@@ -461,7 +461,7 @@ public class BookController {
         /** 요청된 도서를 추가하는 메서드*/
         public void addRequestedBook(RequestDTO requestedBook) throws SQLException {
             BookDTO newBook = new BookDTO();
-            newBook.setBookTitle(requestedBook.getBookTitle());
+            newBook.setBookTitle(requestedBook.getBookTitle()); // 요청된 도서DTO에서 도서관에 보관할 도서DTO로 옮겨 담는 과정이다. 요청된 도서DTO 정보 삭제는 이 메소드가 실행되고 호출한 곳으로 돌아간 다음 이루어 진다.
             newBook.setBookAuthor(requestedBook.getBookAuthor());
             newBook.setBookPublisher(requestedBook.getBookPublisher());
             newBook.setBookGenre(requestedBook.getBookGenre() != null ? requestedBook.getBookGenre() : "미정");

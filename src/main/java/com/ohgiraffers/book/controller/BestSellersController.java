@@ -3,6 +3,7 @@ package com.ohgiraffers.book.controller;
 import com.ohgiraffers.book.dao.BestSellersDAO;
 import com.ohgiraffers.book.dto.BookDTO;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,15 +11,9 @@ import static com.ohgiraffers.common.JDBCTemplate.close;
 import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 
 public class BestSellersController {
-    private BestSellersDAO bestSellersDAO;
-    private Scanner sc;
 
-    public BestSellersController() {
-        bestSellersDAO = new BestSellersDAO();
-        sc = new Scanner(System.in);
-    }
+    private final BestSellersDAO bestSellersDAO = new BestSellersDAO();
 
-    /** 기간별 베스트셀러 도서 출력 메서드*/
     public void showBestSellers(Scanner sc) {
         System.out.println("=== 조회할 기간을 선택하세요 ===");
         System.out.println("1. 이번주 베스트셀러");
@@ -29,8 +24,7 @@ public class BestSellersController {
         int choice = sc.nextInt();
         sc.nextLine();
 
-        String period = null;
-
+        String period;
         switch (choice) {
             case 1:
                 period = "이번주";
@@ -47,7 +41,7 @@ public class BestSellersController {
         }
 
         Connection con = getConnection();
-        List<BookDTO> bestSellersList = bestSellersDAO.selectBestSellersByPeriod(con, period);
+        List<BookDTO> bestSellersList = bestSellersDAO.selectBestSellersByPeriod(con, period); // 여기서 베스트셀러 목록 조회
         close(con);
 
         if (!bestSellersList.isEmpty()) {
@@ -59,6 +53,14 @@ public class BestSellersController {
             }
         } else {
             System.out.println("\n해당 기간의 베스트셀러가 없습니다. ");
+        }
+    }
+
+    public void updateBestSellers() {
+        try (Connection con = getConnection()) {
+            bestSellersDAO.updateBestSellersTable(con);  // 베스트셀러 테이블 업데이트
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
