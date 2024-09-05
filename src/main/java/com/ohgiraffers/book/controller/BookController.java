@@ -31,8 +31,8 @@ public class BookController {
     /** 도서추가 메서드*/
     public void insertBook() throws SQLException {
         boolean validInput = false;
-        // 특수문자 입력 못하게 정규식사용 -> 한글, 알파벳, 숫자, 공백만 허용
-        String regex = "^[a-zA-Z0-9\\s\\-가-힣]+$";
+        // 특수문자 입력 못하게 정규식사용 -> 한글, 알파벳, 숫자, 특수문자, 공백만 허용
+        String regex = "^[a-zA-Z0-9\\s\\-가-힣!@#$%^&*()_+={}\\[\\]:;\"'<>,.?/~`]+$";
         while (!validInput) {
             System.out.println("\n=== 신규 도서 추가 ===");
 
@@ -43,7 +43,7 @@ public class BookController {
                 System.out.println("\n도서 제목은 비워둘 수 없습니다. 다시 시도합니다 !");
                 continue;
             } else if (!bookTitle.matches(regex)) {
-                System.out.println("\n도서 제목에 특수문자는 사용할 수 없습니다. 다시 시도합니다 !");
+                System.out.println(bookTitle+ "은(는) 도서 제목에 입력할 수 없습니다. 다시 시도합니다 !");
                 continue;
             }
 
@@ -65,7 +65,7 @@ public class BookController {
                 System.out.println("\n도서 출판사는 비워둘 수 없습니다. 다시 시도합니다 !");
                 continue;
             } else if (!bookPublisher.matches(regex)) {
-                System.out.println("\n도서 출판사에 특수문자는 사용할 수 없습니다. 다시 시도합니다 !");
+                System.out.println(bookPublisher + "은(는) 도서 출판사에 사용할 수 없습니다. 다시 시도합니다 !");
                 continue;
             }
 
@@ -103,7 +103,7 @@ public class BookController {
         boolean validInput = false;
 
         // 특수문자 입력 못하게 정규식사용 -> 알파벳, 숫자, 공백만 허용
-        String regex = "^[a-zA-Z0-9\\s\\-가-힣]+$";
+        String regex = "^[a-zA-Z0-9\\s\\-가-힣!@#$%^&*()_+={}\\[\\]:;\"'<>,.?/~`]+$";
 
         Connection con = getConnection();
 
@@ -151,7 +151,7 @@ public class BookController {
                 System.out.println("\n도서 제목은 비워둘 수 없습니다. 다시 시도합니다 !");
                 continue;
             } else if (!bookTitle.matches(regex)) {
-                System.out.println("\n도서 제목에 특수문자는 사용할 수 없습니다. 다시 시도합니다 !");
+                System.out.println(bookTitle + "은(는) 도서 제목에 사용할 수 없습니다. 다시 시도합니다 !");
                 continue;
             }
 
@@ -173,7 +173,7 @@ public class BookController {
                 System.out.println("도서 출판사는 비워둘 수 없습니다.");
                 continue;
             } else if (!bookPublisher.matches(regex)) {
-                System.out.println("도서 출판사에 특수문자는 사용할 수 없습니다.");
+                System.out.println(bookPublisher + "은(는) 도서 출판사에 사용할 수 없습니다.");
                 continue;
             }
 

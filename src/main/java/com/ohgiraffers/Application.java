@@ -21,18 +21,18 @@ public class Application {
         Scanner sc = new Scanner(System.in);
         boolean running = true; // 반복문을 돌리기 위한 변수.
 
-//            System.out.print("📕");
-//            Thread.sleep(500);
-//            System.out.print("📖");
-//            Thread.sleep(500);
-//            System.out.print("📕");
-//            Thread.sleep(500);
-//            System.out.print("📖");
-//            Thread.sleep(500);
-//            System.out.print("📕");
-//            Thread.sleep(500);
-//            System.out.print("📖");
-//            Thread.sleep(500);
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
             while (running) {
                 try {
                     // 서연님의 로그인, 회원가입 선택창을 시작으로 프로그램이 구현됩니다. 아주 막중!!!하였다!!!
