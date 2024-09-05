@@ -25,7 +25,7 @@ public class UserController {
 
         while (isSigningUp) {
             try {
-                System.out.println("=== 회원가입을 진행하겠습니다. ===");
+                System.out.println("\n=== 회원가입을 진행하겠습니다. ===");
                 System.out.println("1. 사용자로 회원가입");
                 System.out.println("2. 관리자로 회원가입");
                 System.out.println("0. 이전 메뉴로 돌아가기");
@@ -34,7 +34,7 @@ public class UserController {
                 sc.nextLine();
 
                 if (result == 0) {
-                    System.out.println("=== 이전 메뉴로 돌아갑니다 ===");
+                    System.out.println("\n=== 이전 메뉴로 돌아갑니다 ===");
                     System.out.println("1. 로그인 화면으로 이동하시겠습니까?");
                     System.out.println("2. 회원가입을 계속 진행하시겠습니까?");
                     System.out.print("원하시는 메뉴의 번호를 선택해주세요 :  ");
@@ -202,7 +202,7 @@ public int totallogin() {
      */
         while (!isLoggedIn) {
             try {
-                System.out.println("=== 로그인을 진행하겠습니다. ===");
+                System.out.println("\n=== 로그인을 진행하겠습니다. ===");
                 System.out.println("1. 로그인");
                 System.out.println("0. 이전 메뉴로 돌아가기");
                 System.out.print("원하시는 메뉴의 번호를 선택해주세요 : ");
@@ -210,7 +210,7 @@ public int totallogin() {
                 sc.nextLine();
 
                 if (result == 0) { // 0. 이전 메뉴로 돌아가기를 선택했을 경우
-                    System.out.println("=== 이전 메뉴로 돌아가기 ===");
+                    System.out.println("\n=== 이전 메뉴로 돌아가기 ===");
                     System.out.println("1. 회원가입으로 이동하시겠습니까?");
                     System.out.println("2. 로그인 화면으로 돌아가시겠습니까?");
                     System.out.print("원하시는 메뉴의 번호를 선택해주세요 : ");
@@ -229,7 +229,7 @@ public int totallogin() {
 
                 switch (result) {
                     case 1:
-                        System.out.println("=== 로그인 ===");
+                        System.out.println("\n=== 로그인 ===");
                         System.out.print("아이디를 입력해주세요: ");
                         String id = sc.nextLine();
                         System.out.print("비밀번호를 입력해주세요: ");
@@ -289,7 +289,7 @@ public int totallogin() {
 
         // 회원탈퇴 로직
         while (!isLoggedIn) {
-            System.out.println("===  회원 탈퇴를 진행하겠습니다. ===");
+            System.out.println("\n===  회원 탈퇴를 진행하겠습니다. ===");
             System.out.println(" 아이디 비밀번호를 다시 확인하겠습니다. ");
 
 

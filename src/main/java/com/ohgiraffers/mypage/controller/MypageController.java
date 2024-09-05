@@ -31,7 +31,7 @@ public class MypageController {
             }
         }
 
-        System.out.println("===============");
+        System.out.println("===============================================================");
     }
 
     /** 현재 로그인한 사용자가 대여한 도서를 출력하는 메서드 -- 대여 취소 기능 추후 사용을 위해 주석**/
@@ -79,7 +79,7 @@ public class MypageController {
 
         System.out.println("===" + userDTO.getUserId() + "님의 대여기록  ===");
         mypageDAO.allBorrowBookList(getConnection(), borrowRecordDTO, userDTO);
-        System.out.println("===============");
+        System.out.println("==============================================");
     }
 
     /** 현재 사용자의 연체된 도서 목록을 출력하는 메서드*/
@@ -88,15 +88,15 @@ public class MypageController {
         BorrowRecordDTO borrowRecordDTO = new BorrowRecordDTO();
         UserDTO userDTO = UserSession.getUserDTO();  // 세션에서 사용자 정보 가져오기
         BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAO();
-        borrowRecordDAO.getBorrowRecords(getConnection(),borrowRecordDTO);
+        borrowRecordDAO.getBorrowRecords(getConnection(), borrowRecordDTO);
         int result = borrowRecordDAO.overDueBook(getConnection(), borrowRecordDTO);
         if (result > 0) {
             System.out.println("=== 현재 " + userDTO.getUserId() + "님의 연체중인 책 목록 ===");
             mypageDAO.myOverDueBooks(getConnection(), borrowRecordDTO, userDTO);
-            }else {
-                System.out.println("연체 목록을 가져오지 못했습니다. 다시 시도합니다 !");
-            }
-        System.out.println("================");
+        } else {
+            borrowRecordDAO.overDueBookList(getConnection(), borrowRecordDTO);
+        }
+        System.out.println("==============================");
     }
 
     /** 사용자의 비밀번호를 수정하는 메서드*/
