@@ -3,22 +3,17 @@ package com.ohgiraffers.book.controller;
 import com.ohgiraffers.book.dao.BestSellersDAO;
 import com.ohgiraffers.book.dto.BookDTO;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 import static com.ohgiraffers.common.JDBCTemplate.close;
 import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 
-public class BestSellersController { // 사용자 관리자 모두 함께 공유하는 클래스이다.
-    private BestSellersDAO bestSellersDAO;
-    private Scanner sc; // 필드에서 클래스들을 선언
+public class BestSellersController {
 
-    public BestSellersController() {
-        bestSellersDAO = new BestSellersDAO();
-        sc = new Scanner(System.in);
-    }
+    private final BestSellersDAO bestSellersDAO = new BestSellersDAO();
 
-    /** 기간별 베스트셀러 도서 출력 메서드*/
     public void showBestSellers(Scanner sc) {
         System.out.println("조회할 기간을 선택하세요");
         System.out.println("1. 이번주 베스트셀러");
@@ -27,10 +22,9 @@ public class BestSellersController { // 사용자 관리자 모두 함께 공유
         System.out.print("선택 : ");
 
         int choice = sc.nextInt();
-        sc.nextLine(); // 개행 받고~
+        sc.nextLine();
 
-        String period = null;
-
+        String period;
         switch (choice) {
             case 1:
                 period = "이번주";
@@ -43,11 +37,11 @@ public class BestSellersController { // 사용자 관리자 모두 함께 공유
                 break;
             default:
                 System.out.println("잘못된 선택입니다. 다시 시도해 주세요.");
-                return; // 메소드 탈출 > 호출한 곳으로 복귀
+                return;
         }
 
         Connection con = getConnection();
-        List<BookDTO> bestSellersList = bestSellersDAO.selectBestSellersByPeriod(con, period); // 알뜰살뜰하신 팀장님.. 마이 배웁니다.
+        List<BookDTO> bestSellersList = bestSellersDAO.selectBestSellersByPeriod(con, period); // 여기서 베스트셀러 목록 조회
         close(con);
 
         if (!bestSellersList.isEmpty()) {
@@ -59,6 +53,14 @@ public class BestSellersController { // 사용자 관리자 모두 함께 공유
             }
         } else {
             System.out.println("해당 기간의 베스트셀러가 없습니다.");
+        }
+    }
+
+    public void updateBestSellers() {
+        try (Connection con = getConnection()) {
+            bestSellersDAO.updateBestSellersTable(con);  // 베스트셀러 테이블 업데이트
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
