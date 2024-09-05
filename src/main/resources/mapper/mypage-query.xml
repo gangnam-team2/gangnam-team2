@@ -34,11 +34,6 @@
         WHERE USER_PWD = ?;
     </entry>
 
-
-
-
-
-
     <entry key="myOverDueBooks">
         SELECT
             a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
@@ -46,6 +41,5 @@
         ON a.BOOK_CODE = b.BOOK_CODE
         WHERE USER_ID = ? AND OVER_DUE_BOOKS = 1;
     </entry>
-
 
 </properties>
