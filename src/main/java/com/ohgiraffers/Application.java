@@ -97,23 +97,25 @@ public class Application {
             try {
                 // 관리자와 사용자 메뉴를 나눔
                 if (userRole == 1) {  // 관리자
-                    System.out.println("\n=== 관리자 메뉴 ===");
-                    System.out.println("1. 도서 관리");
-                    System.out.println("2. 연체된 도서 목록");
-                    System.out.println("3. 사용자 관리");
-                    System.out.println("4. 베스트셀러 목록");
-                    System.out.println("5. 회원탈퇴");
-                    System.out.println("0. 로그아웃");
+                    System.out.println("\n|== 관리자 전용 메뉴 ==|");
+                    System.out.println("| 1. 도서 관리        |");
+                    System.out.println("| 2. 연체된 도서 목록  |");
+                    System.out.println("| 3. 사용자 관리      |");
+                    System.out.println("| 4. 베스트셀러 목록   |");
+                    System.out.println("| 5. 회원탈퇴         |");
+                    System.out.println("| 0. 로그아웃         |");
+                    System.out.println("|===================|");
 
                 } else if (userRole == 0) {  // 일반 사용자
-                    System.out.println("\n=== 사용자 메뉴 ===");
-                    System.out.println("1. 도서 검색");
-                    System.out.println("2. 대여 및 반납");
-                    System.out.println("3. 베스트셀러 목록");
-                    System.out.println("4. 도서 요청");
-                    System.out.println("5. 마이페이지");
-                    System.out.println("6. 회원탈퇴");
-                    System.out.println("0. 로그아웃");
+                    System.out.println("\n|== 회원 전용 메뉴 ==|");
+                    System.out.println("| 1. 도서 검색      |");
+                    System.out.println("| 2. 대여 및 반납   |");
+                    System.out.println("| 3. 베스트셀러 목록 |");
+                    System.out.println("| 4. 도서 요청      |");
+                    System.out.println("| 5. 마이페이지      |");
+                    System.out.println("| 6. 회원탈퇴       |");
+                    System.out.println("| 0. 로그아웃       |");
+                    System.out.println("|==================|");
                 }
 
                 System.out.print("원하시는 메뉴의 번호를 선택해주세요(❁´◡`❁): ");
@@ -212,13 +214,13 @@ public class Application {
                                 case 2:
                                     mypageController.allBorrowBookList();
                                     break;
+//                                case 3:
+//                                    mypageController.updateRequestBook();
+//                                    break;
                                 case 3:
-                                    mypageController.updateRequestBook();
-                                    break;
-                                case 4:
                                     mypageController.myOverDueBooks();
                                     break;
-                                case 5:
+                                case 4:
                                     mypageController.pwdUpdate();
                                     break;
                                 case 0:
