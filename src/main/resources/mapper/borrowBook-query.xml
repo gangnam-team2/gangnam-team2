@@ -65,8 +65,8 @@
 
     <entry key="returnBook">
         UPDATE BORROW_RECORDS
-        SET RETURN_DATE = ?, USER_ID = ?
-        WHERE BOOK_CODE = ?;
+            SET RETURN_DATE = ?, USER_ID = ?
+         WHERE BOOK_CODE = ?;
     </entry>
 
 
