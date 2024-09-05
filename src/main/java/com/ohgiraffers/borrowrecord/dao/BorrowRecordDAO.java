@@ -124,8 +124,8 @@ public class BorrowRecordDAO {
             // 반납일 업데이트
             pstmt = con.prepareStatement(updateReturnDateQuery);
             pstmt.setDate(1, borrowRecordDTO.getReturnDate());
-            pstmt.setInt(2, borrowRecordDTO.getBookCode());
-            pstmt.setString(3, borrowRecordDTO.getUserId());
+            pstmt.setString(2, borrowRecordDTO.getUserId());
+            pstmt.setInt(3, borrowRecordDTO.getBookCode());
             result = pstmt.executeUpdate();
 
             if (result > 0) {
