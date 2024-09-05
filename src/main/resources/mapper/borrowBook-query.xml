@@ -65,15 +65,15 @@
 
     <entry key="returnBook">
         UPDATE BORROW_RECORDS
-            SET BOOK_CODE =?, RETURN_DATE = ?;
+            SET RETURN_DATE = ?,BOOK_CODE =?, USER_ID = ?;
     </entry>
+
 
     <entry key="getAllUserIds">
         <![CDATA[
             SELECT DISTINCT user_id FROM borrow_records
         ]]>
     </entry>
-
 
     <entry key="borrowRecords">
         SELECT * FROM borrow_records;
@@ -86,8 +86,6 @@
         SET over_due_books = ?
         WHERE book_code = ? AND return_date IS NULL;
     </entry>
-
-
 
 
 

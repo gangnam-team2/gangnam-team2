@@ -116,7 +116,7 @@ public class BorrowRecordDAO {
     public int returnBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
-        String updateReturnDateQuery = prop.getProperty("updateReturnDate");
+        String updateReturnDateQuery = prop.getProperty("returnBook");
         String updateBookStatusQuery = prop.getProperty("updateBookStatus");
         String updateOverdueBooksStatusQuery = prop.getProperty("updateOverdueBooksStatus");
 
@@ -183,6 +183,8 @@ public class BorrowRecordDAO {
     }
 
 
+
+    /**대여 이력의 정보를 받아오는 메서드*/
     public List<Integer> getBorrowRecords(Connection con, BorrowRecordDTO borrowRecordDTO) {
         Statement stmt = null;
         ResultSet rset = null;
@@ -210,6 +212,8 @@ public class BorrowRecordDAO {
         }return borrowRecords;
     }
 
+
+    /**연체된 도서의 상태를 업데이트하는 메서드*/
     public int overDueBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -246,6 +250,7 @@ public class BorrowRecordDAO {
     }
 
 
+    /**모든 연체된 도서의 목록을 보는 메서드*/
     public void overDueBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
         Statement stmt = null;
         ResultSet rs = null;
