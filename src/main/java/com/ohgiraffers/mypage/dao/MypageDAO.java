@@ -7,6 +7,7 @@ import com.ohgiraffers.usersession.UserSession;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.Date;
 
 import static com.ohgiraffers.common.JDBCTemplate.*;
 
@@ -86,7 +87,7 @@ public class MypageDAO {
 
             if (rs != null && rs.next()) {
                 do {
-                    System.out.printf("북코드: %d | 제목: %s | 대여일: %s | 반납 예정일: %s\n",
+                    System.out.printf("도서 식별번호: %d | 제목: %s | 대여일: %s | 반납 예정일: %s\n",
                             rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getDate(4));
                 } while (rs.next());
             } else {
@@ -114,9 +115,12 @@ public class MypageDAO {
 
             if (rset != null && rset.next()) {
                 do {
-                    System.out.printf("북코드: %d | 제목: %s | 대여일: %s | 반납 예정일: %s | 실제 반납일: %s\n",
+                    Date returnDate = rset.getDate(5);  // 실제 반납일 가져오기
+                    String returnDateStr = (returnDate != null) ? returnDate.toString() : "반납 전입니다.";  // null이면 "반납 전입니다." 출력
+
+                    System.out.printf("북코드: %d | 제목: %s | 대여일: %s | 반납 예정일: %s | 반납일: %s\n",
                             rset.getInt(1), rset.getString(2),
-                            rset.getDate(3), rset.getDate(4), rset.getDate(5));
+                            rset.getDate(3), rset.getDate(4), returnDateStr);
                 } while (rset.next());
             } else {
                 System.out.println("대여 목록이 없습니다.");

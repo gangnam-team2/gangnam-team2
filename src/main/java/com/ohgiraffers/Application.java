@@ -36,10 +36,11 @@ public class Application {
             while (running) {
                 try {
 
-                    System.out.print("\n== 도서 대여 프로그램 ==\n");
-                    System.out.println("1. 회원가입");
-                    System.out.println("2. 로그인");
-                    System.out.println("0. 종료");
+                    System.out.println("\n|== 도서 대여 프로그램 ==|");
+                    System.out.println("| 1. 회원가입           |");
+                    System.out.println("| 2. 로그인            |");
+                    System.out.println("| 0. 종료              |");
+                    System.out.println("|=====================|");
                     System.out.print("선택: ");
                     int choice = sc.nextInt();
                     sc.nextLine();
@@ -95,23 +96,25 @@ public class Application {
             try {
                 // 관리자와 사용자 메뉴를 나눔
                 if (userRole == 1) {  // 관리자
-                    System.out.println("\n== 관리자 메뉴 ==");
-                    System.out.println("1. 도서 관리");
-                    System.out.println("2. 연체된 도서 목록");
-                    System.out.println("3. 사용자 관리");
-                    System.out.println("4. 베스트셀러 목록");
-                    System.out.println("5. 회원탈퇴");
-                    System.out.println("0. 로그아웃");
+                    System.out.println("\n|== 관리자 전용 메뉴 ==|");
+                    System.out.println("| 1. 도서 관리        |");
+                    System.out.println("| 2. 연체된 도서 목록  |");
+                    System.out.println("| 3. 사용자 관리      |");
+                    System.out.println("| 4. 베스트셀러 목록   |");
+                    System.out.println("| 5. 회원탈퇴         |");
+                    System.out.println("| 0. 로그아웃         |");
+                    System.out.println("|===================|");
 
                 } else if (userRole == 0) {  // 일반 사용자
-                    System.out.println("\n== 사용자 메뉴 ==");
-                    System.out.println("1. 도서 검색");
-                    System.out.println("2. 대여 및 반납");
-                    System.out.println("3. 베스트셀러 목록");
-                    System.out.println("4. 도서 요청");
-                    System.out.println("5. 마이페이지");
-                    System.out.println("6. 회원탈퇴");
-                    System.out.println("0. 로그아웃");
+                    System.out.println("\n|== 회원 전용 메뉴 ==|");
+                    System.out.println("| 1. 도서 검색      |");
+                    System.out.println("| 2. 대여 및 반납   |");
+                    System.out.println("| 3. 베스트셀러 목록 |");
+                    System.out.println("| 4. 도서 요청      |");
+                    System.out.println("| 5. 마이페이지      |");
+                    System.out.println("| 6. 회원탈퇴       |");
+                    System.out.println("| 0. 로그아웃       |");
+                    System.out.println("|==================|");
                 }
 
                 System.out.print("선택: ");
@@ -185,12 +188,12 @@ public class Application {
 
                     case 5:
                         if (userRole == 0) {
-                            System.out.println(logind + "님 마이페이지 선택");
+                            System.out.println("\n== " + logind + "님의 마이페이지 ==");
                             System.out.println("1. 현재 대여 신청 책 목록");
                             System.out.println("2. 전체 대여 목록");
-                            System.out.println("3. 대여 취소");
-                            System.out.println("4. 연체 목록 조회");
-                            System.out.println("5. 비밀번호 변경");
+                            //System.out.println("3. 대여 취소");
+                            System.out.println("3. 연체 목록 조회");
+                            System.out.println("4. 비밀번호 변경");
                             System.out.println("0. 이전으로 돌아가기");
                             System.out.print("선택하실 메뉴 : ");
 
@@ -209,13 +212,13 @@ public class Application {
                                 case 2:
                                     mypageController.allBorrowBookList();
                                     break;
+//                                case 3:
+//                                    mypageController.updateRequestBook();
+//                                    break;
                                 case 3:
-                                    mypageController.updateRequestBook();
-                                    break;
-                                case 4:
                                     mypageController.myOverDueBooks();
                                     break;
-                                case 5:
+                                case 4:
                                     mypageController.pwdUpdate();
                                     break;
                                 case 0:
