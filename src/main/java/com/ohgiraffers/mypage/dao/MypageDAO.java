@@ -23,7 +23,7 @@ public class MypageDAO {
         }
     }
 
-    /** 대여한 도서를 취소하는 메서드*/
+    /** 대여한 도서를 취소하는 메서드 -- 현재 사용 X 추후 필요시 이용*/
     public int updateRequest(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;

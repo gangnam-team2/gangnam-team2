@@ -75,24 +75,6 @@
     </entry>
 
 
-<!--    &lt;!&ndash; 책 대여를 위한 쿼리 &ndash;&gt;
-    <entry key="rentBook">
-        <![CDATA[
-        INSERT INTO borrow_records (book_code, user_id, borrow_date)
-        VALUES (?, ?, ?)
-    ]]>
-
-
-<!-    &lt;!&ndash; 책 반납을 위한 쿼리 &ndash;&gt;
-    <entry key="returnBook">
-        <![CDATA[
-            UPDATE borrow_records
-              SET return_date = ?
-            WHERE book_code = ? AND user_id = ? AND return_date IS NULL
-        ]]>
-    </entry>-->
-
-
     <entry key="borrowRecords">
         SELECT * FROM borrow_records;
     </entry>
@@ -117,4 +99,11 @@
         WHERE OVER_DUE_BOOKS = 1;
     </entry>
 
+    <entry key="updateOverdueBooksStatus">
+        <![CDATA[
+        UPDATE borrow_records
+        SET over_due_books = false
+        WHERE book_code = ?
+    ]]>
+    </entry>
 </properties>
