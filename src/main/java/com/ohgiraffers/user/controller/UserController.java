@@ -200,9 +200,10 @@ public int totallogin() {
      */
         while (!isLoggedIn) {
             try {
-                System.out.println("----- 로그인을 진행하겠습니다. -----");
+                System.out.println("\n=== 로그인을 진행하겠습니다. ===");
                 System.out.println("1. 로그인");
                 System.out.println("0. 이전 메뉴로 돌아가기");
+                System.out.println("========");
                 System.out.print("원하는 서비스의 번호를 입력해주세요: ");
                 int result = sc.nextInt();
                 sc.nextLine();

@@ -118,6 +118,7 @@ public class BorrowRecordDAO {
         int result = 0;
         String updateReturnDateQuery = prop.getProperty("returnBook");
         String updateBookStatusQuery = prop.getProperty("updateBookStatus");
+        String updateOverdueBooksStatusQuery = prop.getProperty("updateOverdueBooksStatus");
 
         try {
             // 반납일 업데이트
@@ -135,7 +136,7 @@ public class BorrowRecordDAO {
                 pstmt.executeUpdate();
 
                 // over_due_books를 false로 변경 (연체 상태 초기화)
-                pstmt = con.prepareStatement("UPDATE borrow_records SET over_due_books = false WHERE book_code = ?");
+                pstmt = con.prepareStatement(updateOverdueBooksStatusQuery);
                 pstmt.setInt(1, borrowRecordDTO.getBookCode());
                 pstmt.executeUpdate();
             }

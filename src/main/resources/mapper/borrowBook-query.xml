@@ -75,8 +75,6 @@
         ]]>
     </entry>
 
-
-
     <entry key="borrowRecords">
         SELECT * FROM borrow_records;
     </entry>
@@ -99,4 +97,11 @@
         WHERE OVER_DUE_BOOKS = 1;
     </entry>
 
+    <entry key="updateOverdueBooksStatus">
+        <![CDATA[
+        UPDATE borrow_records
+        SET over_due_books = false
+        WHERE book_code = ?
+    ]]>
+    </entry>
 </properties>
