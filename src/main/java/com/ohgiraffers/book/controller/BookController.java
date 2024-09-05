@@ -361,7 +361,7 @@ public class BookController {
             System.out.println("4. 요청된 도서 확인 및 추가");  // 새로운 메뉴 추가
             System.out.println("0. 이전 메뉴로 돌아가기");
 
-            System.out.println("\n원하시는 메뉴의 번호를 선택해주세요 : ");
+            System.out.print("원하시는 메뉴의 번호를 선택해주세요 : ");
             int choice = sc.nextInt();
             sc.nextLine();
 
