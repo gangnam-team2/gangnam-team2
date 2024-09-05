@@ -36,18 +36,18 @@ public class BorrowRecordDAO {
                 stmt = con.createStatement();
                 rs = stmt.executeQuery(query);
                 if (rs != null) {
-                    System.out.println("============= 대여 가능한 도서 =============");
+                    System.out.println("\n=== 대여 가능한 도서 ===");
                     while (rs.next()) {
-                        System.out.println("북코드: " + rs.getInt(1) + " "
+                        System.out.println("도서코드: " + rs.getInt(1) + " "
                                 + "제목: " + rs.getString(2) + " "
                                 + "작가: " + rs.getString(3) + " "
                                 + "장르: " + rs.getString(4) + " "
                                 + "출판사: " + rs.getString(5));
                         bookList.add(rs.getInt(1));
                     }
-                    System.out.println("=======================================");
+                    System.out.println("======================================");
                 } else {
-                    System.out.println("대여 가능한 책이 없습니다.");
+                    System.out.println("\n대여 가능한 책이 없습니다. 이전 메뉴로 돌아갑니다 !");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -76,7 +76,7 @@ public class BorrowRecordDAO {
             if (rs.next()) {
                 borrowRecordDTO.setBookTitle(rs.getString("book_title"));
             } else {
-                throw new SQLException("해당 코드의 책을 찾을 수 없습니다.");
+                throw new SQLException("\n해당 코드의 책을 찾을 수 없습니다. ");
             }
             rs.close();
             pstmt.close();
@@ -266,7 +266,7 @@ public class BorrowRecordDAO {
                             rs.getString(1), rs.getInt(2), rs.getString(3), rs.getDate(4), rs.getDate(5));
                 } while (rs.next());
             } else {
-                System.out.println("연체된 책이 없습니다.");
+                System.out.println("\n연체된 책이 없습니다. 이전 메뉴로 돌아갑니다 !");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

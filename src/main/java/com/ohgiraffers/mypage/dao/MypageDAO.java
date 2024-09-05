@@ -91,7 +91,7 @@ public class MypageDAO {
                             rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getDate(4));
                 } while (rs.next());
             } else {
-                System.out.println("연체된 책이 없습니다.");
+                System.out.println("\n연체된 책이 없습니다! 이전 메뉴로 돌아갑니다 !");
             }
 
         } catch (SQLException e) {
@@ -123,7 +123,7 @@ public class MypageDAO {
                             rset.getDate(3), rset.getDate(4), returnDateStr);  // 실제 반납일 출력
                 } while (rset.next());
             } else {
-                System.out.println("대여 목록이 없습니다.");
+                System.out.println("\n대여 목록이 없습니다. 이전 메뉴로 돌아갑니다 !");
             }
 
         } catch (SQLException e) {
