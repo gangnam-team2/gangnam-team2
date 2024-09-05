@@ -26,7 +26,7 @@ public class BestSellersDAO {
     }
 
     /** 기간별 베스트셀러 조회시 출력하는 메서드*/
-    public List<BookDTO> selectBestSellersByPeriod(Connection con, String period) {
+    public List<BookDTO> selectBestSellersByPeriod(Connection con, String period) { // 여기서 또 쓰이는 period 대단쓰..
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<BookDTO> bestSellers = new ArrayList<>();
@@ -47,6 +47,7 @@ public class BestSellersDAO {
         }
 
         String query = prop.getProperty("selectBestSellersByPeriod").replace("#{period}", periodInterval);
+        // 프로퍼티 파일의 "selectBestSellersByPeriod" 쿼리문 내에서 period가 쓰인 곳을 모르겠다.
 
         try {
             pstmt = con.prepareStatement(query);

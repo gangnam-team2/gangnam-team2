@@ -9,9 +9,9 @@ import java.util.Scanner;
 import static com.ohgiraffers.common.JDBCTemplate.close;
 import static com.ohgiraffers.common.JDBCTemplate.getConnection;
 
-public class BestSellersController {
+public class BestSellersController { // 사용자 관리자 모두 함께 공유하는 클래스이다.
     private BestSellersDAO bestSellersDAO;
-    private Scanner sc;
+    private Scanner sc; // 필드에서 클래스들을 선언
 
     public BestSellersController() {
         bestSellersDAO = new BestSellersDAO();
@@ -27,7 +27,7 @@ public class BestSellersController {
         System.out.print("선택 : ");
 
         int choice = sc.nextInt();
-        sc.nextLine();
+        sc.nextLine(); // 개행 받고~
 
         String period = null;
 
@@ -43,11 +43,11 @@ public class BestSellersController {
                 break;
             default:
                 System.out.println("잘못된 선택입니다. 다시 시도해 주세요.");
-                return;
+                return; // 메소드 탈출 > 호출한 곳으로 복귀
         }
 
         Connection con = getConnection();
-        List<BookDTO> bestSellersList = bestSellersDAO.selectBestSellersByPeriod(con, period);
+        List<BookDTO> bestSellersList = bestSellersDAO.selectBestSellersByPeriod(con, period); // 알뜰살뜰하신 팀장님.. 마이 배웁니다.
         close(con);
 
         if (!bestSellersList.isEmpty()) {

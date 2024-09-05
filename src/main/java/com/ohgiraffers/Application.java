@@ -35,7 +35,7 @@ public class Application {
 //            Thread.sleep(500);
             while (running) {
                 try {
-
+                    // 서연님의 로그인, 회원가입 선택창을 시작으로 프로그램이 구현됩니다. 아주 막중!!!하였다!!!
                     System.out.print("\n=== 도서 대여 프로그램 ===\n");
                     System.out.println("1. 회원가입");
                     System.out.println("2. 로그인");
@@ -83,17 +83,17 @@ public class Application {
     }
 
     // 역할에 따른 메뉴 출력 및 컨트롤러 호출
-    private static void displayMenu(Scanner sc, int userRole) {
+    private static void displayMenu(Scanner sc, int userRole) { // 로그인 이후 보여질 선택창 메소드, 관리자와 사용자로 나뉜다.
         BookController bookController = new BookController();
         BestSellersController bestSellersController = new BestSellersController();
         ManagerController managerController = new ManagerController();
         MypageController mypageController = new MypageController();
         BorrowRecordController borrowRecordController = new BorrowRecordController();
-        UserController usercontroller = new UserController(); // 클래스를 객체로 선언 후
+        UserController usercontroller = new UserController(); // 클래스를 객체로 선언 후 해당 클래스의 메소드를 사용할 준비를 마쳤다.
 
-        boolean isRunning = true;
-        String logind = UserSession.getUserDTO().getUserId();
-        while (isRunning) {
+        boolean isRunning = true; // 반복문을 돌리기 위한 불린형 변수 선언 및 초기화
+        String logind = UserSession.getUserDTO().getUserId(); // 현재 로그인한 회원의 아이디 DTO 정보를 담은 스트링 변수
+        while (isRunning) { // 무한~ 루프~!🙌
             try {
                 // 관리자와 사용자 메뉴를 나눔
                 if (userRole == 1) {  // 관리자
@@ -128,10 +128,10 @@ public class Application {
 
                 switch (choice) {
                     case 1:
-                        if (userRole == 1) {
+                        if (userRole == 1) {// 동규 팀장님의 도서 관리 메뉴
                             System.out.println("\n관리자 " + logind + "님! 도서 관리 메뉴를 선택하셨습니다.^0^");
                             bookController.manageBooksMenu(sc);
-                        } else {
+                        } else { // 동규 팀장님의 도서 검색 메뉴
                             System.out.println("\n사용자 " + logind + "님! 도서 검색 메뉴를 선택하셨습니다.^0^");
                             bookController.searchBookMenu(sc);
                         }

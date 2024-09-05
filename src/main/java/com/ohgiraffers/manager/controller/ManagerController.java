@@ -55,8 +55,8 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
         System.out.println("회원 정보 리스트");
         for (UserDTO member : allMembersInfo){
 
-            System.out.printf("회원 아이디: %s | 회원 이름: %s | 가입일: $s | 정보 수정일: %s\n",
-                    member.getUserId(), member.getUserName(), member.getUserCreatedAt(), member.getUserUpdatedAt());
+            System.out.printf("회원 아이디: %s | 회원 이름: %s | 정보 수정일: %s | 가입일: %s\n",
+                    member.getUserId(), member.getUserName(), member.getUserUpdatedAt(), member.getUserCreatedAt());
 
             /*"회원 아이디: " + member.getUserId()
                           + "   회원 이름: " + member.getUserName()
@@ -72,8 +72,8 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
         booksInfoAndUserId =managerDAO.selectBooksAndUser(getConnection());
         System.out.println("대여 중인 책과 해당 회원 아이디");
         for (BorrowRecordDTO book : booksInfoAndUserId) {
-            System.out.printf("책 제목: %s | 책 코드: %d | 빌려간 회원 아이디: %s | 대여한 날짜: %s | 대여 만기일: %s\n",
-                    book.getBookTitle(), book.getBookCode(), book.getUserId(), book.getBorrowCode(), book.getDueDate());
+            System.out.printf("빌려간 회원 아이디: %s | 대여 시작일: %s | 대여 만기일: %s | 책 제목: %s | 책 코드: %d\n",
+                    book.getUserId(), book.getBorrowCode(), book.getDueDate(), book.getBookTitle(), book.getBookCode());
 
                     /*"책 제목: " + book.getBookTitle()
                           + "   책 코드: " + book.getBookCode()
@@ -110,8 +110,8 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
             lateMember = managerDAO.selectMemberHistoy(getConnection());
             System.out.println("현재 대여 만기일을 넘긴 회원들의 목록과 해당 책 제목"); // 실제 반납일 > 대여 마감일, 현재를 반영하기 어렵다.
             for (BorrowRecordDTO member : lateMember) {
-                System.out.printf("회원 아이디: %s | 책 제목: %s\n",
-                        member.getUserId(), member.getBookTitle());
+                System.out.printf("회원 아이디: %s | 책 제목: %s | 책 코드: %d\n",
+                        member.getUserId(), member.getBookTitle(), member.getBookCode());
 
                         /*"회원 아이디: " + member.getUserId()
                               + "   책 제목: " + member.getBookTitle());*/
