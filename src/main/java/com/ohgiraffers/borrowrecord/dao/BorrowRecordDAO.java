@@ -116,7 +116,7 @@ public class BorrowRecordDAO {
     public int returnBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
-        String updateReturnDateQuery = prop.getProperty("updateReturnDate");
+        String updateReturnDateQuery = prop.getProperty("returnBook");
         String updateBookStatusQuery = prop.getProperty("updateBookStatus");
 
         try {
