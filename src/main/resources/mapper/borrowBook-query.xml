@@ -52,7 +52,7 @@
             SELECT br.book_code, b.book_title, br.borrow_date
               FROM borrow_records br
             JOIN books b ON br.book_code = b.book_code
-            WHERE br.user_id = ?
+            WHERE br.user_id = ? AND b.book_status = 1;
         ]]>
     </entry>
 
@@ -65,7 +65,8 @@
 
     <entry key="returnBook">
         UPDATE BORROW_RECORDS
-            SET RETURN_DATE = ?,BOOK_CODE =?, USER_ID = ?;
+            SET RETURN_DATE = ?, USER_ID = ?
+         WHERE BOOK_CODE = ?;
     </entry>
 
 

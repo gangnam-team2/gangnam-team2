@@ -84,7 +84,7 @@ public class BorrowRecordController {
 
             // 반납할 책의 코드 입력 받기
             Scanner sc = new Scanner(System.in);
-            System.out.println("반납할 도서의 코드 번호를 입력해주세요 : ");
+            System.out.print("반납할 도서의 코드 번호를 입력해주세요 : ");
             int bookCode = sc.nextInt();
             borrowRecordDTO.setBookCode(bookCode);
             borrowRecordDTO.setUserId(userDTO.getUserId()); // 유저 ID 설정
