@@ -31,15 +31,13 @@ public class BookController {
     /** 도서추가 메서드*/
     public void insertBook() throws SQLException {
         boolean validInput = false;
-
-        // 특수문자 입력 못하게 정규식사용 -> 알파벳, 숫자, 공백만 허용
-        String regex = "^[a-zA-Z0-9\\s]+$";
-
+        // 특수문자 입력 못하게 정규식사용 -> 한글, 알파벳, 숫자, 공백만 허용
+        String regex = "^[a-zA-Z0-9\\s\\-가-힣]+$";
         while (!validInput) {
-            System.out.println("\n=== 신규 도서 추가 ===\n");
+            System.out.println("\n=== 신규 도서 추가 ===");
 
             // 도서 제목 입력
-            System.out.print("\n도서 제목을 입력해주세요 : ");
+            System.out.print("도서 제목을 입력해주세요 : ");
             String bookTitle = sc.nextLine().trim();
             if (bookTitle.isEmpty()) {
                 System.out.println("\n도서 제목은 비워둘 수 없습니다. 다시 시도합니다 !");
@@ -50,7 +48,7 @@ public class BookController {
             }
 
             // 도서 저자 입력
-            System.out.print("\n도서 저자를 입력해주세요 :");
+            System.out.print("도서 저자를 입력해주세요 :");
             String bookAuthor = sc.nextLine().trim();
             if (bookAuthor.isEmpty()) {
                 System.out.println("\n도서 저자는 비워둘 수 없습니다. 다시 시도합니다 !");
@@ -61,7 +59,7 @@ public class BookController {
             }
 
             // 도서 출판사 입력
-            System.out.print("\n도서 출판사를 입력해주세요 : ");
+            System.out.print("도서 출판사를 입력해주세요 : ");
             String bookPublisher = sc.nextLine().trim();
             if (bookPublisher.isEmpty()) {
                 System.out.println("\n도서 출판사는 비워둘 수 없습니다. 다시 시도합니다 !");
@@ -72,7 +70,7 @@ public class BookController {
             }
 
             // 도서 장르 입력
-            System.out.print("\n도서 장르를 입력해주세요 : ");
+            System.out.print("도서 장르를 입력해주세요 : ");
             String bookGenre = sc.nextLine().trim();
             if (bookGenre.isEmpty()) {
                 System.out.println("\n도서 장르는 비워둘 수 없습니다. 다시 시도합니다 !");
@@ -105,33 +103,49 @@ public class BookController {
         boolean validInput = false;
 
         // 특수문자 입력 못하게 정규식사용 -> 알파벳, 숫자, 공백만 허용
-        String regex = "^[a-zA-Z0-9\\s]+$";
+        String regex = "^[a-zA-Z0-9\\s\\-가-힣]+$";
+
+        Connection con = getConnection();
+
+        // 대여 가능한 도서 목록 불러오기
+        List<BookDTO> availableBooks = bookDAO.getAvailableBooks(con);
+
+        // 도서 목록 출력
+        if (availableBooks.isEmpty()) {
+            System.out.println("\n현재 대여 가능한 도서가 없습니다.");
+            return;
+        } else {
+            System.out.println("\n=== 수정 가능한 도서 목록 ===");
+            for (BookDTO book : availableBooks) {
+                System.out.printf("북코드: %d | 제목: %s | 저자: %s | 출판사: %s | 장르: %s\n",
+                        book.getBookCode(), book.getBookTitle(), book.getBookAuthor(),
+                        book.getBookPublisher(), book.getBookGenre());
+            }
+            System.out.println("===========================");
+        }
 
         while (!validInput) {
-            System.out.println("\n=== 도서 정보 수정 ===");
             System.out.print("수정할 도서 코드를 입력해주세요 : ");
             int bookCode = 0;
 
-            if (sc.hasNextInt()) { // 이거 인트여..? 기여 아니여!!
+            if (sc.hasNextInt()) {
                 bookCode = sc.nextInt();
                 sc.nextLine();
             } else {
-                System.out.println("\n유효한 도서 코드를 입력해주세요. 다시 시도합니다 !");
-                sc.next();  // 잘못된 입력은 여기서 제거
+                System.out.println("유효한 도서 코드를 입력해주세요. 다시 시도합니다 !");
+                sc.next();
                 continue;
             }
 
-            Connection con = getConnection();
             BookDTO bookDTO = bookDAO.getBookById(con, bookCode);
 
             if (bookDTO == null) {
                 System.out.println("\n해당 도서를 찾을 수 없습니다. 이전 메뉴로 돌아갑니다 !");
-                close(con);
-                return; // 리턴은 메소드를 종료하고 호출한 곳으로 돌아가도록 한다. 단 메인 메소드가 리턴을 만나면 프로그램이 종료된다. 더이상 돌아갈 곳이 없어..
+                return;
             }
 
             // 새 도서 제목 입력
-            System.out.print("\n 신규 도서 제목을 입력해주세요 : ");
+            System.out.print("신규 도서 제목을 입력해주세요 : ");
             String bookTitle = sc.nextLine().trim();
             if (bookTitle.isEmpty()) {
                 System.out.println("\n도서 제목은 비워둘 수 없습니다. 다시 시도합니다 !");
@@ -142,7 +156,7 @@ public class BookController {
             }
 
             // 새 도서 저자 입력
-            System.out.print("\n신규 도서의 저자를 입력해주세요 : ");
+            System.out.print("신규 도서의 저자를 입력해주세요 : ");
             String bookAuthor = sc.nextLine().trim();
             if (bookAuthor.isEmpty()) {
                 System.out.println("도서 저자는 비워둘 수 없습니다.");
@@ -211,12 +225,32 @@ public class BookController {
 
     /** 도서 삭제 메서드*/
     public void deleteBook() {
+
+        Connection con = getConnection();
+
+        // 대여 가능한 도서 목록 불러오기
+        List<BookDTO> availableBooks = bookDAO.getAvailableBooks(con);
+
+        // 도서 목록 출력
+        if (availableBooks.isEmpty()) {
+            System.out.println("\n현재 대여 가능한 도서가 없습니다.");
+            return;
+        } else {
+            System.out.println("\n=== 삭제 가능한 도서 목록 ===");
+            for (BookDTO book : availableBooks) {
+                System.out.printf("북코드: %d | 제목: %s | 저자: %s | 출판사: %s | 장르: %s\n",
+                        book.getBookCode(), book.getBookTitle(), book.getBookAuthor(),
+                        book.getBookPublisher(), book.getBookGenre());
+            }
+            System.out.println("===========================");
+        }
+
         System.out.println("\n=== 도서 삭제 ===");
         System.out.print("삭제할 도서 코드를 입력해주세요 : ");
         int bookCode = sc.nextInt();
         sc.nextLine();
 
-        Connection con = getConnection();
+        //Connection con = getConnection();
         int result = bookDAO.deleteBook(con, bookCode); // DB내 존재하는 도서를 삭제하는 메소드를 호출하며 책의 코드 번호를 넘기고, DB로부터 반영 여부를 인트로 받는다.
         close(con);
 

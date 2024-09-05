@@ -1,10 +1,6 @@
 package com.ohgiraffers.book.dao;
 
 import com.ohgiraffers.book.dto.BookDTO;
-import com.ohgiraffers.common.JDBCTemplate;
-import com.ohgiraffers.request.controller.RequestController;
-import com.ohgiraffers.request.dao.RequestDAO;
-import com.ohgiraffers.request.dto.RequestDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -84,13 +80,29 @@ public class BookDAO {
     public int deleteBook(Connection con, int bookCode) {
         PreparedStatement pstmt = null;
         int result = 0;
-        String query = prop.getProperty("deleteBook");
 
         try {
-            pstmt = con.prepareStatement(query);
+            // 1. borrow_records 테이블에서 해당 도서와 관련된 기록 삭제
+            String deleteFromBorrowRecordsQuery = prop.getProperty("deleteFromBorrowRecords");
+            pstmt = con.prepareStatement(deleteFromBorrowRecordsQuery);
             pstmt.setInt(1, bookCode);
+            pstmt.executeUpdate(); // 삭제 결과는 무시하고 다음 삭제로 진행
 
-            result = pstmt.executeUpdate();
+            pstmt.close();
+
+            // 2. best_sellers 테이블에서 해당 도서 삭제
+            String deleteFromBestSellersQuery = prop.getProperty("deleteFromBestSellers");
+            pstmt = con.prepareStatement(deleteFromBestSellersQuery);
+            pstmt.setInt(1, bookCode);
+            pstmt.executeUpdate(); // 삭제 결과는 무시하고 books 삭제로 진행
+
+            pstmt.close();
+
+            // 3. books 테이블에서 도서 삭제
+            String deleteBookQuery = prop.getProperty("deleteBook");
+            pstmt = con.prepareStatement(deleteBookQuery);
+            pstmt.setInt(1, bookCode);
+            result = pstmt.executeUpdate(); // books 테이블에서 도서 삭제
 
         } catch (SQLException | NullPointerException e) {
             System.out.println("잘못된 값이 입력되었습니다. 다시 시도해주세요.");
@@ -98,7 +110,8 @@ public class BookDAO {
         } finally {
             close(pstmt);
         }
-        return result;
+
+        return result; // 삭제 성공 시 1, 실패 시 0 반환
     }
 
     /** 도서 식별번호로 도서 가져오는 메서드*/
@@ -279,10 +292,24 @@ public class BookDAO {
                 availableBooks.add(bookDTO);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("도서를 불러오는 도중 오류가 발생했습니다: " + e.getMessage());
+            e.printStackTrace(); // 필요시 제거 가능
         } finally {
-            close(rs);
-            close(pstmt);
+            // null 체크 후 close 처리
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return availableBooks;
