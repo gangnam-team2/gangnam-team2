@@ -5,12 +5,12 @@
 
     <entry key="showBookList">
         SELECT
-            BOOK_CODE,
-            BOOK_TITLE,
-            BOOK_AUTHOR,
-            BOOK_GENRE,
-            BOOK_PUBLISHER
-          FROM BOOKS
+        BOOK_CODE,
+        BOOK_TITLE,
+        BOOK_AUTHOR,
+        BOOK_GENRE,
+        BOOK_PUBLISHER
+        FROM BOOKS
         WHERE BOOK_STATUS = 0;
     </entry>
 
@@ -52,7 +52,7 @@
             SELECT br.book_code, b.book_title, br.borrow_date
               FROM borrow_records br
             JOIN books b ON br.book_code = b.book_code
-            WHERE br.user_id = ?
+            WHERE br.user_id = ? AND b.book_status = 1;
         ]]>
     </entry>
 
@@ -65,7 +65,8 @@
 
     <entry key="returnBook">
         UPDATE BORROW_RECORDS
-            SET RETURN_DATE = ?,BOOK_CODE =?, USER_ID = ?;
+        SET RETURN_DATE = ?, USER_ID = ?
+        WHERE BOOK_CODE = ?;
     </entry>
 
 
@@ -91,8 +92,8 @@
 
     <entry key="overDueBookList">
         SELECT
-            a.USER_ID, a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
-          FROM BORROW_RECORDS a JOIN BOOKS b
+        a.USER_ID, a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE
+        FROM BORROW_RECORDS a JOIN BOOKS b
         ON a.BOOK_CODE = b.BOOK_CODE
         WHERE OVER_DUE_BOOKS = 1;
     </entry>

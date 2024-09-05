@@ -12,7 +12,6 @@
     </entry>
 
 
-
     <entry key="allBorrowBookList">
         SELECT
             a.BOOK_CODE, b.BOOK_TITLE, a.BORROW_DATE, a.DUE_DATE, a.RETURN_DATE

@@ -26,39 +26,39 @@ public class BorrowRecordDAO {
         }
     }
 
-        /** 대여 가능한 도서 목록을 출력하는 메서드*/
-        public List<Integer> showBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
-            List<Integer> bookList = new ArrayList<Integer>();
-            Statement stmt = null;
-            ResultSet rs = null;
-            String query = prop.getProperty("showBookList");
-            try {
-                stmt = con.createStatement();
-                rs = stmt.executeQuery(query);
-                if (rs != null) {
-                    System.out.println("\n=== 대여 가능한 도서 ===");
-                    while (rs.next()) {
-                        System.out.println("도서코드: " + rs.getInt(1) + " "
-                                + "제목: " + rs.getString(2) + " "
-                                + "작가: " + rs.getString(3) + " "
-                                + "장르: " + rs.getString(4) + " "
-                                + "출판사: " + rs.getString(5));
-                        bookList.add(rs.getInt(1));
-                    }
-                    System.out.println("======================================");
-                } else {
-                    System.out.println("\n대여 가능한 책이 없습니다. 이전 메뉴로 돌아갑니다 !");
+    /** 대여 가능한 도서 목록을 출력하는 메서드*/
+    public List<Integer> showBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
+        List<Integer> bookList = new ArrayList<Integer>();
+        Statement stmt = null;
+        ResultSet rs = null;
+        String query = prop.getProperty("showBookList");
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+            if (rs != null) {
+                System.out.println("\n=== 대여 가능한 도서 ===");
+                while (rs.next()) {
+                    System.out.println("도서코드: " + rs.getInt(1) + " "
+                            + "제목: " + rs.getString(2) + " "
+                            + "작가: " + rs.getString(3) + " "
+                            + "장르: " + rs.getString(4) + " "
+                            + "출판사: " + rs.getString(5));
+                    bookList.add(rs.getInt(1));
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                close(rs);
-                close(stmt);
-                close(con);
-            }return bookList;
-        }
+                System.out.println("======================================");
+            } else {
+                System.out.println("\n대여 가능한 책이 없습니다. 이전 메뉴로 돌아갑니다 !");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rs);
+            close(stmt);
+            close(con);
+        }return bookList;
+    }
 
-        /**도서 대여하는 메서드*/
+    /**도서 대여하는 메서드*/
     public int rentBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -124,8 +124,8 @@ public class BorrowRecordDAO {
             // 반납일 업데이트
             pstmt = con.prepareStatement(updateReturnDateQuery);
             pstmt.setDate(1, borrowRecordDTO.getReturnDate());
-            pstmt.setInt(2, borrowRecordDTO.getBookCode());
-            pstmt.setString(3, borrowRecordDTO.getUserId());
+            pstmt.setString(2, borrowRecordDTO.getUserId());
+            pstmt.setInt(3, borrowRecordDTO.getBookCode());
             result = pstmt.executeUpdate();
 
             if (result > 0) {
@@ -152,7 +152,7 @@ public class BorrowRecordDAO {
     }
 
     /**대여 가능한 도서들의 여부를 확인하려고 만든 메서드 -> 사용자가 대여중인 도서 목록 가져오려고
-    이게 있어야 내가 뭘 대여했는지 알 수 있고 그래야 대여 가능한 도서에서만 대여를 할 수 있음.*/
+     이게 있어야 내가 뭘 대여했는지 알 수 있고 그래야 대여 가능한 도서에서만 대여를 할 수 있음.*/
     public List<BorrowRecordDTO> getBorrowedBooks(Connection con, String userId) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
