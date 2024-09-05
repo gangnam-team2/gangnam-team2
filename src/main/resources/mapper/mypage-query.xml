@@ -12,12 +12,6 @@
     </entry>
 
 
-    <entry key="updateRequest">
-        UPDATE BOOKS
-            SET BOOK_STATUS =0
-        WHERE BOOK_CODE =?;
-    </entry>
-
 
     <entry key="allBorrowBookList">
         SELECT
@@ -33,6 +27,7 @@
             SET USER_PWD = ?
         WHERE USER_PWD = ?;
     </entry>
+
 
     <entry key="myOverDueBooks">
         SELECT

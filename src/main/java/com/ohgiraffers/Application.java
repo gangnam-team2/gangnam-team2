@@ -98,12 +98,12 @@ public class Application {
                 // 관리자와 사용자 메뉴를 나눔
                 if (userRole == 1) {  // 관리자
                     System.out.println("\n|== 관리자 전용 메뉴 ==|");
-                    System.out.println("| 1. 도서 관리        |");
-                    System.out.println("| 2. 연체된 도서 목록  |");
-                    System.out.println("| 3. 사용자 관리      |");
-                    System.out.println("| 4. 베스트셀러 목록   |");
-                    System.out.println("| 5. 회원탈퇴         |");
-                    System.out.println("| 0. 로그아웃         |");
+                    System.out.println("| 1. 도서 관리          |");
+                    System.out.println("| 2. 연체된 도서 목록    |");
+                    System.out.println("| 3. 사용자 관리        |");
+                    System.out.println("| 4. 베스트셀러 목록     |");
+                    System.out.println("| 5. 회원탈퇴           |");
+                    System.out.println("| 0. 로그아웃           |");
                     System.out.println("|===================|");
 
                 } else if (userRole == 0) {  // 일반 사용자
@@ -193,7 +193,6 @@ public class Application {
                             System.out.println("\n사용자"+logind + "님! 마이페이지 메뉴를 선택하셨습니다.^0^");
                             System.out.println("1. 대여중인 도서 목록");
                             System.out.println("2. 도서 대여 기록");
-                            //System.out.println("3. 대여 취소");
                             System.out.println("3. 연체 목록 조회");
                             System.out.println("4. 비밀번호 변경");
                             System.out.println("0. 이전으로 돌아가기");
@@ -214,9 +213,6 @@ public class Application {
                                 case 2:
                                     mypageController.allBorrowBookList();
                                     break;
-//                                case 3:
-//                                    mypageController.updateRequestBook();
-//                                    break;
                                 case 3:
                                     mypageController.myOverDueBooks();
                                     break;

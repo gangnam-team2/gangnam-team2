@@ -23,25 +23,6 @@ public class MypageDAO {
         }
     }
 
-    /** 대여한 도서를 취소하는 메서드*/
-    public int updateRequest(Connection con, BorrowRecordDTO borrowRecordDTO) {
-        PreparedStatement pstmt = null;
-        int result = 0;
-        String query = prop.getProperty("updateRequest");
-
-        try {
-            pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, borrowRecordDTO.getBookCode());
-
-            result = pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(pstmt);
-        }
-        return result;
-    }
 
     /** 현재 대여중인 도서 목록 메서드*/
     public List<BorrowRecordDTO> currentBorrowBooks(Connection con, String userId) {
