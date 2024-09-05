@@ -5,12 +5,12 @@
 
     <entry key="showBookList">
         SELECT
-        BOOK_CODE,
-        BOOK_TITLE,
-        BOOK_AUTHOR,
-        BOOK_GENRE,
-        BOOK_PUBLISHER
-        FROM BOOKS
+            BOOK_CODE,
+            BOOK_TITLE,
+            BOOK_AUTHOR,
+            BOOK_GENRE,
+            BOOK_PUBLISHER
+          FROM BOOKS
         WHERE BOOK_STATUS = 0;
     </entry>
 

@@ -19,7 +19,7 @@ public class BestSellersController {
         System.out.println("1. 이번주 베스트셀러");
         System.out.println("2. 최근 한달간 베스트셀러");
         System.out.println("3. 최근 일년간 베스트셀러");
-        System.out.print("원하시는 메뉴의 번호를 선택해주세요 ´◡`: ");
+        System.out.print("원하시는 메뉴의 번호를 선택해주세요: ");
 
         int choice = sc.nextInt();
         sc.nextLine();
