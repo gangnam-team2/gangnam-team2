@@ -19,21 +19,20 @@ public class Application {
         UserController usercontroller = new UserController();
 
         Scanner sc = new Scanner(System.in);
-        boolean running = true;
-            // 메인 페이지
-//            System.out.print("📕");
-//            Thread.sleep(500);
-//            System.out.print("📖");
-//            Thread.sleep(500);
-//            System.out.print("📕");
-//            Thread.sleep(500);
-//            System.out.print("📖");
-//            Thread.sleep(500);
-//            System.out.print("📕");
-//            Thread.sleep(500);
-//            System.out.print("📖");
-//            Thread.sleep(500);
+        boolean running = true; // 반복문을 돌리기 위한 변수.
 
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
+            System.out.print("📕");
+            Thread.sleep(500);
+            System.out.print("📖");
+            Thread.sleep(500);
             while (running) {
                 try {
 
@@ -41,9 +40,9 @@ public class Application {
                     System.out.println("1. 회원가입");
                     System.out.println("2. 로그인");
                     System.out.println("0. 종료");
-                    System.out.print("원하시는 메뉴의 번호를 선택해주세요 (❁´◡`❁):  \n");
+                    System.out.print("\n원하시는 메뉴의 번호를 선택해주세요 : ");
                     int choice = sc.nextInt();
-                    sc.nextLine();
+                    sc.nextLine(); // 개행 받아 먹기 냠냠..
 
                     switch (choice) {
                         case 1:
@@ -57,16 +56,17 @@ public class Application {
                             // 로그인 및 해당 역할에 따른 메뉴 표시
                             // select
                             int userRole = usercontroller.totallogin();
+                            // 1은 관리자, 0은 일반 사용자, 1보다 큰 수는 로그인 실패.
                             if (userRole == 1 || userRole == 0) {
                                 displayMenu(sc, userRole);
                             } else if (userRole == 2) {
-                                System.out.println( " \n로그인 실패하셨습니다. (T_T) " );
+                                System.out.println( " \n로그인 실패하셨습니다. " );
 
                             }
                             break;
                         case 0:
                             System.out.println("\n === 프로그램을 종료합니다. ===");
-                            System.out.println("\n도서대여 프로그램을 이용해주셔서 감사합니다. ^0^ ");
+                            System.out.println("\n도서대여 프로그램을 이용해주셔서 감사합니다. *^^* ");
                             running = false;
                             break;
                         default:
@@ -89,7 +89,7 @@ public class Application {
         ManagerController managerController = new ManagerController();
         MypageController mypageController = new MypageController();
         BorrowRecordController borrowRecordController = new BorrowRecordController();
-        UserController usercontroller = new UserController();
+        UserController usercontroller = new UserController(); // 클래스를 객체로 선언 후
 
         boolean isRunning = true;
         String logind = UserSession.getUserDTO().getUserId();
@@ -97,7 +97,7 @@ public class Application {
             try {
                 // 관리자와 사용자 메뉴를 나눔
                 if (userRole == 1) {  // 관리자
-                    System.out.println("\n=== 관리자 메뉴 ===\n");
+                    System.out.println("\n=== 관리자 메뉴 ===");
                     System.out.println("1. 도서 관리");
                     System.out.println("2. 연체된 도서 목록");
                     System.out.println("3. 사용자 관리");
@@ -106,7 +106,7 @@ public class Application {
                     System.out.println("0. 로그아웃");
 
                 } else if (userRole == 0) {  // 일반 사용자
-                    System.out.println("\n=== 사용자 메뉴 ===\n");
+                    System.out.println("\n=== 사용자 메뉴 ===");
                     System.out.println("1. 도서 검색");
                     System.out.println("2. 대여 및 반납");
                     System.out.println("3. 베스트셀러 목록");
@@ -116,7 +116,7 @@ public class Application {
                     System.out.println("0. 로그아웃");
                 }
 
-                System.out.print("원하시는 메뉴의 번호를 선택해주세요(❁´◡`❁):  \n");
+                System.out.print("원하시는 메뉴의 번호를 선택해주세요 : ");
                 if (!sc.hasNextInt()) {  // 숫자 입력이 아닌 경우 예외 처리
                     System.out.println("\n잘못된 메뉴를 선택하셨습니다. 다시 시도합니다! ");
                     sc.next();  // 잘못된 입력을 버퍼에서 제거
@@ -129,25 +129,25 @@ public class Application {
                 switch (choice) {
                     case 1:
                         if (userRole == 1) {
-                            System.out.println("\n관리자 " + logind + "님! 도서 관리 메뉴를 선택하셨습니다.^0^");
+                            System.out.println("\n관리자 " + logind + "님! 도서 관리 메뉴를 선택하셨습니다.");
                             bookController.manageBooksMenu(sc);
                         } else {
-                            System.out.println("\n사용자" + logind + "님! 도서 검색 메뉴를 선택하셨습니다.^0^");
+                            System.out.println("\n사용자 " + logind + "님! 도서 검색 메뉴를 선택하셨습니다.");
                             bookController.searchBookMenu(sc);
                         }
                         break;
 
                     case 2:
                         if (userRole == 1) {
-                            System.out.println("\n관리자 " + logind + "님! 연체 도서 목록 메뉴를 선택하셨습니다.^0^");
+                            System.out.println("\n관리자 " + logind + "님! 연체 도서 목록 메뉴를 선택하셨습니다.");
                             borrowRecordController.overDueBooks();
                         } else {
-                            System.out.println("\n사용자 " + logind + "님! 대여 및 반납 기능 메뉴를 선택하셨습니다.^0^");
-                            System.out.println("\n=== 대여 및 반납 메뉴 ===\n");
+                            System.out.println("\n사용자 " + logind + "님! 대여 및 반납 기능 메뉴를 선택하셨습니다.");
+                            System.out.println("\n=== 대여 및 반납 메뉴 ===");
                             System.out.println("1. 대여   2. 반납");
-                            System.out.print("원하시는 메뉴의 번호를 선택해주세요(❁´◡`❁):  \n");
+                            System.out.print("\n원하시는 메뉴의 번호를 선택해주세요 : ");
                             if (!sc.hasNextInt()) {
-                                System.out.println("잘못된 입력입니다. 다시 시도해주세요!");
+                                System.out.println("\n잘못된 입력입니다. 다시 시도해주세요!");
                                 sc.next();  // 잘못된 입력을 처리
                                 continue;  // 메뉴로 돌아가기
                             }
@@ -168,37 +168,37 @@ public class Application {
 
                     case 3:
                         if (userRole == 1) {
-                            System.out.println("\n관리자 " + logind + "님! 사용자 관리 메뉴를 선택하셨습니다.^0^");
+                            System.out.println("\n관리자 " + logind + "님! 사용자 관리 메뉴를 선택하셨습니다.");
                             managerController.displayManager();
                         } else {
-                            System.out.println("\n사용자 " + logind + "님! 베스트셀러 목록 메뉴를 선택하셨습니다.^0^");
+                            System.out.println("\n사용자 " + logind + "님! 베스트셀러 목록 메뉴를 선택하셨습니다.");
                             bestSellersController.showBestSellers(sc);
                         }
                         break;
 
                     case 4:
                         if (userRole == 1) {
-                            System.out.println("\n관리자 " + logind + "님! 베스트셀러 목록 메뉴를 선택하셨습니다.^0^");
+                            System.out.println("\n관리자 " + logind + "님! 베스트셀러 목록 메뉴를 선택하셨습니다.");
                             bestSellersController.showBestSellers(sc);
                         } else {
-                            System.out.println("\n사용자" + logind + "님! 도서 요청 선택 메뉴를 선택하셨습니다.^0^");
+                            System.out.println("\n사용자" + logind + "님! 도서 요청 선택 메뉴를 선택하셨습니다.");
                             RequestController.insertRequestedBook();
                         }
                         break;
 
                     case 5:
                         if (userRole == 0) {
-                            System.out.println("\n사용자"+logind + "님! 마이페이지 메뉴를 선택하셨습니다.^0^");
-                            System.out.println("1. 현재 대여 신청 책 목록");
-                            System.out.println("2. 전체 대여 목록");
+                            System.out.println("\n사용자"+logind + "님! 마이페이지 메뉴를 선택하셨습니다.");
+                            System.out.println("1. 대여중인 도서 목록");
+                            System.out.println("2. 도서 대여 기록");
                             System.out.println("3. 대여 취소");
                             System.out.println("4. 연체 목록 조회");
                             System.out.println("5. 비밀번호 변경");
                             System.out.println("0. 이전으로 돌아가기");
-                            System.out.print("원하시는 메뉴의 번호를 선택해주세요(❁´◡`❁):  \n");
+                            System.out.print(" 원하시는 메뉴의 번호를 선택해주세요 : ");
 
                             if (!sc.hasNextInt()) {
-                                System.out.println("잘못된 입력입니다. 다시 시도해주세요! ");
+                                System.out.println(" 잘못된 입력입니다. 다시 시도합니다 ! ");
                                 sc.next();  // 잘못된 입력을 처리
                                 continue;  // 메뉴로 돌아가기
                             }
@@ -227,7 +227,7 @@ public class Application {
                                     System.out.println("\n보기의 메뉴를 선택해주세요. 다시 시도합니다! ");
                             }
                         } else if (userRole == 1) {
-                            System.out.println("\n관리자 " + logind + "님! 회원탈퇴 기능 메뉴를 선택하셨습니다.^0^");
+                            System.out.println("\n관리자 " + logind + "님! 회원탈퇴 기능 메뉴를 선택하셨습니다. ");
                             usercontroller.deleteuser();
                             isRunning = false;
                         }
@@ -235,25 +235,25 @@ public class Application {
 
                     case 6:
                         if (userRole == 0) {
-                            System.out.println("\n사용자" + logind + "님! 회원탈퇴 기능 메뉴 선택하셨습니다.^0^");
+                            System.out.println("\n사용자" + logind + "님! 회원탈퇴 기능 메뉴 선택하셨습니다.");
                             usercontroller.deleteuser();
                             isRunning = false;
                         } else {
-                            System.out.println("\n잘못된 선택입니다. 다시 시도합니다! ");
+                            System.out.println("\n잘못된 선택입니다. 다시 시도합니다 ! ");
                         }
                         break;
 
                     case 0:
-                        System.out.println( logind + "님! 로그아웃 합니다. \n도서대여 시스템을 사용해주셔서 감사합니다.^_____^ ");
+                        System.out.println( logind + "님! 로그아웃 합니다. \n도서대여 시스템을 사용해주셔서 감사합니다 😊 ");
                         isRunning = false;
                         break;
 
                     default:
-                        System.out.println("\n잘못된 입력입니다. 다시 시도해주세요! ");
+                        System.out.println("\n잘못된 입력입니다. 다시 시도합니다 ! ");
                         break;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("\n보기의 메뉴를 선택해주세요. 다시 시도합니다! ");
+                System.out.println("\n보기의 메뉴를 선택해주세요. 다시 시도합니다 ! ");
                 sc.nextLine();  // 잘못된 입력 비워버리기
             } catch (SQLException e) {
                 throw new RuntimeException(e);

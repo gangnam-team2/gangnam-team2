@@ -38,7 +38,7 @@ public class BookDAO {
             pstmt.setString(2, bookDTO.getBookAuthor());
             pstmt.setString(3, bookDTO.getBookPublisher());
             pstmt.setString(4, bookDTO.getBookGenre());
-            pstmt.setBoolean(5, bookDTO.isBookStatus() ? bookDTO.isBookStatus() : true);
+            pstmt.setBoolean(5, bookDTO.isBookStatus() ? bookDTO.isBookStatus() : false);
             pstmt.setInt(6, bookDTO.getBorrowCount());
 
             result = pstmt.executeUpdate();

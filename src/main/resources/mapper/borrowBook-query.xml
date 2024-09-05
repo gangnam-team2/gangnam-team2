@@ -100,9 +100,9 @@
 
 
     <entry key="overDueBooks">
-        UPDATE BORROW_RECORDS
-        SET OVER_DUE_BOOKS = 1
-        WHERE DUE_DATE = ?;
+        UPDATE borrow_records
+        SET over_due_books = ?
+        WHERE book_code = ? AND return_date IS NULL;
     </entry>
 
 
@@ -117,7 +117,21 @@
         WHERE OVER_DUE_BOOKS = 1;
     </entry>
 
+    <entry key="updateReturnDate">
+        <![CDATA[
+    UPDATE borrow_records
+    SET return_date = ?
+    WHERE book_code = ? AND user_id = ?
+    ]]>
+    </entry>
 
+    <entry key="updateBookStatus">
+        <![CDATA[
+    UPDATE books
+    SET book_status = ?
+    WHERE book_code = ?
+    ]]>
+    </entry>
 
 <!--    &lt;!&ndash; 현재 로그인한 사용자의 대여 중인 책 목록을 가져오는 쿼리 &ndash;&gt;
     <entry key="getBorrowedBooksByUser">

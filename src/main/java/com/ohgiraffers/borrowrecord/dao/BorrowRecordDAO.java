@@ -36,18 +36,18 @@ public class BorrowRecordDAO {
                 stmt = con.createStatement();
                 rs = stmt.executeQuery(query);
                 if (rs != null) {
-                    System.out.println("============= 대여 가능한 도서 =============");
+                    System.out.println("\n=== 대여 가능한 도서 ===");
                     while (rs.next()) {
-                        System.out.println("북코드: " + rs.getInt(1) + " "
+                        System.out.println("도서코드: " + rs.getInt(1) + " "
                                 + "제목: " + rs.getString(2) + " "
                                 + "작가: " + rs.getString(3) + " "
                                 + "장르: " + rs.getString(4) + " "
                                 + "출판사: " + rs.getString(5));
                         bookList.add(rs.getInt(1));
                     }
-                    System.out.println("=======================================");
+                    System.out.println("======================================");
                 } else {
-                    System.out.println("대여 가능한 책이 없습니다.");
+                    System.out.println("\n대여 가능한 책이 없습니다. 이전 메뉴로 돌아갑니다 !");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -76,7 +76,7 @@ public class BorrowRecordDAO {
             if (rs.next()) {
                 borrowRecordDTO.setBookTitle(rs.getString("book_title"));
             } else {
-                throw new SQLException("해당 코드의 책을 찾을 수 없습니다.");
+                throw new SQLException("\n해당 코드의 책을 찾을 수 없습니다. ");
             }
             rs.close();
             pstmt.close();
@@ -116,36 +116,35 @@ public class BorrowRecordDAO {
     public int returnBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
-        String logind = UserSession.getUserDTO().getUserId();
-
-        String deleteBorrowRecordQuery = prop.getProperty("deleteBorrowRecord");
+        String updateReturnDateQuery = prop.getProperty("updateReturnDate");
         String updateBookStatusQuery = prop.getProperty("updateBookStatus");
 
         try {
-
-            // 우선 borrow_records 테이블에서 대여하는 사람이 반납하는 거니까 해당 도서 대여 기록 삭제
-            pstmt = con.prepareStatement(deleteBorrowRecordQuery);
-            pstmt.setInt(1, borrowRecordDTO.getBookCode());
-            pstmt.setString(2, logind);
+            // 반납일 업데이트
+            pstmt = con.prepareStatement(updateReturnDateQuery);
+            pstmt.setDate(1, borrowRecordDTO.getReturnDate());
+            pstmt.setInt(2, borrowRecordDTO.getBookCode());
+            pstmt.setString(3, borrowRecordDTO.getUserId());
             result = pstmt.executeUpdate();
-            close(pstmt);
 
             if (result > 0) {
-                // 여기서는 books 테이블에서 book_status를 false로 업데이트 이러면 대여 가능 상태로 변경
+                // book_status를 대여 가능 상태로 (false)로 설정
                 pstmt = con.prepareStatement(updateBookStatusQuery);
                 pstmt.setBoolean(1, false);
                 pstmt.setInt(2, borrowRecordDTO.getBookCode());
                 pstmt.executeUpdate();
 
-            } else {
-                System.out.println("대여 기록이 존재하지 않습니다.");
-                return 0; // 대여 기록이 없을 경우 반납 실패 처리
+                // over_due_books를 false로 변경 (연체 상태 초기화)
+                pstmt = con.prepareStatement("UPDATE borrow_records SET over_due_books = false WHERE book_code = ?");
+                pstmt.setInt(1, borrowRecordDTO.getBookCode());
+                pstmt.executeUpdate();
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             close(pstmt);
+            close(con);
         }
 
         return result;
@@ -210,47 +209,66 @@ public class BorrowRecordDAO {
         }return borrowRecords;
     }
 
-        public int overDueBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
+    public int overDueBook(Connection con, BorrowRecordDTO borrowRecordDTO) {
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("overDueBooks");
 
-            PreparedStatement pstmt = null;
-            int result = 0;
-            String query = prop.getProperty("overDueBooks");
-
-                if (LocalDate.now().isAfter(borrowRecordDTO.getDueDate().toLocalDate())) {
-                    try {
-                        pstmt = con.prepareStatement(query);
-                        pstmt.setDate(1, borrowRecordDTO.getDueDate());
-                        result = pstmt.executeUpdate();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    } finally {
-                        close(con);
-                        close(pstmt);
-                    }
+        try {
+            // 연체 상태를 확인하고, due_date가 현재 날짜를 넘는 경우에만 실행
+            if (borrowRecordDTO.getDueDate() != null && LocalDate.now().isAfter(borrowRecordDTO.getDueDate().toLocalDate())) {
+                pstmt = con.prepareStatement(query);
+                pstmt.setBoolean(1, true); // 연체 상태를 true로 설정 (1)
+                pstmt.setInt(2, borrowRecordDTO.getBookCode()); // 해당 도서의 book_code
+                result = pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // PreparedStatement가 null이 아닌 경우에만 close() 호출
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            return result;
-        }
-
-        public void overDueBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
-            Statement stmt = null;
-            ResultSet rs = null;
-            String query = prop.getProperty("overDueBookList");
-
-            try {
-                stmt = con.createStatement();
-                rs = stmt.executeQuery(query);
-                if (rs != null) {
-                    while (rs.next()) {
-                        System.out.println("ID: " + rs.getString(1) + " " + "북코드: " + rs.getInt(2) + " "
-                                + "제목: " + rs.getString(3) + " " + "대여일: " + rs.getDate(4) + " " + "반납 예정일: " + rs.getDate(5));
-                    }
-                } else {
-                    System.out.println("연체된 책이 없습니다.");
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
         }
+        return result;
+    }
+
+
+    public void overDueBookList(Connection con, BorrowRecordDTO borrowRecordDTO) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        String query = prop.getProperty("overDueBookList");
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+
+            if (rs != null && rs.next()) {
+                do {
+                    System.out.printf("ID: %s | 북코드: %d | 제목: %s | 대여일: %s | 반납 예정일: %s\n",
+                            rs.getString(1), rs.getInt(2), rs.getString(3), rs.getDate(4), rs.getDate(5));
+                } while (rs.next());
+            } else {
+                System.out.println("\n연체된 책이 없습니다. 이전 메뉴로 돌아갑니다 !");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rs);
+            close(stmt);
+        }
+    }
 
     // borrow_records 테이블에 있는 모든 user_id를 가져오는 메서드
     public List<String> getAllUserIds(Connection con) {

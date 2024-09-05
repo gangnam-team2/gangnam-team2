@@ -36,49 +36,49 @@ public class BookController {
         String regex = "^[a-zA-Z0-9\\s]+$";
 
         while (!validInput) {
-            System.out.println("=====새 도서 추가=====");
+            System.out.println("\n=== 신규 도서 추가 ===\n");
 
             // 도서 제목 입력
-            System.out.print("도서 제목 : ");
+            System.out.print("\n도서 제목을 입력해주세요 : ");
             String bookTitle = sc.nextLine().trim();
             if (bookTitle.isEmpty()) {
-                System.out.println("도서 제목은 비워둘 수 없습니다.");
+                System.out.println("\n도서 제목은 비워둘 수 없습니다. 다시 시도합니다 !");
                 continue;
             } else if (!bookTitle.matches(regex)) {
-                System.out.println("도서 제목에 특수문자는 사용할 수 없습니다.");
+                System.out.println("\n도서 제목에 특수문자는 사용할 수 없습니다. 다시 시도합니다 !");
                 continue;
             }
 
             // 도서 저자 입력
-            System.out.print("도서 저자 : ");
+            System.out.print("\n도서 저자를 입력해주세요 :");
             String bookAuthor = sc.nextLine().trim();
             if (bookAuthor.isEmpty()) {
-                System.out.println("도서 저자는 비워둘 수 없습니다.");
+                System.out.println("\n도서 저자는 비워둘 수 없습니다. 다시 시도합니다 !");
                 continue;
             } else if (!bookAuthor.matches(regex)) {
-                System.out.println("도서 저자에 특수문자는 사용할 수 없습니다.");
+                System.out.println("\n도서 저자에 특수문자는 사용할 수 없습니다. 다시 시도합니다 !");
                 continue;
             }
 
             // 도서 출판사 입력
-            System.out.print("도서 출판사 : ");
+            System.out.print("\n도서 출판사를 입력해주세요 : ");
             String bookPublisher = sc.nextLine().trim();
             if (bookPublisher.isEmpty()) {
-                System.out.println("도서 출판사는 비워둘 수 없습니다.");
+                System.out.println("\n도서 출판사는 비워둘 수 없습니다. 다시 시도합니다 !");
                 continue;
             } else if (!bookPublisher.matches(regex)) {
-                System.out.println("도서 출판사에 특수문자는 사용할 수 없습니다.");
+                System.out.println("\n도서 출판사에 특수문자는 사용할 수 없습니다. 다시 시도합니다 !");
                 continue;
             }
 
             // 도서 장르 입력
-            System.out.print("도서 장르 : ");
+            System.out.print("\n도서 장르를 입력해주세요 : ");
             String bookGenre = sc.nextLine().trim();
             if (bookGenre.isEmpty()) {
-                System.out.println("도서 장르는 비워둘 수 없습니다.");
+                System.out.println("\n도서 장르는 비워둘 수 없습니다. 다시 시도합니다 !");
                 continue;
             } else if (!bookGenre.matches(regex)) {
-                System.out.println("도서 장르에 특수문자는 사용할 수 없습니다.");
+                System.out.println("\n도서 장르에 특수문자는 사용할 수 없습니다. 다시 시도합니다 !");
                 continue;
             }
 
@@ -108,15 +108,15 @@ public class BookController {
         String regex = "^[a-zA-Z0-9\\s]+$";
 
         while (!validInput) {
-            System.out.println("=====도서 정보 수정=====");
-            System.out.print("수정할 도서 코드: ");
+            System.out.println("\n=== 도서 정보 수정 ===");
+            System.out.print("수정할 도서 코드를 입력해주세요 : ");
             int bookCode = 0;
 
             if (sc.hasNextInt()) {
                 bookCode = sc.nextInt();
                 sc.nextLine();
             } else {
-                System.out.println("유효한 도서 코드를 입력하세요.");
+                System.out.println("\n유효한 도서 코드를 입력해주세요. 다시 시도합니다 !");
                 sc.next();  // 잘못된 입력은 여기서 제거
                 continue;
             }
@@ -125,24 +125,24 @@ public class BookController {
             BookDTO bookDTO = bookDAO.getBookById(con, bookCode);
 
             if (bookDTO == null) {
-                System.out.println("해당 도서를 찾을 수 없습니다.");
+                System.out.println("\n해당 도서를 찾을 수 없습니다. 이전 메뉴로 돌아갑니다 !");
                 close(con);
                 return;
             }
 
             // 새 도서 제목 입력
-            System.out.print("새 도서 제목: ");
+            System.out.print("\n 신규 도서 제목을 입력해주세요 : ");
             String bookTitle = sc.nextLine().trim();
             if (bookTitle.isEmpty()) {
-                System.out.println("도서 제목은 비워둘 수 없습니다.");
+                System.out.println("\n도서 제목은 비워둘 수 없습니다. 다시 시도합니다 !");
                 continue;
             } else if (!bookTitle.matches(regex)) {
-                System.out.println("도서 제목에 특수문자는 사용할 수 없습니다.");
+                System.out.println("\n도서 제목에 특수문자는 사용할 수 없습니다. 다시 시도합니다 !");
                 continue;
             }
 
             // 새 도서 저자 입력
-            System.out.print("새 도서 저자: ");
+            System.out.print("\n신규 도서의 저자를 입력해주세요 : ");
             String bookAuthor = sc.nextLine().trim();
             if (bookAuthor.isEmpty()) {
                 System.out.println("도서 저자는 비워둘 수 없습니다.");
@@ -201,18 +201,18 @@ public class BookController {
             }
 
             if (result > 0) {
-                System.out.println("도서 정보가 수정되었습니다.");
+                System.out.println("\n도서 정보 수정이 완료되었습니다 !.");
                 validInput = true;
             } else {
-                System.out.println("도서 정보 수정에 실패하였습니다.");
+                System.out.println("\n도서 정보 수정에 실패하였습니다. 다시 시도합니다 !");
             }
         }
     }
 
     /** 도서 삭제 메서드*/
     public void deleteBook() {
-        System.out.println("=====도서 삭제======");
-        System.out.print("삭제할 도서 코드: ");
+        System.out.println("\n=== 도서 삭제 ===");
+        System.out.print("삭제할 도서 코드를 입력해주세요 : ");
         int bookCode = sc.nextInt();
         sc.nextLine();
 
@@ -221,18 +221,18 @@ public class BookController {
         close(con);
 
         if (result > 0) {
-            System.out.println("도서가 삭제되었습니다.");
+            System.out.println("\n도서 삭제가 완료되었습니다 !");
         } else {
-            System.out.println("도서 삭제에 실패하였습니다.");
+            System.out.println("\n도서 삭제에 실패하였습니다. 다시 시도합니다 !");
         }
     }
 
     /**조건 별 도서 검색 메서드*/
     public static void searchBookMenu(Scanner sc) {
-        System.out.println("== 도서 검색 ==");
+        System.out.println("=== 도서 검색 ===");
         System.out.println("1. 도서 제목으로 검색");
         System.out.println("2. 도서 코드로 검색");
-        System.out.print("선택: ");
+        System.out.print("원하시는 메뉴의 번호를 선택해주세요 : ");
 
         int searchChoice = sc.nextInt();
         sc.nextLine();
@@ -253,14 +253,14 @@ public class BookController {
 
     /** 도서 식별번호를 이용한 도서 찾기 메서드*/
     public static void searchBooksByCode() {
-        System.out.println("=====도서 검색 (코드로 검색)=====");
-        System.out.print("검색할 도서 코드: ");
+        System.out.println("\n=== 도서 검색 ===");
+        System.out.print("검색할 도서의 코드를 입력해주세요 : ");
 
         int bookCode;
         try {
             bookCode = Integer.parseInt(sc.nextLine());  // 도서 코드를 정수로 변환
         } catch (NumberFormatException e) {
-            System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+            System.out.println("\n보기의 메뉴를 선택해주세요. 다시 시도합니다! ");
             return;  // 잘못된 입력이므로 메서드 종료
         }
 
@@ -279,21 +279,21 @@ public class BookController {
                     book.isBookStatus() ? "대여 가능" : "대여 중",
                     book.getBorrowCount()
             );
-            System.out.println("----------------------------");  // 각 도서 사이 구분선
+            System.out.println("=================");  // 각 도서 사이 구분선
         } else {
-            System.out.println("해당 코드의 도서를 찾을 수 없습니다.");
+            System.out.println("\n해당 코드의 도서를 찾을 수 없습니다. 다시 시도합니다 !");
         }
     }
     
     /** 도서 제목으로 도서 찾는 메서드*/
     public static void searchBooksByTitle() {
-        System.out.println("=====도서 제목으로 찾기=====");
-        System.out.print("검색할 도서 제목: ");
+        System.out.println("=== 도서 제목으로 찾기 ===");
+        System.out.print("검색할 도서 제목을 입력해주세요 : ");
         String title = sc.nextLine();
 
         // 입력된 도서 제목이 공백이거나 비어있는지 확인
         if (title == null || title.trim().isEmpty()) {
-            System.out.println("잘못된 입력입니다. 도서 제목을 정확히 입력하세요.");
+            System.out.println("\n보기의 메뉴를 선택해주세요. 다시 시도합니다! ");
             return;  // 잘못된 입력이므로 메서드 종료
         }
 
@@ -313,16 +313,16 @@ public class BookController {
                         book.isBookStatus() ? "대여 가능" : "대여 중",
                         book.getBorrowCount()
                 );
-                System.out.println("----------------------------");  // 각 도서 사이 구분선
+                System.out.println("==========================");  // 각 도서 사이 구분선
             }
         } else {
-            System.out.println("해당 제목의 도서를 찾을 수 없습니다.");
+            System.out.println("\n해당 제목의 도서를 찾을 수 없습니다. 다시 시도합니다 !");
         }
     }
 
     /** 연체된 도서 목록을 조회하는 메서드 - 추후 필요시 사용*/
     public void searchOverdueBooks() {
-        System.out.println("=====연체된 도서 목록 조회======");
+        System.out.println("=== 연체된 도서 목록 조회 ===");
 
         Connection con = getConnection();
         List<BookDTO> books = bookDAO.getOverdueBooks(con);
@@ -340,10 +340,10 @@ public class BookController {
                         book.isBookStatus() ? "대여 가능" : "대여 중",
                         book.getBorrowCount()
                 );
-                System.out.println("----------------------------");  // 각 도서 사이 구분선임
+                System.out.println("==========================");  // 각 도서 사이 구분선임
             }
         } else {
-            System.out.println("연체된 도서가 없습니다.");
+            System.out.println("\n연체된 도서가 없습니다. 이전 메뉴로 돌아갑니다 !");
         }
     }
 
@@ -354,14 +354,14 @@ public class BookController {
         boolean managing = true;
 
         while (managing) {
-            System.out.println("\n== 도서 관리 메뉴 ==");
+            System.out.println("=== 도서 관리 메뉴 ===");
             System.out.println("1. 도서 추가");
             System.out.println("2. 도서 수정");
             System.out.println("3. 도서 삭제");
             System.out.println("4. 요청된 도서 확인 및 추가");  // 새로운 메뉴 추가
             System.out.println("0. 이전 메뉴로 돌아가기");
 
-            System.out.print("선택: ");
+            System.out.println("\n원하시는 메뉴의 번호를 선택해주세요 : ");
             int choice = sc.nextInt();
             sc.nextLine();
 
@@ -382,7 +382,7 @@ public class BookController {
                     managing = false;
                     break;
                 default:
-                    System.out.println("잘못된 선택입니다. 다시 시도하세요.");
+                    System.out.println("\n보기의 메뉴를 선택해주세요. 다시 시도합니다! ");
             }
         }
     }
@@ -393,11 +393,11 @@ public class BookController {
             List<RequestDTO> requestedBooks = requestController.getRequestedBooks();
 
             if (requestedBooks.isEmpty()) {
-                System.out.println("현재 요청된 도서가 없습니다.");
+                System.out.println("\n현재 요청된 도서가 없습니다. 이전 메뉴로 돌아갑니다 !");
                 return;
             }
 
-            System.out.println("\n===== 요청된 도서 목록 =====");
+            System.out.println("=== 요청된 도서 목록 ===");
             for (int i = 0; i < requestedBooks.size(); i++) {
                 RequestDTO book = requestedBooks.get(i);
                 System.out.printf("%d. 제목: %s - 저자: %s - 출판사: %s - 장르: %s%n",
@@ -409,15 +409,14 @@ public class BookController {
             }
             System.out.println("=============================");
 
-            System.out.println("도서를 추가하시겠습니까? (1: 예, 2: 아니오)");
-            System.out.print("선택 : ");
+            System.out.println("도서를 추가하시겠습니까? \n 1: 예, 2: 아니오");
+            System.out.print("원하시는 메뉴의 번호를 입력해주세요 : ");
             int choice = sc.nextInt();
             sc.nextLine();
 
             if (choice == 1) {
-                System.out.println("추가할 도서 번호를 선택하세요:");
+                System.out.println("추가할 도서 번호를 입력해주세요:");
                 int bookChoice = sc.nextInt();
-                System.out.print("선택 : ");
                 sc.nextLine();
 
                 if (bookChoice > 0 && bookChoice <= requestedBooks.size()) {
@@ -429,14 +428,14 @@ public class BookController {
                     // 요청 목록에서 삭제
                     boolean isDeleted = requestController.deleteRequestedBook(selectedBook.getRequestId());
                     if (isDeleted) {
-                        System.out.println("\n===============================");
+                        System.out.println("=========================");
                         System.out.println("요청된 도서 " + selectedBook.getBookTitle() + "이 목록에서 삭제되었습니다.");
-                        System.out.println("===============================");
+                        System.out.println("=========================");
                     } else {
-                        System.out.println("요청된 도서 삭제에 실패하였습니다.");
+                        System.out.println("\n요청된 도서 삭제에 실패하였습니다. 다시 시도합니다!");
                     }
                 } else {
-                    System.out.println("잘못된 선택입니다.");
+                    System.out.println("\n보기의 메뉴를 선택해주세요. 다시 시도합니다! ");
                 }
             }
         }
@@ -453,9 +452,9 @@ public class BookController {
             }
 
             if (result > 0) {
-                System.out.println("도서가 추가되었습니다.");
+                System.out.println("\n도서 추가가 완료되었습니다 !");
             } else {
-                System.out.println("도서 추가에 실패하였습니다.");
+                System.out.println("\n도서 추가에 실패하였습니다! ");
             }
         }
 

@@ -104,7 +104,7 @@ public class RequestDAO {
             int result = pstmt.executeUpdate();
             isDeleted = result > 0;
         } catch (SQLException e) {
-            System.out.println("요청된 도서를 삭제하는데 문제가 생겼습니다.");
+            System.out.println("\n요청된 도서를 삭제하는데 문제가 생겼습니다. 다시 시도합니다!");
         } finally {
             close(pstmt);
         }

@@ -19,13 +19,13 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
 
         loop: while(true){
             try {
-                System.out.println("사용자 관리 모드 입니다.");
+                System.out.println("=== 사용자 관리 모드 입니다. ===");
 
                 System.out.println("1. 회원들의 정보를 조회합니다.");
                 System.out.println("2. 대여 중인 책과 회원들을 조회합니다.");
                 System.out.println("3. 현재 연체 중인 회원들을 조회합니다.");
                 System.out.println("4. 이전 선택창으로 돌아가기");
-                System.out.print("선택 : ");
+                System.out.print("원하시는 메뉴의 번호를 선택해주세요´◡`: ");
 
                 int num = scr.nextInt();
                 switch (num){
@@ -35,11 +35,11 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
                     case 4: break loop;
 
                     default:
-                        System.out.println("선택창 내의 숫자를 입력해 주세요.");break;
+                        System.out.println("\n보기의 메뉴를 선택해주세요. 다시 시도합니다! ");break;
 
                 }
             } catch (InputMismatchException e) {
-                System.out.println("선택창 내의 숫자를 입력해 주세요.");
+                System.out.println("\n보기의 메뉴를 선택해주세요. 다시 시도합니다! ");
                 scr.nextLine();
             }
         }
@@ -52,7 +52,7 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
     public void allMembersInfo(){
         List<UserDTO> allMembersInfo;
         allMembersInfo = managerDAO.selectAllMembersInfo(getConnection());
-        System.out.println("회원 정보 리스트");
+        System.out.println("=== 회원 정보 리스트 ===");
         for (UserDTO member : allMembersInfo){
 
             System.out.printf("회원 아이디: %s | 회원 이름: %s | 가입일: $s | 정보 수정일: %s\n",
@@ -70,7 +70,7 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
     public void findBookList() {
         List<BorrowRecordDTO> booksInfoAndUserId;
         booksInfoAndUserId =managerDAO.selectBooksAndUser(getConnection());
-        System.out.println("대여 중인 책과 해당 회원 아이디");
+        System.out.println("=== 대여 중인 책과 해당 회원 아이디 ===");
         for (BorrowRecordDTO book : booksInfoAndUserId) {
             System.out.printf("책 제목: %s | 책 코드: %d | 빌려간 회원 아이디: %s | 대여한 날짜: %s | 대여 만기일: %s\n",
                     book.getBookTitle(), book.getBookCode(), book.getUserId(), book.getBorrowCode(), book.getDueDate());
@@ -108,7 +108,7 @@ private ManagerDAO managerDAO = new ManagerDAO("src/main/resources/mapper/manage
         public void memberHistoy () {
             List<BorrowRecordDTO> lateMember;
             lateMember = managerDAO.selectMemberHistoy(getConnection());
-            System.out.println("현재 대여 만기일을 넘긴 회원들의 목록과 해당 책 제목"); // 실제 반납일 > 대여 마감일, 현재를 반영하기 어렵다.
+            System.out.println("=== 현재 대여 만기일을 넘긴 회원들의 목록과 해당 책 제목 ===\n"); // 실제 반납일 > 대여 마감일, 현재를 반영하기 어렵다.
             for (BorrowRecordDTO member : lateMember) {
                 System.out.printf("회원 아이디: %s | 책 제목: %s\n",
                         member.getUserId(), member.getBookTitle());

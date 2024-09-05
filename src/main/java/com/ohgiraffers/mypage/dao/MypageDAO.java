@@ -7,6 +7,7 @@ import com.ohgiraffers.usersession.UserSession;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.Date;
 
 import static com.ohgiraffers.common.JDBCTemplate.*;
 
@@ -22,7 +23,7 @@ public class MypageDAO {
         }
     }
 
-    /** 대여한 도서를 출력하는 메서드*/
+    /** 대여한 도서를 취소하는 메서드*/
     public int updateRequest(Connection con, BorrowRecordDTO borrowRecordDTO) {
         PreparedStatement pstmt = null;
         int result = 0;
@@ -90,7 +91,7 @@ public class MypageDAO {
                             rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getDate(4));
                 } while (rs.next());
             } else {
-                System.out.println("연체된 책이 없습니다.");
+                System.out.println("\n연체된 책이 없습니다! 이전 메뉴로 돌아갑니다 !");
             }
 
         } catch (SQLException e) {
@@ -101,7 +102,7 @@ public class MypageDAO {
         }
     }
 
-    /** 대여중인 모든 도서를 출력하는 메서드*/
+    /** 모든 대여기록을 출력하는 메서드*/
     public void allBorrowBookList(Connection con, BorrowRecordDTO borrowRecordDTO, UserDTO userDTO) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
@@ -114,12 +115,15 @@ public class MypageDAO {
 
             if (rset != null && rset.next()) {
                 do {
-                    System.out.printf("북코드: %d | 제목: %s | 대여일: %s | 반납 예정일: %s | 실제 반납일: %s\n",
+                    Date returnDate = rset.getDate(5);  // 실제 반납일 가져오기
+                    String returnDateStr = (returnDate != null) ? returnDate.toString() : "반납 전입니다.";  // null이면 "반납 전입니다." 출력
+
+                    System.out.printf("북코드: %d | 제목: %s | 대여일: %s | 반납 예정일: %s | 반납하신 날짜: %s\n",
                             rset.getInt(1), rset.getString(2),
-                            rset.getDate(3), rset.getDate(4), rset.getDate(5));
+                            rset.getDate(3), rset.getDate(4), returnDateStr);  // 실제 반납일 출력
                 } while (rset.next());
             } else {
-                System.out.println("대여 목록이 없습니다.");
+                System.out.println("\n대여 목록이 없습니다. 이전 메뉴로 돌아갑니다 !");
             }
 
         } catch (SQLException e) {
