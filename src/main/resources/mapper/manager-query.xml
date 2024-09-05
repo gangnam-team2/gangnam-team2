@@ -10,7 +10,8 @@
         user_created_at,
         user_updated_at
         FROM
-        users;
+        users
+        ORDER BY user_id ASC
     </entry>
 
     <entry key="selectBookList">
@@ -21,17 +22,20 @@
             borrow_date,
             due_date
           FROM
-            borrow_records;
+            borrow_records
+        ORDER BY user_id, book_code ASC
 
     </entry>
 
     <entry key="selectMemberHistoy"> <!--회원의 연체 이력을 조회할 수 있는 기능을 구현한다.-->
         SELECT
         user_id,
-        book_title
+        book_title,
+        book_code
         FROM borrow_records
         WHERE
         over_due_books = false
+        ORDER BY user_id, book_code ASC
 
     </entry>
 </properties>

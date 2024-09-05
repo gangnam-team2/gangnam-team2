@@ -184,6 +184,7 @@ public class ManagerDAO {
                 BorrowRecordDTO record = new BorrowRecordDTO();
                 record.setUserId(rset.getString("user_id"));
                 record.setBookTitle(rset.getString("book_title"));
+                record.setBookCode(rset.getInt("book_code"));
 
                 lateMember.add(record);
             }
